@@ -1,0 +1,31 @@
+{
+	"name": "@supercolony-net/typechain-polkadot",
+	"version": "0.0.1",
+	"scripts": {
+		"lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
+		"lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
+	},
+	"engines": {
+		"node": ">=16.0.0",
+		"npm": ">=7.0.0"
+	},
+	"engineStrict": true,
+	"dependencies": {
+		"@types/node": "^17.0.34",
+		"ts-node": "^10.7.0"
+	},
+	"devDependencies": {
+		"@polkadot/api": "^8.6.2",
+		"@polkadot/api-contract": "^8.6.2",
+		"@polkadot/keyring": "^9.3.1",
+		"@types/bn.js": "^5.1.0",
+		"@typescript-eslint/eslint-plugin": "^5.25.0",
+		"@typescript-eslint/parser": "^5.25.0",
+		"eslint": "^8.16.0",
+		"eslint-import-resolver-typescript": "^2.7.1",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-node": "^11.1.0",
+		"typescript": "^4.6.4"
+	},
+	"_deps": {}
+}
