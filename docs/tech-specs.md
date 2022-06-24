@@ -30,7 +30,7 @@ npx @supercolony-net/typechain-polkadot --in path/to/input --out path/to/output
 
 Input folder `path/to/input` should contain `{contract name}.contract` and/or `{contract name}.json` files.
 
-When you contract is represented by a `{contract name}.contract` file, generated code will also have means to deploy such contract to blockchain. E.g. corresponding class will have a static namespace `Contract.constructors` available.
+When your contract is represented by a `{contract name}.contract` file, generated code will also have means to deploy such contract to blockchain. E.g. corresponding class will have a static namespace `Contract.constructors` available.
 
 
 ---------

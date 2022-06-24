@@ -32,16 +32,24 @@ npx @supercolony-net/typechain-polkadot --in path/to/input --out path/to/output
 
 > **(i)** Both generated code and ABI files are meant to stay in your source code and be committed. You have a full ownership of the generated code and can use however you like. Though, we will provide examples further.
 
+<!--
+Mind you, that generated runtime code is reliant on [@supercolony-net/polkadot-ts-sdk](https://github.com/Supercolony-net/polkadot-ts-sdk) library - a Polkadot TS SDK by [SUPER:COLONY](https://supercolony.net). Thus, you should be using it in your project (have it in dependencies).
+-->
+
 --------
 ## Input
 
 Input folder `path/to/input` should contain `{contract name}.contract` and/or `{contract name}.json` files.
 
-When you contract is represented by a `{contract name}.contract` file, generated code will also have means to deploy such contract to blockchain. E.g. corresponding class will have a static namespace `Contract.constructors` available.
+When your contract is represented by a `{contract name}.contract` file, generated code will also have means to deploy such contract to blockchain. E.g. corresponding class will have a static namespace `Contract.constructors` available.
 
 
 ---------
 ## Output
+
+<!--
+(do) Provide description of the output folders structure
+-->
 
 For each given contract (e.g. ABI in `path/to/input/{contract name}.json`), a class is generated and put in `path/to/output/contracts/{contract name}.ts` file. Instance of this class will provide an access point to the contract methods, which already have type definitions for arguments, call options, return values etc.
 
@@ -51,6 +59,7 @@ For each given contract (e.g. ABI in `path/to/input/{contract name}.json`), a cl
 Some contract methods have a trait specified in their original full name (i.e. come in a format `MethodTraitName::method_tail_name`). Generated code's methods' names come primarily as camelCased `method_tail_name` (`methodTailName`). In a case of transformed names overlap, their original name is used.
 
 
+<!-- ### With native Polkadot -->
 ### Namespaces
 
 The contract instance contains several namespaces that can be useful in different cases:
@@ -86,3 +95,8 @@ const { value, gasConsumed } = await conrtact.methods.readOnlyMethod(arg1, ..., 
 
 const successResponse = await conrtact.methods.mutatingMethod(arg1, ..., argN, options);
 ```
+
+-----------
+## EXAMPLES
+
+> For usage examples in TypeScript, please, refer to this repo: https://github.com/Supercolony-net/typechain-polkadot_example

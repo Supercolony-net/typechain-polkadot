@@ -1,0 +1,39 @@
+/* eslint-disable indent */
+
+
+export const FILE = (fileName : string, abiDirRelPath : string) => `/* This file is auto-generated */
+
+import type { ApiPromise } from '@polkadot/api';
+import type { KeyringPair } from '@polkadot/keyring/types';
+import { ContractPromise } from '@polkadot/api-contract';
+//
+import ABI from '${abiDirRelPath}/${fileName}.json';
+//
+import QueryMethods from '../query/${fileName}';
+import BuildExtrinsicMethods from '../build-extrinsic/${fileName}';
+import TxSignAndSendMethods from '../tx-sign-and-send/${fileName}';
+import MixedMethods from '../mixed-methods/${fileName}';
+
+
+////
+
+export default class Contract {
+	readonly query : QueryMethods;
+	readonly buildExtrinsic : BuildExtrinsicMethods;
+	readonly tx : TxSignAndSendMethods;
+	readonly methods : MixedMethods;
+	//
+	constructor(
+		address : string,
+		signer : KeyringPair,
+		nativeAPI : ApiPromise,
+	) {
+		const nativeContract = new ContractPromise(nativeAPI, ABI, address);
+		//
+		this.query = new QueryMethods(nativeContract, signer.address);
+		this.buildExtrinsic = new BuildExtrinsicMethods(nativeContract);
+		this.tx = new TxSignAndSendMethods(nativeContract, signer);
+		this.methods = new MixedMethods(nativeContract, signer);
+	}
+}
+`;
