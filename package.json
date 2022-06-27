@@ -1,11 +1,18 @@
 {
 	"name": "@supercolony-net/typechain-polkadot",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"scripts": {
 		"start": "ts-node index.ts --in artifacts --out out",
 		"lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
 		"lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
 	},
+	"bin": "bin/index.js",
+	"files": [
+		"index.ts",
+		"src",
+		"bin",
+		"tsconfig.json"
+	],
 	"engines": {
 		"node": ">=16.0.0",
 		"npm": ">=7.0.0"
