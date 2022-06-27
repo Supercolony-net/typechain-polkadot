@@ -45,13 +45,3 @@ ${
 }
 `;
 }
-
-export function METHOD_JSDOC(labels : string[]) {
-	if(labels.length < 1) return "	/** */\n";
-	//
-	return decorateJsDoc(labels.map(l => `@type ${l}`));
-}
-
-export const METHOD = (name : string, types : string[]) =>
-`	"${name}" : readonly [ ${ types.join(', ') } ];
-`;

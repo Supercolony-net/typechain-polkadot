@@ -36,11 +36,7 @@ export default class Methods {
 		return queryJSON( this.__nativeContract, this.__callerAddress, "cap", [], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: owner
-	 * ```
-	 * ]
+	 * @arg owner
 	 */
 	"PSP22::balance_of" (
 		owner : ArgumentsTypes["2"],
@@ -49,13 +45,9 @@ export default class Methods {
 		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: to
-	 * 	1: value
-	 * 	2: data
-	 * ```
-	 * ]
+	 * @arg to
+	 * @arg value
+	 * @arg data
 	 */
 	"PSP22::transfer" (
 		to : ArgumentsTypes["2"],
@@ -66,12 +58,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transfer", [to, value, data], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: spender
-	 * 	1: value
-	 * ```
-	 * ]
+	 * @arg spender
+	 * @arg value
 	 */
 	"PSP22::approve" (
 		spender : ArgumentsTypes["2"],
@@ -81,12 +69,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::approve", [spender, value], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: spender
-	 * 	1: delta_value
-	 * ```
-	 * ]
+	 * @arg spender
+	 * @arg delta_value
 	 */
 	"PSP22::increase_allowance" (
 		spender : ArgumentsTypes["2"],
@@ -102,12 +86,8 @@ export default class Methods {
 		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: spender
-	 * 	1: delta_value
-	 * ```
-	 * ]
+	 * @arg spender
+	 * @arg delta_value
 	 */
 	"PSP22::decrease_allowance" (
 		spender : ArgumentsTypes["2"],
@@ -117,14 +97,10 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", [spender, delta_value], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: from
-	 * 	1: to
-	 * 	2: value
-	 * 	3: data
-	 * ```
-	 * ]
+	 * @arg from
+	 * @arg to
+	 * @arg value
+	 * @arg data
 	 */
 	"PSP22::transfer_from" (
 		from : ArgumentsTypes["2"],
@@ -136,12 +112,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transferFrom", [from, to, value, data], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: owner
-	 * 	1: spender
-	 * ```
-	 * ]
+	 * @arg owner
+	 * @arg spender
 	 */
 	"PSP22::allowance" (
 		owner : ArgumentsTypes["2"],
@@ -169,12 +141,8 @@ export default class Methods {
 		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22Metadata::tokenName", [], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: account
-	 * 	1: amount
-	 * ```
-	 * ]
+	 * @arg account
+	 * @arg amount
 	 */
 	"PSP22Wrapper::withdraw_to" (
 		account : ArgumentsTypes["2"],
@@ -184,12 +152,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22Wrapper::withdrawTo", [account, amount], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: account
-	 * 	1: amount
-	 * ```
-	 * ]
+	 * @arg account
+	 * @arg amount
 	 */
 	"PSP22Wrapper::deposit_for" (
 		account : ArgumentsTypes["2"],
@@ -199,11 +163,7 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22Wrapper::depositFor", [account, amount], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: token
-	 * ```
-	 * ]
+	 * @arg token
 	 */
 	"FlashLender::max_flashloan" (
 		token : ArgumentsTypes["2"],
@@ -212,14 +172,10 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "flashLender::maxFlashloan", [token], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: receiver_account
-	 * 	1: token
-	 * 	2: amount
-	 * 	3: data
-	 * ```
-	 * ]
+	 * @arg receiver_account
+	 * @arg token
+	 * @arg amount
+	 * @arg data
 	 */
 	"FlashLender::flashloan" (
 		receiver_account : ArgumentsTypes["2"],
@@ -231,12 +187,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "flashLender::flashloan", [receiver_account, token, amount, data], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: token
-	 * 	1: amount
-	 * ```
-	 * ]
+	 * @arg token
+	 * @arg amount
 	 */
 	"FlashLender::flash_fee" (
 		token : ArgumentsTypes["2"],
@@ -252,11 +204,7 @@ export default class Methods {
 		return queryJSON( this.__nativeContract, this.__callerAddress, "pausable::paused", [], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: new_owner
-	 * ```
-	 * ]
+	 * @arg new_owner
 	 */
 	"Ownable::transfer_ownership" (
 		new_owner : ArgumentsTypes["2"],
@@ -277,12 +225,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "ownable::renounceOwnership", [], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: account
-	 * 	1: amount
-	 * ```
-	 * ]
+	 * @arg account
+	 * @arg amount
 	 */
 	"PSP22Burnable::burn" (
 		account : ArgumentsTypes["2"],
@@ -292,12 +236,8 @@ export default class Methods {
 		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22Burnable::burn", [account, amount], __options );
 	}
 	/**
-	 * @arg args : [
-	 * ```json
-	 * 	0: account
-	 * 	1: amount
-	 * ```
-	 * ]
+	 * @arg account
+	 * @arg amount
 	 */
 	"PSP22Mintable::mint" (
 		account : ArgumentsTypes["2"],

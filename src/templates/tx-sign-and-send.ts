@@ -35,11 +35,7 @@ export function METHOD_JSDOC(args : { label : string; }[]) {
 	if(args.length < 1) return "	/** */\n";
 	//
 	return decorateJsDoc([
-		"@arg args : [",
-		"\`\`\`json",
-		...args.map((a, i) => `	${i}: ${a.label}`),
-		"```",
-		"]"
+		...args.map((a, i) => `@arg ${a.label}`),
 	]);
 }
 
