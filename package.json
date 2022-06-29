@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"scripts": {
 		"start": "ts-node index.ts --in artifacts --out out",
-		"deploy-to-test": "cd ./tests/deployed && yarn deploy:local",
+		"deploy-to-test": "cd ./tests/deployed && yarn && yarn deploy:local",
 		"gen-test-ts": "ts-node index.ts --in tests/deployed/artifacts --out tests/generated",
 		"test": "jest --no-cache --maxWorkers 1",
 		"lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
