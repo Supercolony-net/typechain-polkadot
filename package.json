@@ -1,9 +1,11 @@
 {
 	"name": "@supercolony-net/typechain-polkadot",
-	"version": "0.0.2",
+	"version": "0.0.3",
+	"license": "MIT",
 	"scripts": {
 		"start": "ts-node index.ts --in artifacts --out out",
-		"test-prep": "ts-node index.ts --in tests/data/abi --out tests/data/out",
+		"deploy-to-test": "cd ./tests/deployed && yarn deploy:local",
+		"gen-test-ts": "ts-node index.ts --in tests/deployed/artifacts --out tests/generated",
 		"test": "jest --no-cache --maxWorkers 1",
 		"lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
 		"lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
@@ -41,6 +43,7 @@
 		"eslint-import-resolver-typescript": "^2.7.1",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-node": "^11.1.0",
+		"hjson": "^3.2.2",
 		"ts-jest": "^28.0.3",
 		"typescript": "^4.6.4"
 	}

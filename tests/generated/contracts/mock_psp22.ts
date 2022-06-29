@@ -4,7 +4,7 @@ import type { ApiPromise } from '@polkadot/api';
 import type { KeyringPair } from '@polkadot/keyring/types';
 import { ContractPromise } from '@polkadot/api-contract';
 //
-import ABI from '../../abi/mock_psp22.json';
+import ABI from '../../deployed/artifacts/mock_psp22.json';
 //
 import QueryMethods from '../query/mock_psp22';
 import BuildExtrinsicMethods from '../build-extrinsic/mock_psp22';

@@ -1,10 +1,10 @@
 import * as PolkadotAPI from '@polkadot/api';
 import { BN } from 'bn.js';
-import Contract from '../data/out/contracts/mock_psp22';
+import Contract from '../generated/contracts/mock_psp22';
 import {
 	UserAlice, UserBob, UserCharlie,
 } from '../config';
-import * as ADDRESSES from '../data/addresses';
+import * as ADDRESSES from '../deployed/addresses';
 
 
 ////
@@ -84,6 +84,7 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 
 	//
 
+	/*
 	test("`PSP22Wrapper::deposit_for` & `PSP22Wrapper::withdraw_to`", async () => {
 		var { value, gasConsumed } = await contract.query['PSP22Wrapper::deposit_for'](UserBob.address, '1000000');
 		expect( value === null ).toBe(true);
@@ -91,6 +92,17 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 		// depositing tx to test withdrawal query
 		const response = await contract.tx['PSP22Wrapper::deposit_for'](UserBob.address, '1000000');
 		var { value, gasConsumed } = await contract.query['PSP22Wrapper::withdraw_to'](UserBob.address, '10');
+		expect( value === null ).toBe(true);
+	});
+	*/
+
+	test("`WNative::deposit` & `WNative::withdraw`", async () => {
+		var { value, gasConsumed } = await contract.query['WNative::deposit']({ value:'1000000' });
+		expect( value === null ).toBe(true);
+
+		// depositing tx to test withdrawal query
+		const response = await contract.tx['WNative::deposit']({ value:'1000000' });
+		var { value, gasConsumed } = await contract.query['WNative::withdraw']('10');
 		expect( value === null ).toBe(true);
 	});
 

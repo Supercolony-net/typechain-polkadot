@@ -1,9 +1,9 @@
 import * as PolkadotAPI from '@polkadot/api';
-import Contract from '../data/out/contracts/mock_psp22';
+import Contract from '../generated/contracts/mock_psp22';
 import {
 	UserAlice, UserBob,
 } from '../config';
-import * as ADDRESSES from '../data/addresses';
+import * as ADDRESSES from '../deployed/addresses';
 
 
 ////
@@ -57,9 +57,16 @@ describe("", () => {
 
 	//
 
+	/*
 	test("`PSP22Wrapper::deposit_for` & `PSP22Wrapper::withdraw_to`", async () => {
 		let response = await contract.tx['PSP22Wrapper::deposit_for'](UserBob.address, '1000000');
 		response = await contract.tx['PSP22Wrapper::withdraw_to'](UserBob.address, '10');
+	});
+	*/
+
+	test("`WNative::deposit` & `WNative::withdraw`", async () => {
+		let response = await contract.tx['WNative::deposit']({ value:'1000000' });
+		response = await contract.tx['WNative::withdraw']('10');
 	});
 
 	//
