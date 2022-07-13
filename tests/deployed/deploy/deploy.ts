@@ -22,7 +22,7 @@ const { api } = network
 async function run() {
 	await api.isReady
 
-	// console.log('# ADDRESSES\n')
+	console.log('# ADDRESSES\n')
 
 	let deployerConfig : ConfigTypes.Account
 	let usersConfig : ConfigTypes.Account[]
@@ -35,28 +35,15 @@ async function run() {
 		usersConfig = TESTNET_CONFIG.USERS
 	}
 
-	// console.log('## ACCOUNTS\n')
+	console.log('## ACCOUNTS\n')
 
-	const deployerSigner = network.createSigner(
-		await addPairWithAmount(
-			new Keyring().addFromUri(deployerConfig.mnemonicSeed, {}, deployerConfig.type || 'ecdsa'),
-			deployerConfig.amount
-		)
-	)
-	// console.log('DEPLOYER: ' + deployerSigner.address)
+	const keyring = new Keyring({ type: 'sr25519' })
+	const alice = keyring.addFromUri('//Alice')
 
-	for(let i = 0; i < usersConfig.length; i++) {
-		const user = usersConfig[i]
-		const keyringPair = await addPairWithAmount(
-			new Keyring({ type: user.type || 'ecdsa' }).addFromUri(user.mnemonicSeed),
-			user.amount
-		)
-		user.address = keyringPair.address
-		const title = user.title || i+1;
-		// console.log(`USER '${title}': ` + user.address)
-	}
+	const deployerSigner = network.createSigner(alice)
+	console.log('DEPLOYER: ' + deployerSigner.address)
 
-	// console.log('\n## CONTRACTS\n')
+	console.log('\n## CONTRACTS\n')
 
 	const wNativeAddress = await deployPSP22_Token(deployerSigner, WNATIVE)
 	WNATIVE.address = encodeAddress(wNativeAddress)
@@ -64,21 +51,20 @@ async function run() {
 		const _accountId = await deployPSP22_Token(deployerSigner, token)
 		token.address = encodeAddress(_accountId)
 	}
-	// console.log(`WNATIVE PSP22 TOKEN: `, WNATIVE.address)
-	/*
-	console.log(
-		`PSP22 TOKENS: {\n${
-			TOKENS.map(t => `\t${t.symbol}: '${t.address!}',`).join('\n')
-		}\n}`
-	)
-	*/
+	console.log(`WNATIVE PSP22 TOKEN: `, WNATIVE.address)
+	// console.log(
+	// 	`PSP22 TOKENS: {\n${
+	// 		TOKENS.map(t => `\t${t.symbol}: '${t.address!}',`).join('\n')
+	// 	}\n}`
+	// )
+	//
 	const token = TOKENS[0]!;
 	console.log(`export const TOKEN = '${token.address!}';`);
 
-	await setup(
-		deployerSigner,
-		usersConfig
-	)
+	// await setup(
+	// 	deployerSigner,
+	// 	usersConfig
+	// )
 
 	await api.disconnect()
 }
