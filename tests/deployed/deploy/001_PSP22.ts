@@ -9,22 +9,11 @@ import { AccountId } from '@polkadot/types/interfaces'
 const { getContractFactory } = patract
 
 async function deploy(
-	// api: ApiPromise,
 	deployerSigner: Signer,
-	info: {
-		name: string;
-		symbol: string;
-		decimals ? : number;
-	},
 ): Promise<AccountId> {
-	const contractFactory = await getContractFactory('mock_psp22', deployerSigner)
+	const contractFactory = await getContractFactory('my_psp22', deployerSigner)
 
-	const {
-		name, symbol,
-		decimals = 18
-	} = info
-
-	const contract = await contractFactory.deploy('new', name, symbol, decimals, {gasLimit: '9000000000'})
+	const contract = await contractFactory.deploy('new', '10000000000000000000000', {gasLimit: '9000000000', value: 0})
 
 	return contract.address
 }

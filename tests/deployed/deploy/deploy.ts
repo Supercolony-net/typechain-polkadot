@@ -5,7 +5,9 @@ import { encodeAddress } from '@polkadot/util-crypto'
 import * as dotenv from 'dotenv'
 
 import deployPSP22_Token from './001_PSP22'
-import setup from './setup'
+import deployPSP34_Token from './002_PSP34'
+import deployContractWithEnums from './003_ContractWithEnums'
+
 import type * as ConfigTypes from './config/types'
 import * as LOCAL_CONFIG from './config/config.local'
 import * as TESTNET_CONFIG from './config/config.testnet'
@@ -14,6 +16,8 @@ import {
 	TOKENS, ALL_TOKENS,
 } from './config/tokens';
 import {contracts} from "@polkadot/types/interfaces/definitions";
+import {BN} from "bn.js";
+import {bnToBn} from "@polkadot/util";
 
 
 dotenv.config({ path: __dirname + '/.env' })
@@ -23,41 +27,22 @@ const { api } = network
 async function run() {
 	await api.isReady
 
-	// console.log('# ADDRESSES\n')
-
 	let deployerConfig : ConfigTypes.Account
 	let usersConfig : ConfigTypes.Account[]
 	deployerConfig = LOCAL_CONFIG.DEPLOYER
 	usersConfig = LOCAL_CONFIG.USERS
 
-
-	// console.log('## ACCOUNTS\n')
-
 	const keyring = new Keyring({ type: 'sr25519' })
-	const deployer = keyring.addFromUri(deployerConfig.mnemonicSeed)
+	const deployer = await addPairWithAmount(new Keyring({ type: 'ecdsa' }).addFromUri('//Alice'), new BN('1'))
 
-	const deployerSigner = network.createSigner(
-		deployer
-	)
-	// console.log('DEPLOYER: ' + deployerSigner.address)
+	const deployerSigner = network.getSigners()[0]
 
-	// console.log('\n## CONTRACTS\n')
-
-	const wNativeAddress = await deployPSP22_Token(deployerSigner, WNATIVE)
+	const wNativeAddress = await deployPSP22_Token(deployerSigner)
 	WNATIVE.address = encodeAddress(wNativeAddress)
 
 	// @ts-ignore
-	WNATIVE.contract = await attachContract('mock_psp22', WNATIVE.address, deployerSigner);
+	WNATIVE.contract = await attachContract('my_psp22', WNATIVE.address, deployerSigner);
 
-	// console.log(`WNATIVE PSP22 TOKEN: `, WNATIVE.address)
-	/*
-	console.log(
-		`PSP22 TOKENS: {\n${
-			TOKENS.map(t => `\t${t.symbol}: '${t.address!}',`).join('\n')
-		}\n}`
-	)
-
-	*/
 	console.log(`export const TOKEN = '${WNATIVE.address!}';`);
 
 	for(const user of usersConfig) {
@@ -67,6 +52,14 @@ async function run() {
 		const contract = WNATIVE.contract!;
 		await contract.tx.mint(userAddress, mintAmounts[WNATIVE.symbol]!)
 	}
+
+	const psp34Address = await deployPSP34_Token(deployerSigner);
+
+	console.log(`export const PSP34_TOKEN = '${psp34Address}';`);
+
+	const contactWithEnumsAddress = await deployContractWithEnums(deployerSigner);
+
+	console.log(`export const CONTRACT_WITH_ENUMS = '${contactWithEnumsAddress}';`);
 
 	await api.disconnect()
 }
