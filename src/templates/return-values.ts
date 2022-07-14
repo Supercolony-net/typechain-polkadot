@@ -5,9 +5,10 @@
 
 
 
-export const FILE = (content : string) => `/* This file is auto-generated */
+export const FILE = (content : string, additionalImports: string = '') => `/* This file is auto-generated */
 
 import type BN from 'bn.js';
+${additionalImports}
 
 export default interface OkishReturnValueTypes {
 ${content}

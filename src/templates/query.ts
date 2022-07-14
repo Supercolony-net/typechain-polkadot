@@ -7,7 +7,7 @@ import { decorateJsDoc, buildIndentedText } from './_utils';
 
 //////
 
-export const FILE = (fileName : string, methodsStr : string) => `/* This file is auto-generated */
+export const FILE = (fileName : string, methodsStr : string, additionalImports: string = '') => `/* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
 import type { ArgumentsTypes } from '../arguments/${fileName}';
@@ -15,6 +15,7 @@ import type OkishReturns from '../return-values/${fileName}';
 import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
 import type { QueryReturnType } from '../_sdk/query';
 import { queryJSON, queryOkJSON } from '../_sdk/query';
+${additionalImports}
 
 
 export default class Methods {

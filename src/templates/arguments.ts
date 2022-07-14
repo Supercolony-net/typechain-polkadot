@@ -22,11 +22,13 @@ export function FILE(
 			};
 		}[]
 	}[],
+	additionalImports : string = '',
 ) {
 	//
 	return `/* This file is auto-generated */
 
 import type BN from 'bn.js';
+${additionalImports}
 
 export interface ArgumentsTypes {
 ${

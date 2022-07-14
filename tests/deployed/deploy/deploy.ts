@@ -1,5 +1,5 @@
 import { network } from 'redspot'
-import { addPairWithAmount } from './helpers'
+import {addPairWithAmount, attachContract} from './helpers'
 import { Keyring } from '@polkadot/keyring'
 import { encodeAddress } from '@polkadot/util-crypto'
 import * as dotenv from 'dotenv'
@@ -11,8 +11,9 @@ import * as LOCAL_CONFIG from './config/config.local'
 import * as TESTNET_CONFIG from './config/config.testnet'
 import {
 	WNATIVE,
-	TOKENS,
+	TOKENS, ALL_TOKENS,
 } from './config/tokens';
+import {contracts} from "@polkadot/types/interfaces/definitions";
 
 
 dotenv.config({ path: __dirname + '/.env' })
@@ -22,49 +23,50 @@ const { api } = network
 async function run() {
 	await api.isReady
 
-	console.log('# ADDRESSES\n')
+	// console.log('# ADDRESSES\n')
 
 	let deployerConfig : ConfigTypes.Account
 	let usersConfig : ConfigTypes.Account[]
-	if (network.name == 'development') {
-		deployerConfig = LOCAL_CONFIG.DEPLOYER
-		usersConfig = LOCAL_CONFIG.USERS
-	}
-	else {
-		deployerConfig = TESTNET_CONFIG.DEPLOYER
-		usersConfig = TESTNET_CONFIG.USERS
-	}
+	deployerConfig = LOCAL_CONFIG.DEPLOYER
+	usersConfig = LOCAL_CONFIG.USERS
 
-	console.log('## ACCOUNTS\n')
+
+	// console.log('## ACCOUNTS\n')
 
 	const keyring = new Keyring({ type: 'sr25519' })
-	const alice = keyring.addFromUri('//Alice')
+	const deployer = keyring.addFromUri(deployerConfig.mnemonicSeed)
 
-	const deployerSigner = network.createSigner(alice)
-	console.log('DEPLOYER: ' + deployerSigner.address)
+	const deployerSigner = network.createSigner(
+		deployer
+	)
+	// console.log('DEPLOYER: ' + deployerSigner.address)
 
-	console.log('\n## CONTRACTS\n')
+	// console.log('\n## CONTRACTS\n')
 
 	const wNativeAddress = await deployPSP22_Token(deployerSigner, WNATIVE)
 	WNATIVE.address = encodeAddress(wNativeAddress)
-	for(const token of TOKENS) {
-		const _accountId = await deployPSP22_Token(deployerSigner, token)
-		token.address = encodeAddress(_accountId)
-	}
-	console.log(`WNATIVE PSP22 TOKEN: `, WNATIVE.address)
-	// console.log(
-	// 	`PSP22 TOKENS: {\n${
-	// 		TOKENS.map(t => `\t${t.symbol}: '${t.address!}',`).join('\n')
-	// 	}\n}`
-	// )
-	//
-	const token = TOKENS[0]!;
-	console.log(`export const TOKEN = '${token.address!}';`);
 
-	// await setup(
-	// 	deployerSigner,
-	// 	usersConfig
-	// )
+	// @ts-ignore
+	WNATIVE.contract = await attachContract('mock_psp22', WNATIVE.address, deployerSigner);
+
+	// console.log(`WNATIVE PSP22 TOKEN: `, WNATIVE.address)
+	/*
+	console.log(
+		`PSP22 TOKENS: {\n${
+			TOKENS.map(t => `\t${t.symbol}: '${t.address!}',`).join('\n')
+		}\n}`
+	)
+
+	*/
+	console.log(`export const TOKEN = '${WNATIVE.address!}';`);
+
+	for(const user of usersConfig) {
+		const { mintAmounts } = user
+		if(mintAmounts == null) continue
+		const userAddress = keyring.addFromUri(user.mnemonicSeed).address
+		const contract = WNATIVE.contract!;
+		await contract.tx.mint(userAddress, mintAmounts[WNATIVE.symbol]!)
+	}
 
 	await api.disconnect()
 }

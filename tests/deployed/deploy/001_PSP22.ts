@@ -4,8 +4,6 @@ import type {
 	Signer,
 } from 'redspot/types'
 import { AccountId } from '@polkadot/types/interfaces'
-import {BN} from "bn.js";
-import {bnToBn} from "@polkadot/util";
 
 
 const { getContractFactory } = patract
@@ -26,7 +24,7 @@ async function deploy(
 		decimals = 18
 	} = info
 
-	const contract = await contractFactory.deploy('new', bnToBn(10000).mul(bnToBn(decimals)), name, symbol, decimals, bnToBn(100000).mul(bnToBn(decimals)), {gasLimit: '90000000000'})
+	const contract = await contractFactory.deploy('new', name, symbol, decimals, {gasLimit: '9000000000'})
 
 	return contract.address
 }

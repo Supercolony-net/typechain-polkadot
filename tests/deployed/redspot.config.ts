@@ -19,7 +19,7 @@ export default {
 			explorerUrl: 'https://polkadot.js.org/apps/#/explorer/query/?rpc=ws://127.0.0.1:9944/',
 			accounts: ['//Alice', '//Bob', '//Charlie'],
 			types: {
-				OpenbrushContractsErrorsPsp22Psp22Error: {
+				ContractsErrorsPsp22Psp22Error: {
 					_enum: {
 						Custom: 'String',
 						InsufficientBalance: null,
