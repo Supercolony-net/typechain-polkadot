@@ -1,6 +1,6 @@
 {
-	"name": "@supercolony-net/typechain-polkadot-dev",
-	"version": "0.0.2",
+	"name": "@supercolony-net/typechain-polkadot",
+	"version": "0.1.0",
 	"scripts": {
 		"start": "ts-node index.ts --in artifacts --out out",
 		"deploy-to-test": "cd ./tests/deployed && yarn && yarn deploy:local",
