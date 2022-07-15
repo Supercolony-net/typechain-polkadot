@@ -6,11 +6,6 @@ import type {
 	QueryCallError, QueryOkCallError,
 } from './types';
 
-
-
-
-//////
-
 const DEF_GAS_LIMIT_AND_VALUE : GasLimitAndValue = {
 	value: 0,
 	gasLimit: -1,
@@ -20,9 +15,6 @@ type QueryReturnType<T> = {
 	value : T;
 	gasConsumed : bigint;
 };
-
-
-////// EXPORT
 
 export type {
 	QueryReturnType,
@@ -35,7 +27,7 @@ export {
 /**
  * @throws { QueryCallError }
  */
-export async function queryJSON<T extends AnyJson>(
+export async function queryJSON<T>(
 	nativeContract : ContractPromise,
 	callerAddress : string,
 	//
@@ -63,7 +55,7 @@ export async function queryJSON<T extends AnyJson>(
 	}
 
 	return {
-		value: _value as T,
+		value: _value as unknown as T,
 		gasConsumed,
 	};
 }
@@ -140,15 +132,6 @@ export async function queryOutput(
 	const _args = args || [];
 	const _gasLimitAndValue = _genValidGasLimitAndValue(gasLimitAndValue);
 
-	console.log(
-		`\nContract.queryString(${title}) call:`,
-		`\n > contract address:`, contractAddress,
-		`\n > caller:`, callerAddress,
-		`\n > arguments:`, _args,
-		`\n > gasLimitAndValue:`, _gasLimitAndValue,
-		'\n',
-	);
-
 	let response : ContractCallOutcome;
 	let error : QueryCallError | undefined;
 	try {
@@ -157,13 +140,10 @@ export async function queryOutput(
 			_gasLimitAndValue,
 			..._args,
 		);
-		// as ContractCallOutcome; // Fix for typing in TS version, used by 'tsdx'. Othervise fails on 'build'
 	}
 	catch(caughtError) {
 		error = {
 			issue: 'FAIL_AT_CALL',
-			// method: title,
-			// args: _args,
 			caughtError,
 		};
 		console.error(
@@ -182,18 +162,6 @@ export async function queryOutput(
 
 	const resValueStr = output ? output.toString() : null;
 	const resValueJSON = output ? output.toJSON() : null;
-
-	console.log(
-		`\nContract.queryString(${title}) response:`,
-		`\n > status: [isOk: ${result.isOk}; isErr: ${result.isErr}] `, // result.isErr ? result.asErr : '',
-		`\n > gasConsumed:`, gasConsumed.toBigInt(),
-		`\n > !!output:`, !!output,
-		// `\n > output:`, output,
-		`\n > typeof output.toJSON():`, typeof resValueJSON,
-		`\n > output.toString():`, resValueStr,
-		`\n > output.toJSON():`, resValueJSON,
-		'\n',
-	);
 
 	if(result.isErr) error = {
 		issue: 'FAIL_AFTER_CALL::IS_ERROR',
@@ -217,11 +185,6 @@ export async function queryOutput(
 		gasConsumed: gasConsumed.toBigInt(),
 	};
 }
-
-
-
-
-//// PRIVATE
 
 function _genValidGasLimitAndValue(gasLimitAndValue ? : GasLimitAndValue) : GasLimitAndValue{
 	if(gasLimitAndValue == null) return DEF_GAS_LIMIT_AND_VALUE;

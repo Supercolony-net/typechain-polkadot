@@ -23,3 +23,4 @@ export default interface OkishReturnValueTypes {
 	"2" : string;
 
 };
+
