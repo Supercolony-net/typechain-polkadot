@@ -1,1 +1,6 @@
 generated/
+deployed/addresses.ts
+
+deployed/yarn.lock
+deployed/yarn-error.log
+deployed/package-lock.json

@@ -3,7 +3,7 @@ import * as PolkadotAPI from "@polkadot/api";
 import Contract from "../generated/contracts/my_psp34";
 import * as ADDRESSES from "../deployed/addresses";
 import {UserAlice, UserBob} from "../config";
-import {Id, IdBuilder} from "../generated/types/my_psp34";
+import {Id, IdBuilder} from "../generated/types-arguments/my_psp34";
 
 describe('MY_PSP34', () => {
 	let api : PolkadotAPI.ApiPromise;

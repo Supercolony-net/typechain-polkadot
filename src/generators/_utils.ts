@@ -4,24 +4,9 @@ import Handlebars from "handlebars";
 import toCamelCase from 'camelcase';
 import {Method} from "../types";
 
-export function decorateJsDoc(content : string[], tabsN = 1) {
-	const tabs = '	'.repeat(tabsN);
-	if(content.length < 1) return tabs + "/** */";
-	return tabs + "/**\n"
-		+ content.map(str => `${tabs} * ${str}\n`).join('')
-		+ tabs + " */\n";
-}
-
-export function buildIndentedText(text : string[], newLineAfter = true, tabsN = 1) {
-	return text.map(str => str ? '	'.repeat(tabsN) + str : '')
-		.join('\n')
-		+ ( newLineAfter ? '\n' : '' );
-}
-
-
 export function readTemplate (template: string): string {
 	// Inside the api repo itself, it will be 'auto'
-	const rootDir = 'src/templates';
+	const rootDir = __dirname + '/../templates';
 
 	// NOTE With cjs in a subdir, search one lower as well
 	const file = ['', '/raw/_sdk']
@@ -60,3 +45,50 @@ Handlebars.registerHelper( 'constructReturnType', function(fn: Method) {
 	}
 	return '';
 });
+
+import {Abi} from "@polkadot/api-contract";
+
+export function preprocessABI(_abiStr: string): Abi {
+	const abiJson = JSON.parse(_abiStr);
+
+	for (const method of abiJson.V3.spec.messages) {
+		for (const arg of method.args) {
+			for (let i = 0; i < arg.type.displayName.length; i++) {
+				arg.type.displayName[i] = `_${arg.type.displayName[i]}`;
+			}
+		}
+	}
+
+	const typeNamesCount = new Map<string, number>();
+
+	for (let {type} of abiJson.V3.types) {
+		if (type.path === undefined) continue;
+		if (type.path[type.path.length - 1] == 'Mapping') continue;
+
+		if (type.path.length > 0) {
+			const value = typeNamesCount.get(type.path[type.path.length - 1]) || 0;
+			typeNamesCount.set(
+				type.path[type.path.length - 1],
+				value + 1
+			);
+		}
+	}
+
+	let __i = 0;
+	for (let {type} of abiJson.V3.types) {
+		__i++;
+		if (type.path === undefined) continue;
+		if (type.path[type.path.length - 1] == 'Mapping') continue;
+
+		const count = typeNamesCount.get(type.path[type.path.length - 1])
+		if (type.path.length > 0 && (count ? count : 0) > 1) {
+			if (type.path.length > 3) {
+				abiJson.V3.types[__i - 1].type.path[type.path.length - 1] = `${type.path[type.path.length - 2]}_${type.path[type.path.length - 1]}`;
+			}
+		}
+	}
+
+	const _abiStrWithUnderscores = JSON.stringify(abiJson, null, 2);
+
+	return new Abi(_abiStrWithUnderscores);
+}

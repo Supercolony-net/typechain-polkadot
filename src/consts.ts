@@ -17,3 +17,23 @@ export const INK_TYPES_TO_TS_RETURNS = {
     'I128': '(string | number)',
     'I256': '(string | number)'
 };
+
+export const INK_TYPES_TO_TS_ARGUMENTS = {
+    'Bool': 'boolean',
+    'Char': 'string',
+    'Str': 'string',
+
+    'U8': '(number | string | BN)',
+    'U16': '(number | string | BN)',
+    'U32': '(number | string | BN)',
+    'U64': '(number | string | BN)',
+    'U128': '(string | number | BN)',
+    'U256': '(string | number | BN)',
+
+    'I8': '(number | string | BN)',
+    'I16': '(number | string | BN)',
+    'I32': '(number | string | BN)',
+    'I64': '(number | string | BN)',
+    'I128': '(string | number | BN)',
+    'I256': '(string | number | BN)'
+}
