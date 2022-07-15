@@ -6,7 +6,7 @@ import {ApiPromise, Keyring} from "@polkadot/api";
 import BN from "bn.js";
 
 async function main() {
-    const TOKEN_ADDRESS = '5FjRu3w4wQGJdbSFz2F7PjBTXPN6Fxxe9ndiqH9SsU4u9Yn9';
+    const TOKEN_ADDRESS = '5EDVuNtbFMfDsVuMciiZFezjotP2T8gBhj9aF5ivesrrH6ym';
 
     const api = await ApiPromise.create();
 

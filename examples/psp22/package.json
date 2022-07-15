@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate": "npx typechain-polkadot-dev --in ./artifacts --out ./out",
+    "generate": "npx typechain-polkadot --in ./artifacts --out ./out",
     "start": "ts-node index.ts"
   },
   "dependencies": {

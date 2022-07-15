@@ -23,103 +23,128 @@ export default class Methods {
 		this.__keyringPair = keyringPair;
 		this.__callerAddress = keyringPair.address;
 	}
+
 	/**
-	 * @arg to
-	 * @arg value
-	 * @arg data
+	 * @arg: args: [
+	 * 0: to,
+	 * 1: value,
+	 * 2: data,
+	 * ]
 	 */
 	"PSP22::transfer" (
-		to : ArgumentsTypes["2"],
-		value : ArgumentsTypes["0"],
-		data : ArgumentsTypes["9"],
-		__options ? : GasLimit,
-	) {
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transfer", [to, value, data], __options );
+		to: ArgumentsTypes[2],
+		value: ArgumentsTypes[0],
+		data: ArgumentsTypes[9],
+		__options: GasLimit,
+	){
+		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transfer", [to, value, data], __options);
 	}
+
 	/**
-	 * @arg spender
-	 * @arg delta_value
+	 * @arg: args: [
+	 * 0: spender,
+	 * 1: delta_value,
+	 * ]
 	 */
 	"PSP22::decrease_allowance" (
-		spender : ArgumentsTypes["2"],
-		delta_value : ArgumentsTypes["0"],
-		__options ? : GasLimit,
-	) {
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", [spender, delta_value], __options );
+		spender: ArgumentsTypes[2],
+		delta_value: ArgumentsTypes[0],
+		__options: GasLimit,
+	){
+		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", [spender, delta_value], __options);
 	}
+
 	/**
-	 * @arg owner
+	 * @arg: args: [
+	 * 0: owner,
+	 * ]
 	 */
 	"PSP22::balance_of" (
-		owner : ArgumentsTypes["2"],
-		__options ? : GasLimit,
-	) : Promise< QueryReturnType< OkishReturns["0"] > > {
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options );
+		owner: ArgumentsTypes[2],
+		__options: GasLimit,
+	): Promise< QueryReturnType< OkishReturns["0"] > >{
+		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options);
 	}
+
 	/**
-	 * @arg owner
-	 * @arg spender
+	 * @arg: args: [
+	 * 0: owner,
+	 * 1: spender,
+	 * ]
 	 */
 	"PSP22::allowance" (
-		owner : ArgumentsTypes["2"],
-		spender : ArgumentsTypes["2"],
-		__options ? : GasLimit,
-	) : Promise< QueryReturnType< OkishReturns["0"] > > {
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options );
+		owner: ArgumentsTypes[2],
+		spender: ArgumentsTypes[2],
+		__options: GasLimit,
+	): Promise< QueryReturnType< OkishReturns["0"] > >{
+		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options);
 	}
+
 	/**
-	 * @arg spender
-	 * @arg delta_value
+	 * @arg: args: [
+	 * 0: spender,
+	 * 1: delta_value,
+	 * ]
 	 */
 	"PSP22::increase_allowance" (
-		spender : ArgumentsTypes["2"],
-		delta_value : ArgumentsTypes["0"],
-		__options ? : GasLimit,
-	) {
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", [spender, delta_value], __options );
+		spender: ArgumentsTypes[2],
+		delta_value: ArgumentsTypes[0],
+		__options: GasLimit,
+	){
+		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", [spender, delta_value], __options);
 	}
+
 	/** */
 	"PSP22::total_supply" (
-		__options ? : GasLimit,
-	) : Promise< QueryReturnType< OkishReturns["0"] > > {
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options );
+		__options: GasLimit,
+	): Promise< QueryReturnType< OkishReturns["0"] > >{
+		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options);
 	}
+
 	/**
-	 * @arg from
-	 * @arg to
-	 * @arg value
-	 * @arg data
+	 * @arg: args: [
+	 * 0: from,
+	 * 1: to,
+	 * 2: value,
+	 * 3: data,
+	 * ]
 	 */
 	"PSP22::transfer_from" (
-		from : ArgumentsTypes["2"],
-		to : ArgumentsTypes["2"],
-		value : ArgumentsTypes["0"],
-		data : ArgumentsTypes["9"],
-		__options ? : GasLimit,
-	) {
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transferFrom", [from, to, value, data], __options );
+		from: ArgumentsTypes[2],
+		to: ArgumentsTypes[2],
+		value: ArgumentsTypes[0],
+		data: ArgumentsTypes[9],
+		__options: GasLimit,
+	){
+		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transferFrom", [from, to, value, data], __options);
 	}
+
 	/**
-	 * @arg spender
-	 * @arg value
+	 * @arg: args: [
+	 * 0: spender,
+	 * 1: value,
+	 * ]
 	 */
 	"PSP22::approve" (
-		spender : ArgumentsTypes["2"],
-		value : ArgumentsTypes["0"],
-		__options ? : GasLimit,
-	) {
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::approve", [spender, value], __options );
+		spender: ArgumentsTypes[2],
+		value: ArgumentsTypes[0],
+		__options: GasLimit,
+	){
+		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::approve", [spender, value], __options);
 	}
+
 	/**
-	 * @arg account
-	 * @arg amount
+	 * @arg: args: [
+	 * 0: account,
+	 * 1: amount,
+	 * ]
 	 */
 	"PSP22Mintable::mint" (
-		account : ArgumentsTypes["2"],
-		amount : ArgumentsTypes["0"],
-		__options ? : GasLimit,
-	) {
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", [account, amount], __options );
+		account: ArgumentsTypes[2],
+		amount: ArgumentsTypes[0],
+		__options: GasLimit,
+	){
+		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", [account, amount], __options);
 	}
 
 }

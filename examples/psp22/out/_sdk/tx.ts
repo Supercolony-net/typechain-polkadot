@@ -101,20 +101,8 @@ export function _signAndSend(
 			submittableResult => {
 				const { events, status } = submittableResult;
 
-				// [some logging]
-				/*
-				console.log(`Current status is ${status.type}`);
-				if(status.isInBlock) console.log(`Transaction included at blockHash ${status.asInBlock}`);
-				else if(status.isFinalized) console.log(`Transaction finalized at blockHash ${status.asFinalized}`);
-				events.forEach(({ phase, event: { data, method, section } }) => {
-					console.log(`[Tx event] ${phase}: ${section}.${method}:: ${data}`);
-				});
-				*/
-
 				if(status.isInBlock) response.blockHash = status.asInBlock.toHex();
-
 				if(status.isInBlock || status.isFinalized) {
-					// type EventRecord = typeof events[number];
 					const systemEvents = events.filter(record => record.event.section === 'system');
 
 					const successEvent = systemEvents.find(({ event:{ method } }) => method === 'ExtrinsicSuccess');

@@ -1,5 +1,4 @@
 import type BN from 'bn.js';
-// @ts-ignore
 import type { ContractExecResultErr } from '@polkadot/types/interfaces/contracts/types';
 import type {AnyJson} from "@polkadot/types-codec/types";
 
