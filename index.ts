@@ -3,15 +3,15 @@ import * as FsExtraAPI from 'fs-extra';
 import * as PathAPI from 'path';
 import YARGS from 'yargs';
 import type ABI from './src/abi_interface';
-import * as ARGUMENTS_TEMPLATES from './src/generators/arguments';
-import * as OK_RETURNS_TEMPLATES from './src/generators/return-values';
-import * as QUERY_TEMPLATES from './src/generators/query';
-import * as BUILD_EXTRINSIC_TEMPLATES from './src/generators/build-extrinsic';
-import * as TX_SIGN_AND_SEND_TEMPLATES from './src/generators/tx-sign-and-send';
-import * as MIXED_METHODS_TEMPLATES from './src/generators/mixed-methods';
-import * as CONTRACT_TEMPLATES from './src/generators/contract';
+import * as ARGUMENTS_TEMPLATES from './src/templates/arguments';
+import * as OK_RETURNS_TEMPLATES from './src/templates/return-values';
+import * as QUERY_TEMPLATES from './src/templates/query';
+import * as BUILD_EXTRINSIC_TEMPLATES from './src/templates/build-extrinsic';
+import * as TX_SIGN_AND_SEND_TEMPLATES from './src/templates/tx-sign-and-send';
+import * as MIXED_METHODS_TEMPLATES from './src/templates/mixed-methods';
+import * as CONTRACT_TEMPLATES from './src/templates/contract';
 import {typeDecoder} from "./src";
-import {Type, Method, Import} from "./src/types";
+
 
 const _argv = YARGS
 	.option('input', {
@@ -41,7 +41,7 @@ const absPathToOutput = PathAPI.resolve( cwdPath, `./${argv.output}` );
 __assureDirExists(absPathToOutput, '');
 __assureDirExists(absPathToOutput, '_sdk');
 FsExtraAPI.copySync(
-	PathAPI.resolve(__dirname, 'src/generators/raw/_sdk'),
+	PathAPI.resolve(__dirname, 'src/templates/raw/_sdk'),
 	PathAPI.resolve(absPathToOutput, '_sdk')
 );
 __assureDirExists(absPathToOutput, "arguments");
@@ -68,20 +68,24 @@ for(const fullFileName of fullFileNames) {
 	}
 	const abi : ABI = _json;
 
-	let methods: Method[] = [];
-	let types: Type[] = [];
-	let _argsTypes: Type[] = [];
-	let imports: Import[] = [];
+	let _str : string;
+	let _fileStr : string;
 
-	const { decoder, result } = typeDecoder(_abiStr);
+
+	const {
+		decoder,
+		result
+	} = typeDecoder(_abiStr);
 
 	// [ types ]
 
-	const _str = result.enums.concat(result.composites).map(e => e.body).join('\n\n');
+	_str = result.enums.concat(result.composites).map(e => e.body).join('\n\n');
 
 	__writeFileSync(absPathToOutput, `types/${fileName}.ts`, _str);
 
 	// [ out/arguments ]
+
+	_str = '';
 
 	const __allArgs = abi.V3.spec.messages.map(m => m.args).flat();
 	const __uniqueArgs : typeof __allArgs = [];
@@ -89,17 +93,9 @@ for(const fullFileName of fullFileNames) {
 		if(!__uniqueArgs.find(__a => __a.type.type === __arg.type.type))
 			__uniqueArgs.push(__arg);
 
-	_argsTypes = __uniqueArgs.map(a => ({
+	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.type,
 		tsStr: decoder(a.type.type),
-	}));
-
-	methods = abi.V3.spec.messages.map(__m => ({
-		name: __m.label,
-		args: __m.args.map(__a => ({
-			name: __a.label,
-			type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-		})),
 	}));
 
 	let argumentsImports = new Set<string>();
@@ -112,160 +108,175 @@ for(const fullFileName of fullFileNames) {
 		}
 	}
 
-	imports = [];
-	imports.push({
-		values: Array.from(argumentsImports),
-		path: `../types/${fileName}`,
-	});
+	let _argumentImports = `import type { ${Array.from(argumentsImports).join(', ')} } from '../types/${fileName}';`;
+	if (argumentsImports.size == 0) {
+		_argumentImports = ''
+	}
 
-	methods = abi.V3.spec.messages.map(__m => {
+	const _methods = abi.V3.spec.messages.map(__m => {
 		return ({
 			name: __m.label,
 			args: __m.args.map(__a => ({
 				name: __a.label,
 				type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-			})),
-		});
+			}) ),
+		}
+		)
 	});
 
-	__writeFileSync(absPathToOutput, `arguments/${fileName}.ts`, ARGUMENTS_TEMPLATES.FILE(
+	_fileStr = ARGUMENTS_TEMPLATES.FILE(
 		_argsTypes,
-		methods,
-		imports
-	));
+		_methods,
+		_argumentImports
+	);
+
+	__writeFileSync(absPathToOutput, `arguments/${fileName}.ts`, _fileStr);
 
 	// [ out/return-values ]
 
 	let returnValuesImports = new Set<string>();
 
+	_str = '';
+
 	const _returnTypesIDs = Array.from( new Set(
 		abi.V3.spec.messages.filter(m => m.returnType).map(m => m.returnType!.type)
 	) );
-
-	imports = [];
-	types = [];
 	for(const id of _returnTypesIDs) {
+		_str += OK_RETURNS_TEMPLATES.TYPE_JSDOC();
+		_str += OK_RETURNS_TEMPLATES.TYPE(id, decoder(id));
 		const typeName = decoder(id);
 
 		if (result.enums.find(e => e.name === typeName) || result.composites.find(e => e.name == typeName)) {
 			returnValuesImports.add(typeName);
 		}
-
-		types.push({
-			id: id,
-			tsStr: typeName,
-		});
 	}
-	imports.push({
-		values: Array.from(returnValuesImports),
-		path: `../types/${fileName}`,
-	});
 
-	__writeFileSync(absPathToOutput, `return-values/${fileName}.ts`, OK_RETURNS_TEMPLATES.FILE(types, imports));
+	let imports = `import type { ${Array.from(returnValuesImports).join(', ')} } from '../types/${fileName}';`;
+
+	if (returnValuesImports.size == 0) {
+		imports = '';
+	}
+
+	_fileStr = OK_RETURNS_TEMPLATES.FILE(_str, imports);
+
+	__writeFileSync(absPathToOutput, `return-values/${fileName}.ts`, _fileStr);
 
 	// [ out/query ]
-	imports = [];
-	methods = [];
+
+	_str = '';
+
 	for(const __message of abi.V3.spec.messages) {
-		methods.push({
-			name: __message.label,
-			args: __message.args.map(__a => ({
+		// if(__message.mutates) continue;
+		const __label = __message.label;
+		_str += QUERY_TEMPLATES.METHOD_JSDOC(__message.args);
+		_str += QUERY_TEMPLATES.METHOD(
+			__label,
+			__message.args.map(__a => ({
 				name: __a.label,
 				type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-			})),
-			returnType: __message.returnType && {
-				tsStr: decoder(__message.returnType!.type),
-				id: __message.returnType!.type
-			},
-			payable: __message.payable,
-			mutating: __message.mutates,
-			methodType: 'query',
-		});
+			}) ),
+			__message.returnType && {tsStr: decoder(__message.returnType!.type), id: __message.returnType!.type},
+			__message.payable,
+			__message.mutates
+		);
 	}
 
-	__writeFileSync(absPathToOutput, `query/${fileName}.ts`, QUERY_TEMPLATES.FILE(fileName, methods, imports));
+
+	_fileStr = QUERY_TEMPLATES.FILE(fileName, _str);
+
+	__writeFileSync(absPathToOutput, `query/${fileName}.ts`, _fileStr);
 
 	// [ out/build-extrinsic ]
 
-	imports = [];
-	methods = [];
+	_str = '';
+
 	for(const __message of abi.V3.spec.messages) {
-		methods.push({
-			name: __message.label,
-			args: __message.args.map(__a => ({
+		// if(!__message.mutates) continue;
+		const __label = __message.label;
+		_str += BUILD_EXTRINSIC_TEMPLATES.METHOD_JSDOC(__message.args);
+		_str += BUILD_EXTRINSIC_TEMPLATES.METHOD(
+			__label,
+			__message.args.map(__a => ({
 				name: __a.label,
 				type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-			})),
-			payable: __message.payable,
-			methodType: 'extrinsic',
-		});
+			}) ),
+			__message.payable,
+		);
 	}
 
-	__writeFileSync(absPathToOutput, `build-extrinsic/${fileName}.ts`, BUILD_EXTRINSIC_TEMPLATES.FILE(fileName, methods, imports));
+	_fileStr = BUILD_EXTRINSIC_TEMPLATES.FILE(fileName, _str);
+
+	__writeFileSync(absPathToOutput, `build-extrinsic/${fileName}.ts`, _fileStr);
 
 	// [ out/tx-sign-and-send ]
 
-	imports = [];
-	methods = [];
+	_str = '';
+
 	for(const __message of abi.V3.spec.messages) {
-		methods.push({
-			name: __message.label,
-			args: __message.args.map(__a => ({
+		// if(!__message.mutates) continue;
+		const __label = __message.label;
+		_str += TX_SIGN_AND_SEND_TEMPLATES.METHOD_JSDOC(__message.args);
+		_str += TX_SIGN_AND_SEND_TEMPLATES.METHOD(
+			__label,
+			__message.args.map(__a => ({
 				name: __a.label,
 				type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-			})),
-			payable: __message.payable,
-			methodType: 'tx',
-		});
+			}) ),
+			__message.payable,
+		);
 	}
 
-	__writeFileSync(absPathToOutput, `tx-sign-and-send/${fileName}.ts`, TX_SIGN_AND_SEND_TEMPLATES.FILE(fileName, methods, imports));
+	_fileStr = TX_SIGN_AND_SEND_TEMPLATES.FILE(fileName, _str);
+
+	__writeFileSync(absPathToOutput, `tx-sign-and-send/${fileName}.ts`, _fileStr);
 
 	// [ out/mixed-methods ]
 
-	imports = [];
-	methods = [];
+	_str = '';
+
 	for(const __message of abi.V3.spec.messages) {
+		const __label = __message.label;
 		if(__message.mutates) {
-			methods.push({
-				name: __message.label,
-				args: __message.args.map(__a => ({
+			_str += TX_SIGN_AND_SEND_TEMPLATES.METHOD_JSDOC(__message.args);
+			_str += TX_SIGN_AND_SEND_TEMPLATES.METHOD(
+				__label,
+				__message.args.map(__a => ({
 					name: __a.label,
 					type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-				})),
-				payable: __message.payable,
-				methodType: 'tx',
-			});
+				}) ),
+				__message.payable,
+			);
 		}
 		else {
-			methods.push({
-				name: __message.label,
-				args: __message.args.map(__a => ({
+			_str += QUERY_TEMPLATES.METHOD_JSDOC(__message.args);
+			_str += QUERY_TEMPLATES.METHOD(
+				__label,
+				__message.args.map(__a => ({
 					name: __a.label,
 					type: _argsTypes.find(_a => _a.id == __a.type.type)!,
-				})),
-				returnType: __message.returnType && {
-					tsStr: decoder(__message.returnType!.type),
-					id: __message.returnType!.type
-				},
-				payable: __message.payable,
-				mutating: __message.mutates,
-				methodType: 'query',
-			});
+				}) ),
+				__message.returnType && {tsStr: decoder(__message.returnType!.type), id: __message.returnType!.type},
+				__message.payable,
+				__message.mutates
+			);
 		}
 	}
 
-	__writeFileSync(absPathToOutput, `mixed-methods/${fileName}.ts`, MIXED_METHODS_TEMPLATES.FILE(fileName, methods, imports));
+	_fileStr = MIXED_METHODS_TEMPLATES.FILE(fileName, _str);
+
+	__writeFileSync(absPathToOutput, `mixed-methods/${fileName}.ts`, _fileStr);
 
 	// [ out/contracts ]
 
-	imports = [];
 	const relPathFromOutL1toABIs = PathAPI.relative(
 		PathAPI.resolve(absPathToOutput, "contracts"),
 		absPathToABIs
 	);
 
-	__writeFileSync(absPathToOutput, `contracts/${fileName}.ts`, CONTRACT_TEMPLATES.FILE(fileName, relPathFromOutL1toABIs, imports));
+	_fileStr = CONTRACT_TEMPLATES.FILE(fileName, relPathFromOutL1toABIs);
+
+	__writeFileSync(absPathToOutput, `contracts/${fileName}.ts`, _fileStr);
+
 }
 
 function __assureDirExists(absPathToBase : string, relPathToDir : string) {

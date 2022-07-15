@@ -1,15 +1,18 @@
-/* This file is auto-generated */
+/* eslint-disable indent */
+
+
+export const FILE = (fileName : string, abiDirRelPath : string) => `/* This file is auto-generated */
 
 import type { ApiPromise } from '@polkadot/api';
 import type { KeyringPair } from '@polkadot/keyring/types';
 import { ContractPromise } from '@polkadot/api-contract';
 //
-import ABI from '../../abi/mock_psp22.json';
+import ABI from '${abiDirRelPath}/${fileName}.json';
 //
-import QueryMethods from '../query/mock_psp22';
-import BuildExtrinsicMethods from '../build-extrinsic/mock_psp22';
-import TxSignAndSendMethods from '../tx-sign-and-send/mock_psp22';
-import MixedMethods from '../mixed-methods/mock_psp22';
+import QueryMethods from '../query/${fileName}';
+import BuildExtrinsicMethods from '../build-extrinsic/${fileName}';
+import TxSignAndSendMethods from '../tx-sign-and-send/${fileName}';
+import MixedMethods from '../mixed-methods/${fileName}';
 
 
 ////
@@ -33,3 +36,4 @@ export default class Contract {
 		this.methods = new MixedMethods(nativeContract, signer);
 	}
 }
+`;
