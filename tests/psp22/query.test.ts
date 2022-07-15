@@ -1,5 +1,4 @@
 import * as PolkadotAPI from '@polkadot/api';
-import { BN } from 'bn.js';
 import Contract from '../generated/contracts/my_psp22';
 import {
 	UserAlice, UserBob, UserCharlie,
@@ -72,10 +71,8 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 		expect( value === null ).toBe(true);
 	});
 
-
 	test("`PSP22::transfer`", async () => {
 		await contract.tx['PSP22Mintable::mint'](UserAlice.address, '10');
-
 		const { value } = await contract.query['PSP22::transfer'](UserBob.address, '10', []);
 		expect( value === null ).toBe(true);
 	});

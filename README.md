@@ -30,5 +30,9 @@ npx @supercolony-net/typechain-polkadot --in path/to/input --out path/to/output
 
 > Referer to [tech docs](./docs/tech-specs.md) and [about](./docs/about.md) section for more information. For usage examples in TypeScript, please, refer to this repo: https://github.com/Supercolony-net/typechain-polkadot_example
 
+## Milestones
+
+Milestone 1 - Referer to [Milestone 1 docs](./docs/milestone-1.md)
+
 -----------
 #### Made with ❤️ by [Supercolony](https://supercolony.net)

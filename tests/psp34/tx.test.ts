@@ -24,8 +24,8 @@ describe('MY_PSP34', () => {
 	it('Returns total supply', async () => {
 		const {
 			query,
-			tx
-		} = contract
+			tx,
+		} = contract;
 
 		const resultBefore = ((await query['PSP34::total_supply']()).value) as number;
 
@@ -34,12 +34,12 @@ describe('MY_PSP34', () => {
 		const resultAfter = ((await query['PSP34::total_supply']()).value);
 		// @ts-ignore
 		await expect(resultAfter.valueOf() - resultBefore.valueOf()).toBe(1);
-	})
+	});
 
 	it('Transfer works', async () => {
 		const {
 			query,
-			tx
+			tx,
 		} = contract;
 
 		const totalSupply = (await (query['PSP34::total_supply']())).value as number;
@@ -48,13 +48,13 @@ describe('MY_PSP34', () => {
 		await tx['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U16(totalSupply.valueOf() + 1));
 
 		await tx['PSP34::transfer'](UserBob.address, IdBuilder.U16(totalSupply.valueOf() + 1), []);
-	})
+	});
 
 	it('Can mint any Id', async () => {
 		const {
 			query,
-			tx
-		} = contract
+			tx,
+		} = contract;
 
 		const totalSupply = (await (query['PSP34::total_supply']())).value as number;
 
@@ -71,5 +71,5 @@ describe('MY_PSP34', () => {
 
 		// @ts-ignore
 		await expect(totalSupplyAfter.valueOf() - totalSupply.valueOf()).toBe(6);
-	})
-})
+	});
+});

@@ -7,8 +7,6 @@ import {
 import * as ADDRESSES from '../deployed/addresses';
 
 
-////
-
 describe("", () => {
 	let api : PolkadotAPI.ApiPromise;
 	let contract : Contract;

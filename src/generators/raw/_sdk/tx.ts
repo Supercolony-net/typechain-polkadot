@@ -1,38 +1,21 @@
 import type { ContractPromise } from "@polkadot/api-contract";
-import type {
-	RequestArgumentType, GasLimitAndValue, MethodDoesntExistError,
-} from './types';
-import {
-	_genValidGasLimitAndValue,
-} from './query';
-
-
-import {
-	u8aToBn,
-} from '@polkadot/util';
-import type {
-	SubmittableExtrinsic,
-} from '@polkadot/api/submittable/types';
+import type { RequestArgumentType, GasLimitAndValue, MethodDoesntExistError } from './types';
+import { _genValidGasLimitAndValue } from './query';
+import { u8aToBn } from '@polkadot/util';
+import type { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
 import type { KeyringPair } from '@polkadot/keyring/types';
-//
 import type { Registry } from '@polkadot/types-codec/types';
 
-
-
-//////
 
 type SignAndSendSuccessResponse = {
 	from : string;
 	txHash : string;
 	blockHash ? : string;
 };
+
 type SignAndSendError = {
 	text ? : string;
 };
-
-
-
-////// EXPORT
 
 export type {
 	SignAndSendSuccessResponse,
@@ -55,7 +38,6 @@ export function txSignAndSend(
 
 export function buildSubmittableExtrinsic(
 	nativeContract : ContractPromise,
-	//
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
@@ -141,10 +123,6 @@ export function _signAndSend(
 	});
 }
 
-
-
-////// PRIVATE
-
 function _decodeSignAndSendErrorText(data :any[], registry : Registry) {
 	try {
 		const mod = data.find(item => item.module || item.isModule)?.asModule;
@@ -158,8 +136,6 @@ function _decodeSignAndSendErrorText(data :any[], registry : Registry) {
 			: metaError.docs || ''}`;
 		return text;
 	}
-	catch(swallow) {
-		// swallow
-	}
+	catch(swallow) {}
 	return;
 }

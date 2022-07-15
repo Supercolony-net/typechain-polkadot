@@ -7,10 +7,7 @@
 		"gen-test-ts": "ts-node index.ts --in tests/deployed/artifacts --out tests/generated",
 		"test": "jest --no-cache --maxWorkers 1",
 		"lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
-		"lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
-		"link-dev": "npm link @supercolony-net/polkadot-ts-sdk",
-		"_unlink-dev": "npm uninstall --no-save @supercolony-net/polkadot-ts-sdk && npm i",
-		"unlink-dev": "npm unlink --no-save @supercolony-net/polkadot-ts-sdk && npm i"
+		"lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
 	},
 	"bin": "bin/index.js",
 	"files": [

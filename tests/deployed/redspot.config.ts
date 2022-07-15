@@ -1,7 +1,7 @@
-import { RedspotUserConfig, HDAccountsUserConfig } from 'redspot/types'
-import '@redspot/patract'
-import '@redspot/chai'
-import { accounts } from './utils/network'
+import { RedspotUserConfig, HDAccountsUserConfig } from 'redspot/types';
+import '@redspot/patract';
+import '@redspot/chai';
+import { accounts } from './utils/network';
 
 export default {
 	defaultNetwork: 'development',
@@ -90,4 +90,4 @@ export default {
 	mocha: {
 		timeout: 1800000,
 	},
-} as RedspotUserConfig
+} as RedspotUserConfig;

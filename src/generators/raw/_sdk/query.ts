@@ -16,9 +16,6 @@ type QueryReturnType<T> = {
 	gasConsumed : bigint;
 };
 
-
-////// EXPORT
-
 export type {
 	QueryReturnType,
 };
@@ -33,7 +30,6 @@ export {
 export async function queryJSON<T>(
 	nativeContract : ContractPromise,
 	callerAddress : string,
-	//
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
