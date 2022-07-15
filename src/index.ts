@@ -1,6 +1,6 @@
 import {Abi} from "@polkadot/api-contract";
 
-import {INK_TYPES_TO_TS_RETURNS} from "./consts";
+import {INK_TYPES_TO_TS_ARGUMENTS, INK_TYPES_TO_TS_RETURNS} from "./consts";
 import assert from "assert";
 
 export interface ParsedABI {
@@ -9,9 +9,14 @@ export interface ParsedABI {
 	enums: Array<{id: number, name: string, body: string}>,
 }
 
-const parsePrimitive = (primitive: string): string => {
+const parsePrimitiveReturns = (primitive: string): string => {
 	// @ts-ignore
 	return INK_TYPES_TO_TS_RETURNS[primitive];
+};
+
+const parsePrimitiveArgs = (primitive: string): string => {
+	// @ts-ignore
+	return INK_TYPES_TO_TS_ARGUMENTS[primitive];
 };
 
 const generateInterface = (interfaceName: string, argumentNames: string[], argumentTypes: string[]): string => {
@@ -19,16 +24,16 @@ const generateInterface = (interfaceName: string, argumentNames: string[], argum
 
 	return `export type ${interfaceName} = {
 \t${argumentNames.map((e, i) => `${e}: ${argumentTypes[i]}`).join(',\n\t')}
-}`
-}
+}`;
+};
 
-export const generateEnum = (enumName: string, enumFields: string[]): string => {
+const generateEnum = (enumName: string, enumFields: string[]): string => {
 	return `export enum ${enumName} {
 	${enumFields.join(',\n\t')}
-}`
-}
+}`;
+};
 
-export const generateClassEnum = (enumName: string, enumFields: string[], enumValues: string[]): string => {
+const generateClassEnum = (enumName: string, enumFields: string[], enumValues: string[]): string => {
 	assert(enumFields.length == enumValues.length);
 	return `export interface ${enumName} {
 	${enumFields.map((e, i) => `${e} ? : ${enumValues[i]}`).join(',\n\t')}
@@ -40,14 +45,14 @@ export class ${enumName}Builder {
 		${enumValues[i] !== 'null' ? `\t${e}: value` : `\t${e}: null`}
 		};
 	}`).join('\n\t')}
-}`
-}
+}`;
+};
 
-export default function parseABI(abi: Abi) : ParsedABI {
+export function parseABI(abi: Abi, __type: 'arguments' | 'returns') : ParsedABI {
 	const types = abi.metadata.types;
-	let compositesBodies = new Array<{id: number, name: string, body: string}>();
-	let enumsBodies = new Array<{id: number, name: string, body: string}>();
-	let typescriptTypes = new Array<string>(types.length);
+	const compositesBodies = new Array<{id: number, name: string, body: string}>();
+	const enumsBodies = new Array<{id: number, name: string, body: string}>();
+	const typescriptTypes = new Array<string>(types.length);
 	typescriptTypes.fill('');
 
 	const generateType = (typeId: number): string => {
@@ -71,7 +76,7 @@ export default function parseABI(abi: Abi) : ParsedABI {
 					compositesBodies.push({
 						id: typeId,
 						name: compositeName,
-						body: `export type ${compositeName} = string`
+						body: `export type ${compositeName} = ${__type == 'returns' ? 'string' : 'string | number[]'}`,
 					});
 					return typescriptTypes[typeId] = compositeName;
 				}
@@ -80,25 +85,27 @@ export default function parseABI(abi: Abi) : ParsedABI {
 						compositeName,
 						composite.fields.map(field => field.name.toString()),
 						composite.fields.map(field => generateType(field.type as unknown as number))
-					)
+					);
 
 					compositesBodies.push({
 						id: typeId,
 						name: compositeName,
-						body: resultComposite
+						body: resultComposite,
 					});
 				}
 				return typescriptTypes[typeId] = compositeName;
 			case 'Variant':
 				const variant = type.def.asVariant;
 				let resultVariant = '';
-				let variantName = type.path[type.path.length - 1]!.toString();
+				const variantName = type.path[type.path.length - 1]!.toString();
 
 				if (variantName == 'Result') {
 					let _type;
 					if (variant.variants[0]!.fields.length > 0) {
-						_type =
-							generateType(variant.variants[0]!.fields[0]!.type.toJSON() as number);
+						const generatedType = generateType(variant.variants[0]!.fields[0]!.type.toJSON() as number);
+						_type = __type == 'returns' ?
+							generatedType :
+							`${generatedType} | null`;
 					} else {
 						_type = 'null';
 					}
@@ -139,13 +146,13 @@ export default function parseABI(abi: Abi) : ParsedABI {
 								return `null`;
 							}
 						}),
-					)
+					);
 				}
 
 				enumsBodies.push({
 					id: typeId,
 					name: variantName,
-					body: resultVariant
+					body: resultVariant,
 				});
 				return typescriptTypes[typeId] = variantName;
 			case 'Sequence':
@@ -161,13 +168,15 @@ export default function parseABI(abi: Abi) : ParsedABI {
 					return typescriptTypes[typeId] = '[' + tuple.map(field => generateType(field!)).join(', ') + ']';
 				}
 			case 'Primitive':
-				return typescriptTypes[typeId] = parsePrimitive(type.def.asPrimitive.toString());
+				return typescriptTypes[typeId] = __type == 'returns' ?
+					parsePrimitiveReturns(type.def.asPrimitive.toString())
+					: parsePrimitiveArgs(type.def.asPrimitive.toString());
 			default:
 				throw new Error(`Unknown type ${type.def.type}`);
 		}
-	}
+	};
 
-	let result = new Array<{
+	const result = new Array<{
 		id: number,
 		tsStr: string,
 		type: string
@@ -188,13 +197,12 @@ export default function parseABI(abi: Abi) : ParsedABI {
 	};
 }
 
-export function typeDecoder(__abiStr: string) {
-	const abi = new Abi(JSON.parse(__abiStr));
-	const result = parseABI(abi);
+export function typeDecoder(abi: Abi, type: 'arguments' | 'returns') {
+	const result = parseABI(abi, type);
 	return {
 		decoder: (typeId: number) => {
 			return result.types[typeId]!.tsStr!;
 		},
-		result: result
-	}
+		result: result,
+	};
 }

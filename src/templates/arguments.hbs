@@ -1,11 +1,8 @@
 /* This file is auto-generated */
 
 import type BN from 'bn.js';
-{{#if additionalImports.length}}
-{{#each additionalImports}}
-import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
+{{#if additionalImports.length}}{{#each additionalImports}}import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
 {{/each}}{{/if}}
-
 export interface ArgumentsTypes {
 {{#each argsTypes}}
 	"{{{id}}}": {{{tsStr}}};

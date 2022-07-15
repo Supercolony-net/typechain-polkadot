@@ -12,6 +12,7 @@ import * as MIXED_METHODS_TEMPLATES from './src/generators/mixed-methods';
 import * as CONTRACT_TEMPLATES from './src/generators/contract';
 import {typeDecoder} from "./src";
 import {Type, Method, Import} from "./src/types";
+import {preprocessABI} from "./src/generators/_utils";
 
 const _argv = YARGS
 	.option('input', {
@@ -51,7 +52,8 @@ __assureDirExists(absPathToOutput, "build-extrinsic");
 __assureDirExists(absPathToOutput, "tx-sign-and-send");
 __assureDirExists(absPathToOutput, "mixed-methods");
 __assureDirExists(absPathToOutput, "contracts");
-__assureDirExists(absPathToOutput, "types");
+__assureDirExists(absPathToOutput, "types-arguments");
+__assureDirExists(absPathToOutput, "types-returns");
 
 // Parsing inputs & generating outputs
 
@@ -73,13 +75,24 @@ for(const fullFileName of fullFileNames) {
 	let _argsTypes: Type[] = [];
 	let imports: Import[] = [];
 
-	const { decoder, result } = typeDecoder(_abiStr);
+	const { decoder: decoderArgs, result: resultArgs } = typeDecoder(preprocessABI(_abiStr), 'arguments');
+	const { decoder: decoderReturns, result: resultReturns } = typeDecoder(preprocessABI(_abiStr), 'returns');
 
-	// [ types ]
+	// [ types-arguments ]
 
-	const _str = result.enums.concat(result.composites).map(e => e.body).join('\n\n');
+	__writeFileSync(
+		absPathToOutput,
+		`types-arguments/${fileName}.ts`,
+		`import type BN from 'bn.js';\n\n` + resultArgs.enums.concat(resultArgs.composites).map(e => e.body).join('\n\n')
+	);
 
-	__writeFileSync(absPathToOutput, `types/${fileName}.ts`, _str);
+	// [ types-returns ]
+
+	__writeFileSync(
+		absPathToOutput,
+		`types-returns/${fileName}.ts`,
+		resultReturns.enums.concat(resultReturns.composites).map(e => e.body).join('\n\n')
+	);
 
 	// [ out/arguments ]
 
@@ -91,7 +104,7 @@ for(const fullFileName of fullFileNames) {
 
 	_argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.type,
-		tsStr: decoder(a.type.type),
+		tsStr: decoderArgs(a.type.type),
 	}));
 
 	methods = abi.V3.spec.messages.map(__m => ({
@@ -102,21 +115,23 @@ for(const fullFileName of fullFileNames) {
 		})),
 	}));
 
-	let argumentsImports = new Set<string>();
+	const argumentsImports = new Set<string>();
 
 	for (const _argType of _argsTypes) {
 		const typeStr = _argType.tsStr;
-		if (result.composites.find(e => e.name == typeStr) || result.enums.find(e => e.name == typeStr))
+		if (resultArgs.composites.find(e => e.name == typeStr) || resultArgs.enums.find(e => e.name == typeStr))
 		{
 			argumentsImports.add(_argType.tsStr);
 		}
 	}
 
 	imports = [];
-	imports.push({
-		values: Array.from(argumentsImports),
-		path: `../types/${fileName}`,
-	});
+	if(argumentsImports.size) {
+		imports.push({
+			values: Array.from(argumentsImports),
+			path: `../types-arguments/${fileName}`,
+		});
+	}
 
 	methods = abi.V3.spec.messages.map(__m => {
 		return ({
@@ -136,7 +151,7 @@ for(const fullFileName of fullFileNames) {
 
 	// [ out/return-values ]
 
-	let returnValuesImports = new Set<string>();
+	const returnValuesImports = new Set<string>();
 
 	const _returnTypesIDs = Array.from( new Set(
 		abi.V3.spec.messages.filter(m => m.returnType).map(m => m.returnType!.type)
@@ -144,22 +159,32 @@ for(const fullFileName of fullFileNames) {
 
 	imports = [];
 	types = [];
-	for(const id of _returnTypesIDs) {
-		const typeName = decoder(id);
 
-		if (result.enums.find(e => e.name === typeName) || result.composites.find(e => e.name == typeName)) {
-			returnValuesImports.add(typeName);
-		}
+	let typesStr = '';
+
+	for(const id of _returnTypesIDs) {
+		const typeName = decoderReturns(id);
+		typesStr += typeName + '##';
 
 		types.push({
 			id: id,
 			tsStr: typeName,
 		});
 	}
-	imports.push({
-		values: Array.from(returnValuesImports),
-		path: `../types/${fileName}`,
-	});
+
+	for(const _enum of resultReturns.enums) {
+		if(typesStr.includes(_enum.name))returnValuesImports.add(_enum.name);
+	}
+
+	for(const composite of resultReturns.composites) {
+		if(typesStr.includes(composite.name))returnValuesImports.add(composite.name);
+	}
+	if(returnValuesImports.size) {
+		imports.push({
+			values: Array.from(returnValuesImports),
+			path: `../types-returns/${fileName}`,
+		});
+	}
 
 	__writeFileSync(absPathToOutput, `return-values/${fileName}.ts`, OK_RETURNS_TEMPLATES.FILE(types, imports));
 
@@ -174,8 +199,8 @@ for(const fullFileName of fullFileNames) {
 				type: _argsTypes.find(_a => _a.id == __a.type.type)!,
 			})),
 			returnType: __message.returnType && {
-				tsStr: decoder(__message.returnType!.type),
-				id: __message.returnType!.type
+				tsStr: decoderReturns(__message.returnType!.type),
+				id: __message.returnType!.type,
 			},
 			payable: __message.payable,
 			mutating: __message.mutates,
@@ -245,8 +270,8 @@ for(const fullFileName of fullFileNames) {
 					type: _argsTypes.find(_a => _a.id == __a.type.type)!,
 				})),
 				returnType: __message.returnType && {
-					tsStr: decoder(__message.returnType!.type),
-					id: __message.returnType!.type
+					tsStr: decoderReturns(__message.returnType!.type),
+					id: __message.returnType!.type,
 				},
 				payable: __message.payable,
 				mutating: __message.mutates,

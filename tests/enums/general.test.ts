@@ -2,7 +2,7 @@ import * as PolkadotAPI from "@polkadot/api";
 import Contract from "../generated/contracts/contract_with_enums";
 import * as ADDRESSES from "../deployed/addresses";
 import {UserAlice} from "../config";
-import {AnotherEnumBuilder, EnumExampleBuilder} from "../generated/types/contract_with_enums";
+import {AnotherEnumBuilder, EnumExampleBuilder} from "../generated/types-arguments/contract_with_enums";
 
 describe('MY_PSP34', () => {
     let api: PolkadotAPI.ApiPromise;

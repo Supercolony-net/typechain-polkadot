@@ -10,14 +10,9 @@ import deployContractWithEnums from './003_ContractWithEnums'
 
 import type * as ConfigTypes from './config/types'
 import * as LOCAL_CONFIG from './config/config.local'
-import * as TESTNET_CONFIG from './config/config.testnet'
 import {
 	WNATIVE,
-	TOKENS, ALL_TOKENS,
 } from './config/tokens';
-import {contracts} from "@polkadot/types/interfaces/definitions";
-import {BN} from "bn.js";
-import {bnToBn} from "@polkadot/util";
 
 
 dotenv.config({ path: __dirname + '/.env' })
@@ -29,11 +24,9 @@ async function run() {
 
 	let deployerConfig : ConfigTypes.Account
 	let usersConfig : ConfigTypes.Account[]
-	deployerConfig = LOCAL_CONFIG.DEPLOYER
 	usersConfig = LOCAL_CONFIG.USERS
 
 	const keyring = new Keyring({ type: 'sr25519' })
-	const deployer = await addPairWithAmount(new Keyring({ type: 'ecdsa' }).addFromUri('//Alice'), new BN('1'))
 
 	const deployerSigner = network.getSigners()[0]
 
@@ -50,7 +43,7 @@ async function run() {
 		if(mintAmounts == null) continue
 		const userAddress = keyring.addFromUri(user.mnemonicSeed).address
 		const contract = WNATIVE.contract!;
-		await contract.tx.mint(userAddress, mintAmounts[WNATIVE.symbol]!)
+		await contract.tx["psp22Mintable::mint"](userAddress, mintAmounts[WNATIVE.symbol]!)
 	}
 
 	const psp34Address = await deployPSP34_Token(deployerSigner);
