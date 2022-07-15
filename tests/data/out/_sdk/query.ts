@@ -6,11 +6,6 @@ import type {
 	QueryCallError, QueryOkCallError,
 } from './types';
 
-
-
-
-//////
-
 const DEF_GAS_LIMIT_AND_VALUE : GasLimitAndValue = {
 	value: 0,
 	gasLimit: -1,
@@ -20,9 +15,6 @@ type QueryReturnType<T> = {
 	value : T;
 	gasConsumed : bigint;
 };
-
-
-////// EXPORT
 
 export type {
 	QueryReturnType,
@@ -217,9 +209,6 @@ export async function queryOutput(
 		gasConsumed: gasConsumed.toBigInt(),
 	};
 }
-
-
-
 
 //// PRIVATE
 
