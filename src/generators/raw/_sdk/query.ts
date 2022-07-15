@@ -16,6 +16,9 @@ type QueryReturnType<T> = {
 	gasConsumed : bigint;
 };
 
+
+////// EXPORT
+
 export type {
 	QueryReturnType,
 };
@@ -55,7 +58,7 @@ export async function queryJSON<T>(
 	}
 
 	return {
-		value: _value as unknown as T,
+		value: output.toJSON() as unknown as T,
 		gasConsumed,
 	};
 }
