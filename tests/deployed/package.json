@@ -4,15 +4,14 @@
 	"private": true,
 	"module": "true",
 	"scripts": {
-		"deploy:local": "npx redspot run ./deploy/deploy.ts --no-compile 1> addresses.ts",
-		"deploy:testnet": "npx redspot run ./deploy/deploy.ts --network testnet --no-compile 1> addresses.ts"
+		"deploy:local": "npx redspot run ./deploy/deploy.ts --no-compile 1> addresses.ts"
 	},
 	"engines": {
 		"node": ">=14.x"
 	},
 	"dependencies": {
-		"@redspot/chai": "^0.13.4",
-		"@redspot/patract": "^0.13.5",
+		"@redspot/chai": "^0.13.6",
+		"@redspot/patract": "^0.13.6",
 		"@types/chai": "^4.2.14",
 		"@types/mocha": "^8.0.3",
 		"binaryen": "^101.0.0",

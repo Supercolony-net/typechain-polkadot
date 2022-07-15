@@ -7,7 +7,7 @@ import type {
 ////
 
 const DEPLOYER : Account = {
-	mnemonicSeed: process.env.MNEMONIC || 'invalid mnemonic',
+	mnemonicSeed: '//Alice',
 	amount: new BN('100000'),
 };
 
@@ -33,41 +33,6 @@ const USERS : Account[] = [
 			'TOKEN1': new BN('1000000000000000000000000000000000000'),
 			'TOKEN2': new BN('1000000000000000000000000000000000000'),
 		},
-	},
-	{
-		title: 'Charlie',
-		mnemonicSeed: '//Charlie',
-		amount: DEF_AMOUNT,
-		mintAmounts: {
-			'W_N': new BN('1000000000000000000000000000000000000'),
-			'TOKEN1': new BN('1000000000000000000000000000000000000'),
-			'TOKEN2': new BN('1000000000000000000000000000000000000'),
-		},
-	},
-	{
-		title: 'Dave',
-		mnemonicSeed: '//Dave',
-		amount: DEF_AMOUNT,
-		mintAmounts: {
-			'W_N': new BN('1000000000000000000000000000000000000'),
-			'TOKEN1': new BN('1000000000000000000000000000000000000'),
-			'TOKEN2': new BN('1000000000000000000000000000000000000'),
-		},
-	},
-	{
-		title: 'Eve',
-		mnemonicSeed: '//Eve',
-		amount: DEF_AMOUNT,
-		mintAmounts: {
-			'W_N': new BN('1000000000000000000000000000000000000'),
-			'TOKEN1': new BN('1000000000000000000000000000000000000'),
-			'TOKEN2': new BN('1000000000000000000000000000000000000'),
-		},
-	},
-	{
-		title: 'Ferdie',
-		mnemonicSeed: '//Ferdie',
-		amount: DEF_AMOUNT,
 	},
 ];
 

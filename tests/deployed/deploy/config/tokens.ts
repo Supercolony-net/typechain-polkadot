@@ -14,7 +14,7 @@ type TOKEN_SYMBOL = typeof WNATIVE_SYMBOL | SECONDARY_TOKEN_SYMBOL
 
 export const WNATIVE : Token = {
 	symbol: WNATIVE_SYMBOL,
-	name: 'WNATIVE',
+	name: 'WNATIVE'
 };
 
 export const TOKENS : Token[] = [

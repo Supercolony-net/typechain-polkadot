@@ -23,7 +23,7 @@ export default interface ABI {
 			id : number;
 			type : {
 				def : {
-					primitive ? : string; // 'str' | 'bool' | 'u8' | 'u128'
+					primitive ? : string;
 					composite ? : {
 						fields : {
 							typeName : string;
@@ -39,32 +39,12 @@ export default interface ABI {
 					};
 					variant ? : {
 						variants : {
-							/*
-							{
-								"fields": [
-									{
-										"type": 29
-									}
-								],
-								"index": 0,
-								"name": "Ok"
-							},
-							{
-								"fields": [
-									{
-										"type": 13
-									}
-								],
-								"index": 1,
-								"name": "Err"
-							}
-							*/
 						}[];
 					};
 				};
 				path ? : string[];
 				params ? : {
-					name : string; // 'T' | 'E'
+					name : string;
 					type : number;
 				}[];
 			};

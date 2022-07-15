@@ -1,0 +1,3 @@
+export const TOKEN = '5CpyDrCbVw8qKLELrXfhN8kRfstMBCs171zBbyNDGvYrxRwG';
+export const PSP34_TOKEN = '5GRbpS9cP8CQv45kZFnLgnxeTeKG9yHwC5BhJJKx9p5LE9bU';
+export const CONTRACT_WITH_ENUMS = '5FwK5tki45U4Q5pd7sWQ9GqRtoYjHtWLHBXUuJDBQoLp4Uo7';

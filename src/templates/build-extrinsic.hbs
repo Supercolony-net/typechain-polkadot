@@ -1,0 +1,38 @@
+/* This file is auto-generated */
+
+import type { ContractPromise } from '@polkadot/api-contract';
+import type { ArgumentsTypes } from '../arguments/{{{fileName}}}';
+import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
+import { buildSubmittableExtrinsic } from '../_sdk/tx';
+{{#if additionalImports.length}}
+{{#each additionalImports}}
+import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
+{{/each}}{{/if}}
+
+export default class Methods {
+	private __nativeContract : ContractPromise;
+
+	constructor(
+		nativeContract : ContractPromise,
+	) {
+		this.__nativeContract = nativeContract;
+	}
+{{#each methods}}
+	/**{{#if args.length}}
+	 * @arg: args: [
+	 {{#each args}}
+	 * {{{@index}}}: {{{name}}},
+	 {{/each}}
+	 * ]
+	{{/if}} */
+	"{{{name}}}" (
+	{{#each args}}
+		{{{name}}}: ArgumentsTypes[{{{type.id}}}],
+	{{/each}}
+		__options: {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
+	){{{constructReturnType this}}}{
+		return {{{constructReturn this}}} "{{{toCamelCase name}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
+	}
+
+{{/each}}
+}
