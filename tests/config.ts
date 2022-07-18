@@ -8,5 +8,5 @@ const UserCharlie = ecdsa_keyring.addFromUri('//Charlie');
 
 
 export {
-	UserAlice, UserBob, UserCharlie,
+    UserAlice, UserBob, UserCharlie,
 };

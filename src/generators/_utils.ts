@@ -5,90 +5,90 @@ import toCamelCase from 'camelcase';
 import {Method} from "../types";
 
 export function readTemplate (template: string): string {
-	// Inside the api repo itself, it will be 'auto'
-	const rootDir = __dirname + '/../templates';
+    // Inside the api repo itself, it will be 'auto'
+    const rootDir = __dirname + '/../templates';
 
-	// NOTE With cjs in a subdir, search one lower as well
-	const file = ['', '/raw/_sdk']
-		.map((p) => path.join(rootDir, p, `${template}.hbs`))
-		.find((p) => fs.existsSync(p));
+    // NOTE With cjs in a subdir, search one lower as well
+    const file = ['', '/raw/_sdk']
+        .map((p) => path.join(rootDir, p, `${template}.hbs`))
+        .find((p) => fs.existsSync(p));
 
-	if (!file) {
-		throw new Error(`Unable to locate ${template}.hbs from ${rootDir}`);
-	}
+    if (!file) {
+        throw new Error(`Unable to locate ${template}.hbs from ${rootDir}`);
+    }
 
-	return fs.readFileSync(file).toString();
+    return fs.readFileSync(file).toString();
 }
 
 Handlebars.registerHelper('toCamelCase', toCamelCase);
 
 Handlebars.registerHelper( 'constructReturn', function(fn: Method) {
-	if(fn.methodType == 'query') {
-		return `${fn.mutating ? 'queryOkJSON' : 'queryJSON'}( this.__nativeContract, this.__callerAddress,`;
-	}
-	if(fn.methodType == 'tx') {
-		return `txSignAndSend( this.__nativeContract, this.__keyringPair,`;
-	}
-	if(fn.methodType == 'extrinsic') {
-		return `buildSubmittableExtrinsic( this.__nativeContract,`;
-	}
+    if(fn.methodType == 'query') {
+        return `${fn.mutating ? 'queryOkJSON' : 'queryJSON'}( this.__nativeContract, this.__callerAddress,`;
+    }
+    if(fn.methodType == 'tx') {
+        return `txSignAndSend( this.__nativeContract, this.__keyringPair,`;
+    }
+    if(fn.methodType == 'extrinsic') {
+        return `buildSubmittableExtrinsic( this.__nativeContract,`;
+    }
 });
 
 Handlebars.registerHelper( 'constructReturnType', function(fn: Method) {
-	if(fn.methodType == 'query') {
-		if(fn.returnType) {
-			return `: Promise< QueryReturnType< OkishReturns["${fn.returnType.id}"] > >`;
-		}
-		else{
-			return `: Promise< QueryReturnType< null > >`;
-		}
-	}
-	return '';
+    if(fn.methodType == 'query') {
+        if(fn.returnType) {
+            return `: Promise< QueryReturnType< OkishReturns["${fn.returnType.id}"] > >`;
+        }
+        else{
+            return `: Promise< QueryReturnType< null > >`;
+        }
+    }
+    return '';
 });
 
 import {Abi} from "@polkadot/api-contract";
 
 export function preprocessABI(_abiStr: string): Abi {
-	const abiJson = JSON.parse(_abiStr);
+    const abiJson = JSON.parse(_abiStr);
 
-	for (const method of abiJson.V3.spec.messages) {
-		for (const arg of method.args) {
-			for (let i = 0; i < arg.type.displayName.length; i++) {
-				arg.type.displayName[i] = `_${arg.type.displayName[i]}`;
-			}
-		}
-	}
+    for (const method of abiJson.V3.spec.messages) {
+        for (const arg of method.args) {
+            for (let i = 0; i < arg.type.displayName.length; i++) {
+                arg.type.displayName[i] = `_${arg.type.displayName[i]}`;
+            }
+        }
+    }
 
-	const typeNamesCount = new Map<string, number>();
+    const typeNamesCount = new Map<string, number>();
 
-	for (const {type} of abiJson.V3.types) {
-		if (type.path === undefined) continue;
-		if (type.path[type.path.length - 1] == 'Mapping') continue;
+    for (const {type} of abiJson.V3.types) {
+        if (type.path === undefined) continue;
+        if (type.path[type.path.length - 1] == 'Mapping') continue;
 
-		if (type.path.length > 0) {
-			const value = typeNamesCount.get(type.path[type.path.length - 1]) || 0;
-			typeNamesCount.set(
-				type.path[type.path.length - 1],
-				value + 1
-			);
-		}
-	}
+        if (type.path.length > 0) {
+            const value = typeNamesCount.get(type.path[type.path.length - 1]) || 0;
+            typeNamesCount.set(
+                type.path[type.path.length - 1],
+                value + 1
+            );
+        }
+    }
 
-	let __i = 0;
-	for (const {type} of abiJson.V3.types) {
-		__i++;
-		if (type.path === undefined) continue;
-		if (type.path[type.path.length - 1] == 'Mapping') continue;
+    let __i = 0;
+    for (const {type} of abiJson.V3.types) {
+        __i++;
+        if (type.path === undefined) continue;
+        if (type.path[type.path.length - 1] == 'Mapping') continue;
 
-		const count = typeNamesCount.get(type.path[type.path.length - 1]);
-		if (type.path.length > 0 && (count ? count : 0) > 1) {
-			if (type.path.length > 3) {
-				abiJson.V3.types[__i - 1].type.path[type.path.length - 1] = `${type.path[type.path.length - 2]}_${type.path[type.path.length - 1]}`;
-			}
-		}
-	}
+        const count = typeNamesCount.get(type.path[type.path.length - 1]);
+        if (type.path.length > 0 && (count ? count : 0) > 1) {
+            if (type.path.length > 3) {
+                abiJson.V3.types[__i - 1].type.path[type.path.length - 1] = `${type.path[type.path.length - 2]}_${type.path[type.path.length - 1]}`;
+            }
+        }
+    }
 
-	const _abiStrWithUnderscores = JSON.stringify(abiJson, null, 2);
+    const _abiStrWithUnderscores = JSON.stringify(abiJson, null, 2);
 
-	return new Abi(_abiStrWithUnderscores);
+    return new Abi(_abiStrWithUnderscores);
 }
