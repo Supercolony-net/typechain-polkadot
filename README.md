@@ -28,17 +28,7 @@ Given, that you've put input files in `path/to/input` folder, and want generated
 npx @supercolony-net/typechain-polkadot --in path/to/input --out path/to/output
 ```
 
-> Referer to [tech docs](./docs/tech-specs.md) and [about](./docs/about.md) section for more information.
-
-## Progress
-
-- 🟡 Grant proposal
-- ✅ Generate types
-- ✅ Generate functions
-- ✅ Generate runtime code
-- ✅ CLI interface
-- 🟡 Logger
-- 🔜 More?
+> Referer to [tech docs](./docs/tech-specs.md) and [about](./docs/about.md) section for more information. For usage examples in TypeScript, please, refer to this repo: https://github.com/Supercolony-net/typechain-polkadot_example
 
 -----------
 #### Made with ❤️ by [Supercolony](https://supercolony.net)
