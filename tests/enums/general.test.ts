@@ -23,7 +23,7 @@ describe('MY_PSP34', () => {
     test('Returns proper value', async () => {
         const {
             query,
-            tx
+            tx,
         } = contract;
 
         const resultA = await query.get_message(EnumExampleBuilder.A("Hello"));

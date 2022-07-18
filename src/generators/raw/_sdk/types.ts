@@ -3,47 +3,29 @@ import type { ContractExecResultErr } from '@polkadot/types/interfaces/contracts
 import type {AnyJson} from "@polkadot/types-codec/types";
 
 
-
-//////
-
 export type RequestArgumentType = number | string | boolean | bigint
 	| (string | number)[]
 	| BN | null | AnyJson | Object;
-	// | BigNumber
 
 export interface GasLimit {
-	/**
-	 * Defaults to `-1`
-	 */
 	gasLimit ? : bigint | BN | string | number;
 }
 
 export interface GasLimitAndValue extends GasLimit {
-	/**
-	 * Only required for 'payable' methods
-	 * Defaults to `0`
-	 */
 	value ? : bigint | BN | string | number;
-};
+}
 
 export interface GasLimitAndRequiredValue extends GasLimit {
-	/**
-	 * Only required for 'payable' methods
-	 * Defaults to `0`
-	 */
 	value : bigint | BN | string | number;
 }
 
-//
-
 export interface ErrorWithTexts {
 	texts ? : string[];
-};
+}
 
 export type MethodDoesntExistError = ErrorWithTexts & {
 	issue : 'METHOD_DOESNT_EXIST',
 };
-
 
 export type QueryCallError = MethodDoesntExistError | ErrorWithTexts & (
 	{

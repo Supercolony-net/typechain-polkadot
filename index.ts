@@ -55,28 +55,26 @@ __assureDirExists(absPathToOutput, "contracts");
 __assureDirExists(absPathToOutput, "types-arguments");
 __assureDirExists(absPathToOutput, "types-returns");
 
-// Parsing inputs & generating outputs
-
 const fullFileNames = FsAPI.readdirSync(absPathToABIs);
 
 for(const fullFileName of fullFileNames) {
 	if( !fullFileName.endsWith('.json') ) continue;
 	const fileName = fullFileName.slice(0, -5);
-	const _abiStr = FsAPI.readFileSync( PathAPI.resolve(absPathToABIs, fullFileName), 'utf8' );
-	const _json = JSON.parse(_abiStr);
-	if(!_json.V3) {
+	const abiStr = FsAPI.readFileSync( PathAPI.resolve(absPathToABIs, fullFileName), 'utf8' );
+	const abiJSON = JSON.parse(abiStr);
+	if(!abiJSON.V3) {
 		console.error(`File "${fullFileName}" is not a V3 ABI`);
 		continue;
 	}
-	const abi : ABI = _json;
+	const abi : ABI = abiJSON;
 
 	let methods: Method[] = [];
 	let types: Type[] = [];
 	let _argsTypes: Type[] = [];
 	let imports: Import[] = [];
 
-	const { decoder: decoderArgs, result: resultArgs } = typeDecoder(preprocessABI(_abiStr), 'arguments');
-	const { decoder: decoderReturns, result: resultReturns } = typeDecoder(preprocessABI(_abiStr), 'returns');
+	const { decoder: decoderArgs, result: resultArgs } = typeDecoder(preprocessABI(abiStr), 'arguments');
+	const { decoder: decoderReturns, result: resultReturns } = typeDecoder(preprocessABI(abiStr), 'returns');
 
 	// [ types-arguments ]
 
