@@ -27,5 +27,5 @@ engine-strict=true
 ```
 - Run typechain with
 ```bash
-npx typechain-polkadot-dev --in artifacts --out out
+npx typechain-polkadot --in artifacts --out out
 ```
