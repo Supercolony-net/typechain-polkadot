@@ -18,7 +18,7 @@ engine-strict=true
   "@supercolony-net/typechain-polkadot": "0.1.0",
   "@types/node": "^17.0.34",
   "ts-node": "^10.7.0",
-  "typescript": "^4.6.4"
+  "typescript": "^4.6.4",
   "@polkadot/api": "^8.6.2",
   "@polkadot/api-contract": "^8.6.2",
   "@polkadot/keyring": "^9.3.1",
