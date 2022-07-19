@@ -100,7 +100,7 @@ export async function _signAndSend(
 	return new Promise((resolve, reject) => {
 		const actionStatus = {
 			from: signerAddress.toString(),
-			txHash: extrinsic.hash.toHex()
+			txHash: extrinsic.hash.toHex(),
 		} as SignAndSendSuccessResponse;
 
 		extrinsic
@@ -118,7 +118,7 @@ export async function _signAndSend(
 							)
 							.forEach((event: any): void => {
 								const {
-									event: { data, method }
+									event: { data, method },
 								} = event;
 
 								if (method === 'ExtrinsicFailed') {
@@ -145,7 +145,7 @@ export async function _signAndSend(
 									}
 
 									actionStatus.error = {
-										message
+										message,
 									};
 
 									reject(actionStatus);
@@ -156,7 +156,7 @@ export async function _signAndSend(
 							});
 					} else if (result.isError) {
 						actionStatus.error = {
-							data: result
+							data: result,
 						};
 						actionStatus.events = undefined;
 
@@ -166,7 +166,7 @@ export async function _signAndSend(
 			)
 			.catch((error: any) => {
 				actionStatus.error = {
-					message: error.message
+					message: error.message,
 				};
 
 				reject(actionStatus);

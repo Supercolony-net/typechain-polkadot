@@ -49,7 +49,7 @@ export class TypeParser {
 			default:
 				throw new Error(`Unknown type ${type.def.type}`);
 		}
-	}
+	};
 
 	private generateComposite = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type;
@@ -90,7 +90,7 @@ export class TypeParser {
 			compositeBodyArgs,
 			compositeBodyReturns,
 		);
-	}
+	};
 
 	private generatePrimitive = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type;
@@ -100,7 +100,7 @@ export class TypeParser {
 			parsePrimitiveArgs(type.def.asPrimitive.toString()),
 			parsePrimitiveReturns(type.def.asPrimitive.toString())
 		);
-	}
+	};
 
 	private generateSequence = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type.def.asSequence.type.toJSON() as number;
@@ -110,7 +110,7 @@ export class TypeParser {
 			`Array<${this.generateType(type).tsArgType}>`,
 			`Array<${this.generateType(type).tsReturnType}>`
 		);
-	}
+	};
 
 	private generateArray = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type.def.asArray.type.toJSON() as number;
@@ -120,7 +120,7 @@ export class TypeParser {
 			`Array<${this.generateType(type).tsArgType}>`,
 			`Array<${this.generateType(type).tsReturnType}>`
 		);
-	}
+	};
 
 	private generateTuple = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type.def.asTuple.toJSON() as number[];
@@ -136,7 +136,7 @@ export class TypeParser {
 			`[${type.map(type => this.generateType(type).tsArgType).join(', ')}]`,
 			`[${type.map(type => this.generateType(type).tsReturnType).join(', ')}]`
 		);
-	}
+	};
 
 	private generateVariant = (typeID: number): TypeInfo => {
 		const type = this.abiTypes[typeID]!.type;
@@ -173,7 +173,7 @@ export class TypeParser {
 					typeID,
 					'null',
 					'null'
-				)
+				);
 			}
 		}
 
@@ -230,5 +230,5 @@ export class TypeParser {
 				bodyReturns,
 			);
 		}
-	}
+	};
 }

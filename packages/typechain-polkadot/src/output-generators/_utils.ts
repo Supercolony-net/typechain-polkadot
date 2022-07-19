@@ -69,7 +69,7 @@ export function preprocessABI(_abiStr: string): Abi {
 
 	const typeNamesCount = new Map<string, number>();
 
-	for (let {type} of abiJson.V3.types) {
+	for (const {type} of abiJson.V3.types) {
 		if (type.path === undefined) continue;
 		if (type.path[type.path.length - 1] == 'Mapping') continue;
 
@@ -83,12 +83,12 @@ export function preprocessABI(_abiStr: string): Abi {
 	}
 
 	let __i = 0;
-	for (let {type} of abiJson.V3.types) {
+	for (const {type} of abiJson.V3.types) {
 		__i++;
 		if (type.path === undefined) continue;
 		if (type.path[type.path.length - 1] == 'Mapping') continue;
 
-		const count = typeNamesCount.get(type.path[type.path.length - 1])
+		const count = typeNamesCount.get(type.path[type.path.length - 1]);
 		if (type.path.length > 0 && (count ? count : 0) > 1) {
 			if (type.path.length > 3) {
 				abiJson.V3.types[__i - 1].type.path[type.path.length - 1] = `${type.path[type.path.length - 2]}_${type.path[type.path.length - 1]}`;

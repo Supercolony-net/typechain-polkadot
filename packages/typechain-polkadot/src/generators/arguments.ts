@@ -12,9 +12,9 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		if(!__uniqueArgs.find(__a => __a.type.lookupIndex === __arg.type.lookupIndex))
 			__uniqueArgs.push(__arg);
 
-	let _argsTypes = __uniqueArgs.map(a => ({
+	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
 	}));
 
 	const argumentsImports = new Set<string>();
@@ -27,7 +27,7 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		}
 	}
 
-	let imports = [];
+	const imports = [];
 	if(argumentsImports.size) {
 		imports.push({
 			values: Array.from(argumentsImports),
@@ -35,7 +35,7 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		});
 	}
 
-	let methods = abi.messages.map(__m => {
+	const methods = abi.messages.map(__m => {
 		return ({
 			name: __m.identifier,
 			args: __m.args.map(__a => ({

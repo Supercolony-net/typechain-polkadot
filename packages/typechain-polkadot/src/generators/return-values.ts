@@ -12,8 +12,8 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		abi.messages.concat(abi.constructors).filter(m => m.returnType).map(m => m.returnType!.lookupIndex!)
 	) );
 
-	let imports = [];
-	let types = [];
+	const imports = [];
+	const types = [];
 
 	let typesStr: string = '';
 

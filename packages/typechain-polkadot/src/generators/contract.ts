@@ -5,7 +5,7 @@ import * as CONTRACT_TEMPLATES from "../output-generators/contract";
 import {Import} from "../types";
 
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
-	let imports: Import[] = [];
+	const imports: Import[] = [];
 	const relPathFromOutL1toABIs = PathAPI.relative(
 		PathAPI.resolve(absPathToOutput, "contracts"),
 		absPathToABIs

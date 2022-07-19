@@ -20,12 +20,12 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 			__uniqueArgs.push(__arg);
 
 
-	let _argsTypes = __uniqueArgs.map(a => ({
+	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
 	}));
 
-	let methods: Method[] = [];
+	const methods: Method[] = [];
 	for(const __message of abi.constructors) {
 		methods.push({
 			name: __message.identifier,

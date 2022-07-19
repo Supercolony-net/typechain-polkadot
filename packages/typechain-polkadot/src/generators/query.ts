@@ -13,13 +13,13 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		if(!__uniqueArgs.find(__a => __a.type.lookupIndex === __arg.type.lookupIndex))
 			__uniqueArgs.push(__arg);
 
-	let _argsTypes = __uniqueArgs.map(a => ({
+	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
 	}));
 
-	let imports: Import[] = [];
-	let methods: Method[] = [];
+	const imports: Import[] = [];
+	const methods: Method[] = [];
 
 	for(const __message of abi.messages) {
 		methods.push({
