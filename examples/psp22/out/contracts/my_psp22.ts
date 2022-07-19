@@ -25,7 +25,7 @@ export default class Contract {
 
 		this.query = new QueryMethods(nativeContract, signer.address);
 		this.buildExtrinsic = new BuildExtrinsicMethods(nativeContract);
-		this.tx = new TxSignAndSendMethods(nativeContract, signer);
-		this.methods = new MixedMethods(nativeContract, signer);
+		this.tx = new TxSignAndSendMethods(nativeAPI, nativeContract, signer);
+		this.methods = new MixedMethods(nativeAPI, nativeContract, signer);
 	}
 }

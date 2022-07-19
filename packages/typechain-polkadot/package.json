@@ -1,0 +1,68 @@
+{
+  "name": "@supercolony-net/typechain-polkadot-dev",
+  "version": "0.0.5",
+  "scripts": {
+    "start": "ts-node index.ts --in artifacts --out out",
+    "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
+    "test": "jest --no-cache --maxWorkers 1",
+    "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
+    "link-dev": "npm link @supercolony-net/polkadot-ts-sdk",
+    "_unlink-dev": "npm uninstall --no-save @supercolony-net/polkadot-ts-sdk && npm i",
+    "unlink-dev": "npm unlink --no-save @supercolony-net/polkadot-ts-sdk && npm i"
+  },
+  "bin": {
+    "typechain-polkadot-dev": "bin/index.js"
+  },
+  "files": [
+    "index.ts",
+    "src",
+    "bin",
+    "tsconfig.json"
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
+  },
+  "engineStrict": true,
+  "dependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^17.0.34",
+    "@types/yargs": "^17.0.10",
+    "camelcase": "^6.3.0",
+    "eslint": "^8.18.0",
+    "fs-extra": "^10.1.0",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.7.0",
+    "yargs": "^17.5.1",
+    "@polkadot/api": "^8.6.2",
+    "@polkadot/api-contract": "^8.6.2",
+    "@polkadot/keyring": "^9.3.1",
+    "handlebars": "^4.7.7"
+  },
+  "devDependencies": {
+    "@supercolony-net/typechain-polkadot-parser": "^0.0.4",
+    "@types/bn.js": "^5.1.0",
+    "@types/eslint": "^8.4.3",
+    "@types/jest": "^27.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "eslint": "^8.18.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "hjson": "^3.2.2",
+    "ts-jest": "^28.0.3",
+    "typescript": "^4.7.4"
+  },
+  "author": "Supercolony-net",
+  "homepage": "https://github.com/Supercolony-net/typechain-polkadot-dev#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Supercolony-net/typechain-polkadot-dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Supercolony-net/typechain-polkadot-dev/issues"
+  },
+  "gitHead": "e3d1a8b743699a7823168eaceb521c5cc1953e16"
+}

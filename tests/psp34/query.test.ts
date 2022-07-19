@@ -23,7 +23,7 @@ describe('MY_PSP34', () => {
 
     test('Approve', async () => {
         const {
-            query,
+            query
         } = contract;
 
         const totalSupply = (await (query['PSP34::total_supply']())).value as number;
@@ -34,12 +34,12 @@ describe('MY_PSP34', () => {
         const result = await query['PSP34::approve'](UserBob.address, IdBuilder.U8(id), true);
 
         expect(result.value).toBe(null);
-    });
+    })
 
     test('Transfer', async () => {
         const {
             query,
-            tx,
+            tx
         } = contract;
 
         const totalSupply = (await (query['PSP34::total_supply']())).value as number;
@@ -49,7 +49,7 @@ describe('MY_PSP34', () => {
         const result = await query['PSP34::transfer'](UserBob.address, IdBuilder.U16(totalSupply.valueOf() + 1), []);
 
         expect(result.value).toBe(null);
-    });
+    })
 
     test('Can mint any Id', async () => {
         const {
@@ -91,7 +91,7 @@ describe('MY_PSP34', () => {
         const result = await query['PSP34::allowance'](UserAlice.address, UserBob.address, IdBuilder.U8(id));
 
         expect(result.value).toBe(false);
-    });
+    })
 
     test('BalanceOf', async () => {
         const {
@@ -99,7 +99,7 @@ describe('MY_PSP34', () => {
         } = contract;
 
         await query['PSP34::balance_of'](UserAlice.address);
-    });
+    })
 
     test('OwnerOf', async () => {
         const {

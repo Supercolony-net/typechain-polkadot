@@ -1,49 +1,64 @@
-import { network } from 'redspot';
-import {attachContract} from './helpers';
-import { Keyring } from '@polkadot/keyring';
-import * as dotenv from 'dotenv';
+import { network } from 'redspot'
+import {addPairWithAmount, attachContract} from './helpers'
+import { Keyring } from '@polkadot/keyring'
+import { encodeAddress } from '@polkadot/util-crypto'
+import * as dotenv from 'dotenv'
 
-import deployPSP22_Token from './psp22';
-import deployPSP34_Token from './psp34';
-import deployContractWithEnums from './contractWithEnums';
+import deployPSP22_Token from './001_PSP22'
+import deployPSP34_Token from './002_PSP34'
+import deployContractWithEnums from './003_ContractWithEnums'
+
+import type * as ConfigTypes from './config/types'
+import * as LOCAL_CONFIG from './config/config.local'
+import {
+	WNATIVE,
+} from './config/tokens';
 
 
-dotenv.config({ path: __dirname + '/.env' });
-const { api } = network;
+dotenv.config({ path: __dirname + '/.env' })
+const { api } = network
 
 
 async function run() {
-    await api.isReady;
+	await api.isReady
 
-    const keyring = new Keyring({ type: 'sr25519' });
+	let deployerConfig : ConfigTypes.Account
+	let usersConfig : ConfigTypes.Account[]
+	usersConfig = LOCAL_CONFIG.USERS
 
-    const deployerSigner = network.getSigners()[0];
+	const keyring = new Keyring({ type: 'sr25519' })
 
-    const PSP22Address = await deployPSP22_Token(deployerSigner);
+	const deployerSigner = network.getSigners()[0]
 
-    const alice = keyring.addFromUri('//Alice');
-    const bob   = keyring.addFromUri('//Bob');
+	const wNativeAddress = await deployPSP22_Token(deployerSigner)
+	WNATIVE.address = encodeAddress(wNativeAddress)
 
-    console.log(`export const TOKEN = '${PSP22Address}';`);
+	// @ts-ignore
+	WNATIVE.contract = await attachContract('my_psp22', WNATIVE.address, deployerSigner);
 
-    const PSP22Contract = await attachContract('my_psp22', PSP22Address);
+	console.log(`export const TOKEN = '${WNATIVE.address!}';`);
 
-    await PSP22Contract.tx["psp22Mintable::mint"](alice.address, '1000000000000000000000000000000000000');
-    await PSP22Contract.tx["psp22Mintable::mint"](bob.address, '1000000000000000000000000000000000000');
+	for(const user of usersConfig) {
+		const { mintAmounts } = user
+		if(mintAmounts == null) continue
+		const userAddress = keyring.addFromUri(user.mnemonicSeed).address
+		const contract = WNATIVE.contract!;
+		await contract.tx["psp22Mintable::mint"](userAddress, mintAmounts[WNATIVE.symbol]!)
+	}
 
-    const psp34Address = await deployPSP34_Token(deployerSigner);
+	const psp34Address = await deployPSP34_Token(deployerSigner);
 
-    console.log(`export const PSP34_TOKEN = '${psp34Address}';`);
+	console.log(`export const PSP34_TOKEN = '${psp34Address}';`);
 
-    const contactWithEnumsAddress = await deployContractWithEnums(deployerSigner);
+	const contactWithEnumsAddress = await deployContractWithEnums(deployerSigner);
 
-    console.log(`export const CONTRACT_WITH_ENUMS = '${contactWithEnumsAddress}';`);
+	console.log(`export const CONTRACT_WITH_ENUMS = '${contactWithEnumsAddress}';`);
 
-    await api.disconnect();
+	await api.disconnect()
 }
 
 
 run().catch(error => {
-    console.error('Error caught: ', error);
-    process.exit(1);
-});
+	console.error('Error caught: ', error)
+	process.exit(1)
+})

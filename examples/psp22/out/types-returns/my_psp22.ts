@@ -1,3 +1,9 @@
+import type BN from 'bn.js';
+
+export type AccountId = string | number[]
+
+export type Key = string | number[]
+
 export interface PSP22Error {
 	Custom ? : string,
 	InsufficientBalance ? : null,
@@ -40,6 +46,3 @@ export class PSP22ErrorBuilder {
 	}
 }
 
-export type AccountId = string
-
-export type Key = string

@@ -2,6 +2,7 @@
 
 import type { ContractPromise } from '@polkadot/api-contract';
 import type { KeyringPair } from '@polkadot/keyring/types';
+import type { ApiPromise } from '@polkadot/api';
 import type { ArgumentsTypes } from '../arguments/my_psp22';
 import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
 import { txSignAndSend } from '../_sdk/tx';
@@ -10,11 +11,14 @@ import { txSignAndSend } from '../_sdk/tx';
 export default class Methods {
 	private __nativeContract : ContractPromise;
 	private __keyringPair : KeyringPair;
+	private __apiPromise: ApiPromise;
 
 	constructor(
+		apiPromise: ApiPromise,
 		nativeContract : ContractPromise,
 		keyringPair : KeyringPair,
 	) {
+		this.__apiPromise = apiPromise;
 		this.__nativeContract = nativeContract;
 		this.__keyringPair = keyringPair;
 	}
@@ -32,21 +36,21 @@ export default class Methods {
 		data: ArgumentsTypes[9],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transfer", [to, value, data], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transfer", [to, value, data], __options);
 	}
 
 	/**
 	 * @arg: args: [
 	 * 0: spender,
-	 * 1: delta_value,
+	 * 1: deltaValue,
 	 * ]
 	 */
 	"PSP22::decrease_allowance" (
 		spender: ArgumentsTypes[2],
-		delta_value: ArgumentsTypes[0],
+		deltaValue: ArgumentsTypes[0],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", [spender, delta_value], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", [spender, deltaValue], __options);
 	}
 
 	/**
@@ -58,7 +62,7 @@ export default class Methods {
 		owner: ArgumentsTypes[2],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::balanceOf", [owner], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::balanceOf", [owner], __options);
 	}
 
 	/**
@@ -72,28 +76,28 @@ export default class Methods {
 		spender: ArgumentsTypes[2],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::allowance", [owner, spender], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::allowance", [owner, spender], __options);
 	}
 
 	/**
 	 * @arg: args: [
 	 * 0: spender,
-	 * 1: delta_value,
+	 * 1: deltaValue,
 	 * ]
 	 */
 	"PSP22::increase_allowance" (
 		spender: ArgumentsTypes[2],
-		delta_value: ArgumentsTypes[0],
+		deltaValue: ArgumentsTypes[0],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", [spender, delta_value], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", [spender, deltaValue], __options);
 	}
 
 	/** */
 	"PSP22::total_supply" (
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::totalSupply", [], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::totalSupply", [], __options);
 	}
 
 	/**
@@ -111,7 +115,7 @@ export default class Methods {
 		data: ArgumentsTypes[9],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::transferFrom", [from, to, value, data], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transferFrom", [from, to, value, data], __options);
 	}
 
 	/**
@@ -125,7 +129,7 @@ export default class Methods {
 		value: ArgumentsTypes[0],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22::approve", [spender, value], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::approve", [spender, value], __options);
 	}
 
 	/**
@@ -139,7 +143,7 @@ export default class Methods {
 		amount: ArgumentsTypes[0],
 		__options ? : GasLimit,
 	){
-		return txSignAndSend( this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", [account, amount], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", [account, amount], __options);
 	}
 
 }

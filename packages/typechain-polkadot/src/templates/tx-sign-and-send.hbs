@@ -1,0 +1,47 @@
+/* This file is auto-generated */
+
+import type { ContractPromise } from '@polkadot/api-contract';
+import type { KeyringPair } from '@polkadot/keyring/types';
+import type { ApiPromise } from '@polkadot/api';
+import type { ArgumentsTypes } from '../arguments/{{{fileName}}}';
+import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
+import { txSignAndSend } from '../_sdk/tx';
+{{#if additionalImports.length}}
+{{#each additionalImports}}
+import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
+{{/each}}{{/if}}
+
+export default class Methods {
+	private __nativeContract : ContractPromise;
+	private __keyringPair : KeyringPair;
+	private __apiPromise: ApiPromise;
+
+	constructor(
+		apiPromise: ApiPromise,
+		nativeContract : ContractPromise,
+		keyringPair : KeyringPair,
+	) {
+		this.__apiPromise = apiPromise;
+		this.__nativeContract = nativeContract;
+		this.__keyringPair = keyringPair;
+	}
+
+{{#each methods}}
+	/**{{#if args.length}}
+	 * @arg: args: [
+	 {{#each args}}
+	 * {{{@index}}}: {{{name}}},
+	{{/each}}
+	 * ]
+	{{/if}} */
+	"{{{name}}}" (
+	{{#each args}}
+		{{{name}}}: ArgumentsTypes[{{{type.id}}}],
+	{{/each}}
+		__options ? : {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
+	){{{constructReturnType this}}}{
+		return {{{constructReturn this}}} "{{{toCamelCase name}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
+	}
+
+{{/each}}
+}

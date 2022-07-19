@@ -1,18 +1,21 @@
-
-// In this example we will interact with already deployed psp22 token to mint some tokens to the owner and get total supply.
-// If you want to deploy run a substrate-contracts-node on your computer and use my_psp22.contract to deploy it via web UI.
+// In this example we will deploy & interact with psp22 token to mint some tokens to the owner and get total supply.
 import Contract from "./out/contracts/my_psp22";
 import {ApiPromise, Keyring} from "@polkadot/api";
 import BN from "bn.js";
+import Constructors from "./out/constructors/my_psp22";
 
 async function main() {
-    const TOKEN_ADDRESS = '5EDVuNtbFMfDsVuMciiZFezjotP2T8gBhj9aF5ivesrrH6ym';
-
     const api = await ApiPromise.create();
 
     const keyring = new Keyring({type: 'sr25519'});
 
     const aliceKeyringPair = keyring.addFromUri('//Alice');
+
+	const constructors = new Constructors(api, aliceKeyringPair);
+
+    const {address: TOKEN_ADDRESS} = await constructors.new('10000000000000000000');
+
+	console.log('Contract deployed at:', TOKEN_ADDRESS);
 
     const contract = new Contract(TOKEN_ADDRESS, aliceKeyringPair, api);
 
