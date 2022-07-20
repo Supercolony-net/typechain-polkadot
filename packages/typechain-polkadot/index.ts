@@ -39,8 +39,6 @@ const cwdPath = process.cwd();
 const absPathToABIs = PathAPI.resolve( cwdPath, `./${argv.input}` );
 const absPathToOutput = PathAPI.resolve( cwdPath, `./${argv.output}` );
 
-// Prep of output directory
-
 generateProjectStructure(absPathToOutput);
 
 const fullFileNames = FsAPI.readdirSync(absPathToABIs);
