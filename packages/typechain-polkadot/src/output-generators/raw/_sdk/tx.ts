@@ -5,23 +5,13 @@ import type {
 import {
 	_genValidGasLimitAndValue,
 } from './query';
-
-
-import {
-	u8aToBn,
-} from '@polkadot/util';
 import type {
 	SubmittableExtrinsic,
 } from '@polkadot/api/submittable/types';
 import type { KeyringPair } from '@polkadot/keyring/types';
-//
 import type { Registry } from '@polkadot/types-codec/types';
 import type {ApiPromise, SubmittableResult} from "@polkadot/api";
 import type {DecodedEvent} from "@polkadot/api-contract/types";
-
-
-
-//////
 
 type SignAndSendSuccessResponse = {
 	from: string;
@@ -35,10 +25,6 @@ type SignAndSendSuccessResponse = {
 	events?: DecodedEvent[];
 };
 
-
-
-////// EXPORT
-
 export type {
 	SignAndSendSuccessResponse,
 };
@@ -47,7 +33,6 @@ export function txSignAndSend(
 	nativeAPI: ApiPromise,
 	nativeContract : ContractPromise,
 	keyringPair : KeyringPair,
-	//
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
@@ -61,7 +46,6 @@ export function txSignAndSend(
 
 export function buildSubmittableExtrinsic(
 	nativeContract : ContractPromise,
-	//
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
@@ -172,27 +156,4 @@ export async function _signAndSend(
 				reject(actionStatus);
 			});
 	});
-}
-
-
-
-////// PRIVATE
-
-function _decodeSignAndSendErrorText(data :any[], registry : Registry) {
-	try {
-		const mod = data.find(item => item.module || item.isModule)?.asModule;
-		const u8a = new Uint8Array([ mod.error[0], mod.error[1], mod.error[2], mod.error[3] ]);
-		const metaError = registry.findMetaError(new Uint8Array([
-			mod.index.toNumber(),
-			u8aToBn(u8a).toNumber(),
-		]));
-		const text = `${metaError.section}.${metaError.name}${Array.isArray(metaError.docs)
-			? `(${metaError.docs.join('')})`
-			: metaError.docs || ''}`;
-		return text;
-	}
-	catch(swallow) {
-		// swallow
-	}
-	return;
 }

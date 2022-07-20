@@ -16,9 +16,6 @@ type QueryReturnType<T> = {
 	gasConsumed : bigint;
 };
 
-
-////// EXPORT
-
 export type {
 	QueryReturnType,
 };
@@ -33,7 +30,6 @@ export {
 export async function queryJSON<T>(
 	nativeContract : ContractPromise,
 	callerAddress : string,
-	//
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
@@ -45,7 +41,6 @@ export async function queryJSON<T>(
 
 	let _value = output.toJSON();
 
-	// [ ok-err case ]
 	if(_value && typeof _value === 'object') {
 		if('err' in _value) {
 			const error : QueryOkCallError = {

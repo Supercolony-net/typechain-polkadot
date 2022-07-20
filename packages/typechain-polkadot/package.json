@@ -1,6 +1,6 @@
 {
   "name": "@supercolony-net/typechain-polkadot-dev",
-  "version": "0.0.5",
+  "version": "0.2.0",
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
     "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",

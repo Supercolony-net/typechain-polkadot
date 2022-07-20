@@ -4,7 +4,7 @@ import {
 	generateEnum,
 	generateInterfaceArgs, generateInterfaceReturns,
 	parsePrimitiveArgs,
-	parsePrimitiveReturns, preprocessABI
+	parsePrimitiveReturns, preprocessABI,
 } from "./src/utils";
 import {PortableType} from "@polkadot/types/interfaces/metadata/types";
 import {Vec} from "@polkadot/types-codec/base/Vec";
@@ -68,7 +68,7 @@ export class TypeParser {
 				compositeName,
 				`export type ${compositeName} = string`,
 				`export type ${compositeName} = string | number[]`,
-			)
+			);
 		}
 
 		const compositeBodyReturns = generateInterfaceReturns(

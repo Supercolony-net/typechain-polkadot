@@ -1,17 +1,7 @@
-/* Visit https://aka.ms/tsconfig.json to read more about this file */
-
 {
-	// "extends": "../tsconfig", // Not working ?
-
 	"include": [
 		"./**/*.test.ts",
 	],
-	/*
-	"files": [
-		"../src/declaration.d.ts"
-	],
-	*/
-	// "exclude": [ "node_modules", ],
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": false,
@@ -19,9 +9,7 @@
 		"moduleResolution": "node",
 		"target": "esnext",
 		"sourceMap": true,
-		// output .d.ts declaration files for consumers
 		"declaration": true,
-		// `tsdx build` ignores this option, but it is commonly used when type-checking separately with `tsc`
 		"noEmit": true,
 		"resolveJsonModule": true,
 
@@ -34,43 +22,18 @@
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
 		"noImplicitThis": true,
-		// noUnused* overlap with @typescript-eslint/no-unused-vars, can disable if duplicative
 		"noUnusedLocals": false,
 		"noUnusedParameters": false,
 
 		"useUnknownInCatchVariables": true,
 		"importsNotUsedAsValues": "error",
-		// "exactOptionalPropertyTypes": true,
 		"forceConsistentCasingInFileNames": true,
-
-		// < Questionable >
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": false,
-		// </ Questionable >
-
-		// "baseUrl": "../.",
-		// "paths": {
-		// 	"@src/*": ["src/*"],
-		// 	"@base": ["node_modules/@stichting-allianceblock-foundation/abdex-sdk-base/dist/index"],
-		// },
-
-
-		//// From 'abdex-sdk-v2'
 		"lib": ["dom", "esnext"],
 		"importHelpers": true,
-		// transpile JSX to React.createElement
 		"jsx": "react",
-		// significant perf increase by skipping checking .d.ts files, particularly those in node_modules. Recommended by TS
 		"skipLibCheck": true,
-		// "strictPropertyInitialization": false,
-
 	},
-
-	// "ts-node": {
-	// 	// these options are overrides used only by ts-node
-	// 	"compilerOptions": {
-	// 		"module": "commonjs"
-	// 	}
-	// },
 }

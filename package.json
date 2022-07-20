@@ -5,7 +5,9 @@
 	],
   	"scripts": {
 	  "publish": "npx lerna publish --registry=https://npm.pkg.github.com/",
-	  "start-typechain": "npx typechain-polkadot --in ./artifacts --out ./out"
+	  "start-typechain": "npx typechain-polkadot --in ./artifacts --out ./out",
+	  "lint": "eslint \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
+	  "lint:fix": "eslint --fix \"{packages, examples}/**/*.{js,jsx,ts,tsx}\""
 	},
 	"devDependencies": {
 		"lerna": "^5.1.8",

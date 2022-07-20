@@ -15,7 +15,7 @@ export const INK_TYPES_TO_TS_RETURNS = {
 	'I32': 'number',
 	'I64': 'number',
 	'I128': '(string | number)',
-	'I256': '(string | number)'
+	'I256': '(string | number)',
 };
 
 export const INK_TYPES_TO_TS_ARGUMENTS = {
@@ -35,5 +35,5 @@ export const INK_TYPES_TO_TS_ARGUMENTS = {
 	'I32': '(number | string | BN)',
 	'I64': '(number | string | BN)',
 	'I128': '(string | number | BN)',
-	'I256': '(string | number | BN)'
-}
+	'I256': '(string | number | BN)',
+};
