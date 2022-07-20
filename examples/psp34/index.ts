@@ -1,5 +1,5 @@
 // In this example we will deploy & interact with psp22 token to mint some tokens to the owner and get total supply.
-import Contract from "./out/contracts/my_psp22";
+import Contract from "./out/contracts/my_psp34";
 import {ApiPromise, Keyring} from "@polkadot/api";
 import BN from "bn.js";
 import Constructors from "./out/constructors/my_psp22";

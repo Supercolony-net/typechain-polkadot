@@ -6,10 +6,7 @@
     "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
     "test": "jest --no-cache --maxWorkers 1",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
-    "link-dev": "npm link @supercolony-net/polkadot-ts-sdk",
-    "_unlink-dev": "npm uninstall --no-save @supercolony-net/polkadot-ts-sdk && npm i",
-    "unlink-dev": "npm unlink --no-save @supercolony-net/polkadot-ts-sdk && npm i"
+    "lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
   },
   "bin": {
     "typechain-polkadot-dev": "bin/index.js"
@@ -26,6 +23,7 @@
   },
   "engineStrict": true,
   "dependencies": {
+    "@supercolony-net/typechain-polkadot-parser": "^0.0.5",
     "@polkadot/api": "^8.6.2",
     "@polkadot/api-contract": "^8.6.2",
     "@polkadot/keyring": "^9.3.1",
@@ -41,7 +39,6 @@
     "yargs": "^17.5.1"
   },
   "devDependencies": {
-    "@supercolony-net/typechain-polkadot-parser": "^0.0.5",
     "@types/bn.js": "^5.1.0",
     "@types/eslint": "^8.4.3",
     "@types/jest": "^27.5.1",
