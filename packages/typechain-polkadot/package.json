@@ -56,13 +56,13 @@
     "typescript": "^4.7.4"
   },
   "author": "Supercolony-net",
-  "homepage": "https://github.com/Supercolony-net/typechain-polkadot-dev#readme",
+  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Supercolony-net/typechain-polkadot-dev.git"
+    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
   },
   "bugs": {
-    "url": "https://github.com/Supercolony-net/typechain-polkadot-dev/issues"
+    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
   },
-  "gitHead": "e3d1a8b743699a7823168eaceb521c5cc1953e16"
+  "gitHead": "749d761b2937953405e9be3a7765de5ff7e8ca0a"
 }
