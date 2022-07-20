@@ -30,7 +30,7 @@ const _argv = YARGS
 		description: 'Output relative path',
 		type: 'string',
 	})
-	.help().alias('help', 'h')
+	.help().alias( 'h', 'help')
 	.argv;
 
 const argv = _argv as Awaited<typeof _argv>;

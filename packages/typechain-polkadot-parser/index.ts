@@ -10,10 +10,6 @@ import {PortableType} from "@polkadot/types/interfaces/metadata/types";
 import {Vec} from "@polkadot/types-codec/base/Vec";
 import {TypeInfo} from "./src/types/TypeInfo";
 
-export interface ParsedABI {
-	types: Array<TypeInfo>
-}
-
 export class TypeParser {
 	readonly tsTypes: Array<TypeInfo> = [];
 	private abiTypes: Vec<PortableType>;
