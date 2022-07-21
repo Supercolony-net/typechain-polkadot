@@ -58,7 +58,7 @@ Handlebars.registerHelper( 'constructReturn', function(fn: Method) {
 Handlebars.registerHelper( 'constructReturnType', function(fn: Method) {
 	if(fn.methodType == 'query') {
 		if(fn.returnType) {
-			return `: Promise< QueryReturnType< OkishReturns["${fn.returnType.id}"] > >`;
+			return `: Promise< QueryReturnType< ${fn.returnType.tsStr} > >`;
 		}
 		else{
 			return `: Promise< QueryReturnType< null > >`;

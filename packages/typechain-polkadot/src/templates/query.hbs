@@ -1,11 +1,12 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { ArgumentsTypes } from '../arguments/{{{fileName}}}';
-import type OkishReturns from '../return-values/{{{fileName}}}';
 import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
 import type { QueryReturnType } from '../_sdk/query';
 import { queryJSON, queryOkJSON } from '../_sdk/query';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type * as ReturnTypes from '../types-returns/{{{fileName}}}';
+import type BN from 'bn.js';
 {{#if additionalImports.length}}
 {{#each additionalImports}}
 import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
@@ -33,7 +34,7 @@ export default class Methods {
 	{{/if}} */
 	"{{{name}}}" (
 	{{#each args}}
-		{{{name}}}: ArgumentsTypes[{{{type.id}}}],
+		{{{name}}}: {{{type.tsStr}}},
 	{{/each}}
 		__options ? : {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
 	){{{constructReturnType this}}}{

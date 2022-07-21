@@ -35,7 +35,7 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 
 	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
 	}));
 
 	const imports: Import[] = [];

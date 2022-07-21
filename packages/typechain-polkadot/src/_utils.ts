@@ -30,8 +30,6 @@ export function generateProjectStructure(absPathToOutput: string) {
 		PathAPI.resolve(__dirname, './output-generators/raw/_sdk'),
 		PathAPI.resolve(absPathToOutput, '_sdk')
 	);
-	__assureDirExists(absPathToOutput, "arguments");
-	__assureDirExists(absPathToOutput, "return-values");
 	__assureDirExists(absPathToOutput, "query");
 	__assureDirExists(absPathToOutput, "build-extrinsic");
 	__assureDirExists(absPathToOutput, "tx-sign-and-send");

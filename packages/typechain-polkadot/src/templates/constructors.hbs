@@ -4,7 +4,8 @@ import Files from "fs";
 import type {ApiPromise} from "@polkadot/api";
 import {_signAndSend, SignAndSendSuccessResponse} from "../_sdk/tx";
 import type {ConstructorOptions} from "../_sdk/types";
-import type { ArgumentsTypes } from '../arguments/{{{fileName}}}';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type BN from 'bn.js';
 
 export default class Constructors {
 	readonly nativeAPI: ApiPromise;
@@ -28,7 +29,7 @@ export default class Constructors {
     	{{/if}} */
     	async "{{{name}}}" (
     	{{#each args}}
-    		{{{name}}}: ArgumentsTypes[{{{type.id}}}],
+    		{{{name}}}: {{{type.tsStr}}},
     	{{/each}}
     		__options ? : ConstructorOptions,
     	) {

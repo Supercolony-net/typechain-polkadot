@@ -83,6 +83,8 @@ export class TypeParser {
 				typeId,
 				compositeName,
 				compositeName,
+				`ArgumentTypes.${compositeName}`,
+				`ReturnTypes.${compositeName}`,
 				`export type ${compositeName} = string`,
 				`export type ${compositeName} = string | number[]`,
 			);
@@ -104,6 +106,8 @@ export class TypeParser {
 			typeId,
 			compositeName,
 			compositeName,
+			`ArgumentTypes.${compositeName}`,
+			`ReturnTypes.${compositeName}`,
 			compositeBodyArgs,
 			compositeBodyReturns,
 		);
@@ -115,7 +119,9 @@ export class TypeParser {
 		return new TypeInfo(
 			typeId,
 			parsePrimitiveArgs(type.def.asPrimitive.toString()),
-			parsePrimitiveReturns(type.def.asPrimitive.toString())
+			parsePrimitiveReturns(type.def.asPrimitive.toString()),
+			parsePrimitiveArgs(type.def.asPrimitive.toString()),
+			parsePrimitiveReturns(type.def.asPrimitive.toString()),
 		);
 	};
 
@@ -125,7 +131,9 @@ export class TypeParser {
 		return new TypeInfo(
 			typeId,
 			`Array<${this.generateType(type).tsArgType}>`,
-			`Array<${this.generateType(type).tsReturnType}>`
+			`Array<${this.generateType(type).tsReturnType}>`,
+			`Array<${this.generateType(type).tsArgTypePrefixed}>`,
+			`Array<${this.generateType(type).tsReturnTypePrefixed}>`,
 		);
 	};
 
@@ -135,7 +143,9 @@ export class TypeParser {
 		return new TypeInfo(
 			typeId,
 			`Array<${this.generateType(type).tsArgType}>`,
-			`Array<${this.generateType(type).tsReturnType}>`
+			`Array<${this.generateType(type).tsReturnType}>`,
+			`Array<${this.generateType(type).tsArgTypePrefixed}>`,
+			`Array<${this.generateType(type).tsReturnTypePrefixed}>`,
 		);
 	};
 
@@ -145,13 +155,17 @@ export class TypeParser {
 			return new TypeInfo(
 				typeId,
 				'null',
-				'null'
+				'null',
+				'null',
+				'null',
 			);
 		}
 		return new TypeInfo(
 			typeId,
 			`[${type.map(type => this.generateType(type).tsArgType).join(', ')}]`,
-			`[${type.map(type => this.generateType(type).tsReturnType).join(', ')}]`
+			`[${type.map(type => this.generateType(type).tsReturnType).join(', ')}]`,
+			`[${type.map(type => this.generateType(type).tsArgTypePrefixed).join(', ')}]`,
+			`[${type.map(type => this.generateType(type).tsReturnTypePrefixed).join(', ')}]`,
 		);
 	};
 
@@ -167,13 +181,17 @@ export class TypeParser {
 				return new TypeInfo(
 					typeID,
 					`${generatedType.tsArgType} | null`,
-					generatedType.tsReturnType
+					generatedType.tsReturnType,
+					`${generatedType.tsArgTypePrefixed} | null`,
+					generatedType.tsReturnTypePrefixed,
 				);
 			} else {
 				return new TypeInfo(
 					typeID,
 					'null',
-					'null'
+					'null',
+					'null',
+					'null',
 				);
 			}
 		} else if (variantName == 'Option') {
@@ -182,14 +200,18 @@ export class TypeParser {
 				return new TypeInfo(
 					typeID,
 					`${generatedType.tsArgType} | null`,
-					`${generatedType.tsArgType} | null`
+					`${generatedType.tsArgType} | null`,
+					`${generatedType.tsArgTypePrefixed} | null`,
+					`${generatedType.tsArgTypePrefixed} | null`,
 				);
 			}
 			else {
 				return new TypeInfo(
 					typeID,
 					'null',
-					'null'
+					'null',
+					'null',
+					'null',
 				);
 			}
 		}
@@ -211,6 +233,8 @@ export class TypeParser {
 				typeID,
 				variantName,
 				variantName,
+				`ArgumentTypes.${variantName}`,
+				`ReturnTypes.${variantName}`,
 				body,
 				body,
 			);
@@ -243,6 +267,8 @@ export class TypeParser {
 				typeID,
 				variantName,
 				variantName,
+				`ArgumentTypes.${variantName}`,
+				`ReturnTypes.${variantName}`,
 				bodyArgs,
 				bodyReturns,
 			);
