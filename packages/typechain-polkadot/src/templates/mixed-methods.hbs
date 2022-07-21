@@ -7,9 +7,9 @@ import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
 import type { QueryReturnType } from '../_sdk/query';
 import { queryJSON } from '../_sdk/query';
 import { txSignAndSend } from '../_sdk/tx';
-import * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
-import * as ReturnTypes from '../types-arguments/{{{fileName}}}';
-import BN from 'bn.js';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type * as ReturnTypes from '../types-arguments/{{{fileName}}}';
+import type BN from 'bn.js';
 {{#if additionalImports.length}}
 {{#each additionalImports}}
 import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';

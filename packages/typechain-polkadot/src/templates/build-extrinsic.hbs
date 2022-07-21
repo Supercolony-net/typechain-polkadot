@@ -3,8 +3,8 @@
 import type { ContractPromise } from '@polkadot/api-contract';
 import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
 import { buildSubmittableExtrinsic } from '../_sdk/tx';
-import * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
-import BN from 'bn.js';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type BN from 'bn.js';
 
 {{#if additionalImports.length}}
 {{#each additionalImports}}

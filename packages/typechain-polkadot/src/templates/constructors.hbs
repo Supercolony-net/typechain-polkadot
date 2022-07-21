@@ -4,8 +4,8 @@ import Files from "fs";
 import type {ApiPromise} from "@polkadot/api";
 import {_signAndSend, SignAndSendSuccessResponse} from "../_sdk/tx";
 import type {ConstructorOptions} from "../_sdk/types";
-import * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
-import BN from 'bn.js';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type BN from 'bn.js';
 
 export default class Constructors {
 	readonly nativeAPI: ApiPromise;

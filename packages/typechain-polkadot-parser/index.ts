@@ -83,6 +83,8 @@ export class TypeParser {
 				typeId,
 				compositeName,
 				compositeName,
+				`ArgumentTypes.${compositeName}`,
+				`ReturnTypes.${compositeName}`,
 				`export type ${compositeName} = string`,
 				`export type ${compositeName} = string | number[]`,
 			);
@@ -104,6 +106,8 @@ export class TypeParser {
 			typeId,
 			compositeName,
 			compositeName,
+			`ArgumentTypes.${compositeName}`,
+			`ReturnTypes.${compositeName}`,
 			compositeBodyArgs,
 			compositeBodyReturns,
 		);
