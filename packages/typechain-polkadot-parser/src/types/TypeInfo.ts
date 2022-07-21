@@ -22,7 +22,9 @@
 export class TypeInfo {
 	id: number;
 	tsArgType: string;
+	tsArgTypePrefixed: string;
 	tsReturnType: string;
+	tsReturnTypePrefixed: string;
 	// For enums and composites
 	bodyArgType ?: string;
 	bodyReturnType ?: string;
@@ -33,6 +35,14 @@ export class TypeInfo {
 		this.tsReturnType = tsReturnType;
 		this.bodyArgType = bodyArgType;
 		this.bodyReturnType = bodyReturnType;
+
+		if (bodyArgType && bodyReturnType) {
+			this.tsArgTypePrefixed = `ArgumentTypes.${tsArgType}`;
+			this.tsReturnTypePrefixed = `ReturnTypes.${tsReturnType}`;
+		} else {
+			this.tsArgTypePrefixed = tsArgType;
+			this.tsReturnTypePrefixed = tsReturnType;
+		}
 	}
 
 	static get EMPTY_TYPE_INFO() {
