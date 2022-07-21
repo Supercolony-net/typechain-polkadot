@@ -1,15 +1,23 @@
 import * as PolkadotAPI from "@polkadot/api";
 import Contract from "../generated/contracts/my_psp34";
-import {UserAlice, UserBob} from "../config";
 import {IdBuilder} from "../generated/types-arguments/my_psp34";
 import Constructors from "../generated/constructors/my_psp34";
+import type {KeyringPair} from "@polkadot/keyring/types";
+import {GetAccounts} from "../config";
 
 describe('MY_PSP34', () => {
 	let api: PolkadotAPI.ApiPromise;
 	let contract: Contract;
+	let UserAlice: KeyringPair, UserBob: KeyringPair, UserCharlie : KeyringPair;
 
 	beforeAll(async () => {
 		api = await PolkadotAPI.ApiPromise.create();
+
+		const accounts = GetAccounts();
+
+		UserAlice = accounts.UserAlice;
+		UserBob = accounts.UserBob;
+		UserCharlie = accounts.UserCharlie;
 
 		const factory = new Constructors(api, UserAlice);
 

@@ -18,7 +18,6 @@ module.exports = {
 		"prettier/prettier": "off",
 		"indent": [ "error", "tab", { "SwitchCase": 1 } ],
 		"semi": "warn",
-		"no-trailing-spaces": "error",
 		"comma-dangle": ["warn", {
 			"arrays": "ignore",
 			"objects": "always-multiline",

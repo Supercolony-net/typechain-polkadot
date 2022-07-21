@@ -1,15 +1,23 @@
 import * as PolkadotAPI from "@polkadot/api";
 import Contract from "../generated/contracts/contract_with_enums";
-import {UserAlice} from "../config";
 import {AnotherEnumBuilder, EnumExampleBuilder} from "../generated/types-arguments/contract_with_enums";
 import Constructors from "../generated/constructors/contract_with_enums";
+import type {KeyringPair} from "@polkadot/keyring/types";
+import {GetAccounts} from "../config";
 
 describe('MY_PSP34', () => {
 	let api: PolkadotAPI.ApiPromise;
 	let contract: Contract;
+	let UserAlice: KeyringPair, UserBob: KeyringPair, UserCharlie : KeyringPair;
 
 	beforeAll(async () => {
 		api = await PolkadotAPI.ApiPromise.create();
+
+		const accounts = GetAccounts();
+
+		UserAlice = accounts.UserAlice;
+		UserBob = accounts.UserBob;
+		UserCharlie = accounts.UserCharlie;
 
 		const factory = new Constructors(api, UserAlice);
 
