@@ -46,10 +46,31 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
 	}));
 
+	let _methodsNames = abi.constructors.map((m, i) => {
+		return {
+			original: m.identifier,
+			cut: m.identifier.split("::").pop()!
+		};
+	});
+
+	_methodsNames = _methodsNames.map((m) => {
+		const _overloadsCount = _methodsNames.filter(__m => __m.cut === m.cut).length;
+		if(_overloadsCount > 1) {
+			return {
+				original: m.original,
+				cut: m.original,
+			};
+		} else {
+			return m;
+		}
+	});
+
 	const methods: Method[] = [];
 	for(const __message of abi.constructors) {
+		const _methodName = _methodsNames.find(__m => __m.original === __message.identifier)!;
 		methods.push({
-			name: __message.identifier,
+			name: _methodName.cut,
+			originalName: _methodName.original,
 			args: __message.args.map(__a => ({
 				name: __a.name,
 				type: _argsTypes.find(_a => _a.id === __a.type.lookupIndex)!,
