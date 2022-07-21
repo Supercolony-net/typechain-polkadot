@@ -36,7 +36,7 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 
 	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
 	}));
 
 	const imports: Import[] = [];
@@ -50,7 +50,7 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 				type: _argsTypes.find(_a => _a.id === __a.type.lookupIndex)!,
 			})),
 			returnType: __message.returnType && {
-				tsStr: parser.getType(__message.returnType!.lookupIndex as number).tsReturnType,
+				tsStr: parser.getType(__message.returnType!.lookupIndex as number).tsReturnTypePrefixed,
 				id: __message.returnType!.lookupIndex!,
 			},
 			payable: __message.isPayable,

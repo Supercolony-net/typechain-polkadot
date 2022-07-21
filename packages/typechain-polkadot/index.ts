@@ -24,8 +24,6 @@ import * as FsExtraAPI from 'fs-extra';
 import * as PathAPI from 'path';
 import YARGS from 'yargs';
 
-import GenerateArguments from './src/generators/arguments';
-import GenerateReturnValues from './src/generators/return-values';
 import GenerateQuery from './src/generators/query';
 import GenerateBuildExtrinsic from './src/generators/build-extrinsic';
 import GenerateTxSignAndSend from './src/generators/tx-sign-and-send';
@@ -78,18 +76,6 @@ for(const fullFileName of fullFileNames) {
 	);
 
 	GenerateTypesReturns(
-		abi,
-		fileName,
-		absPathToOutput
-	);
-
-	GenerateArguments(
-		abi,
-		fileName,
-		absPathToOutput
-	);
-
-	GenerateReturnValues(
 		abi,
 		fileName,
 		absPathToOutput

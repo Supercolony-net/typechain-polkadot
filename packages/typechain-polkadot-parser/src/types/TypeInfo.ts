@@ -29,23 +29,25 @@ export class TypeInfo {
 	bodyArgType ?: string;
 	bodyReturnType ?: string;
 
-	constructor(id: number, tsArgType: string, tsReturnType: string, bodyArgType?: string, bodyReturnType?: string) {
+	constructor(
+		id: number,
+		tsArgType: string,
+		tsReturnType: string,
+		tsArgTypePrefixed: string,
+		tsReturnTypePrefixed: string,
+		bodyArgType?: string,
+		bodyReturnType?: string
+	) {
 		this.id = id;
 		this.tsArgType = tsArgType;
 		this.tsReturnType = tsReturnType;
 		this.bodyArgType = bodyArgType;
 		this.bodyReturnType = bodyReturnType;
-
-		if (bodyArgType && bodyReturnType) {
-			this.tsArgTypePrefixed = `ArgumentTypes.${tsArgType}`;
-			this.tsReturnTypePrefixed = `ReturnTypes.${tsReturnType}`;
-		} else {
-			this.tsArgTypePrefixed = tsArgType;
-			this.tsReturnTypePrefixed = tsReturnType;
-		}
+		this.tsArgTypePrefixed = tsArgTypePrefixed;
+		this.tsReturnTypePrefixed = tsReturnTypePrefixed;
 	}
 
 	static get EMPTY_TYPE_INFO() {
-		return new TypeInfo(0, '', '');
+		return new TypeInfo(0, '', '', '', '', '', '');
 	}
 }

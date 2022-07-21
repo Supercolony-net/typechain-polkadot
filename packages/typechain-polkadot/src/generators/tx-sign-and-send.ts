@@ -36,10 +36,9 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 
 	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
 	}));
 
-	const imports: Import[] = [];
 	const methods: Method[] = [];
 
 	for(const __message of abi.messages) {
@@ -54,6 +53,6 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		});
 	}
 
-	__writeFileSync(absPathToOutput, `tx-sign-and-send/${fileName}.ts`, TX_SIGN_AND_SEND_TEMPLATES.FILE(fileName, methods, imports));
+	__writeFileSync(absPathToOutput, `tx-sign-and-send/${fileName}.ts`, TX_SIGN_AND_SEND_TEMPLATES.FILE(fileName, methods, []));
 
 }
