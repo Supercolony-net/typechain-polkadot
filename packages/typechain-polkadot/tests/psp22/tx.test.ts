@@ -26,8 +26,8 @@ describe("", () => {
 
 		contract = new Contract(res.address, UserAlice, api);
 
-		await contract.tx["PSP22Mintable::mint"](UserAlice.address, '10000000000000000000000');
-		await contract.tx["PSP22Mintable::mint"](UserBob.address, '10000000000000000000000');
+		await contract.tx.mint(UserAlice.address, '10000000000000000000000');
+		await contract.tx.mint(UserBob.address, '10000000000000000000000');
 	});
 
 	afterAll(async () => {
@@ -37,31 +37,27 @@ describe("", () => {
 	jest.setTimeout(10000);
 
 	test("`PSP22::total_supply`", async () => {
-		await contract.tx['PSP22::total_supply']();
+		await contract.tx.totalSupply();
 	});
 
 	test("`PSP22::balance_of`", async () => {
-		await contract.tx['PSP22::balance_of'](UserAlice.address);
-	});
-
-	test("`mint_to`", async () => {
-		await contract.tx['PSP22Mintable::mint'](UserAlice.address, '1000000');
+		await contract.tx.balanceOf(UserAlice.address);
 	});
 
 	test("`PSP22Mintable::mint`", async () => {
-		await contract.tx['PSP22Mintable::mint'](UserAlice.address, '1000000');
+		await contract.tx.mint(UserAlice.address, '1000000');
 	});
 
 	test("`PSP22::allowance`", async () => {
-		await contract.query['PSP22::allowance'](UserAlice.address, UserAlice.address);
+		await contract.query.allowance(UserAlice.address, UserAlice.address);
 	});
 
 	test("`PSP22::increase_allowance` & `PSP22::decrease_allowance`", async () => {
-		await contract.tx['PSP22::increase_allowance'](UserAlice.address, '1000000');
-		await contract.tx['PSP22::decrease_allowance'](UserAlice.address, '1000000');
+		await contract.tx.increaseAllowance(UserAlice.address, '1000000');
+		await contract.tx.decreaseAllowance(UserAlice.address, '1000000');
 	});
 
 	test("`PSP22::transfer`", async () => {
-		await contract.query['PSP22::transfer'](UserBob.address, '10', []);
+		await contract.query.transfer(UserBob.address, '10', []);
 	});
 });

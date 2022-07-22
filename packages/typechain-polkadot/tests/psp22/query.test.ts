@@ -25,8 +25,8 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 
 		contract = new Contract(res.address, UserAlice, api);
 
-		await contract.tx["PSP22Mintable::mint"](UserAlice.address, '10000000000000000000000');
-		await contract.tx["PSP22Mintable::mint"](UserBob.address, '10000000000000000000000');
+		await contract.tx.mint(UserAlice.address, '10000000000000000000000');
+		await contract.tx.mint(UserBob.address, '10000000000000000000000');
 	});
 
 	afterAll(async () => {
@@ -36,55 +36,51 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 	jest.setTimeout(10000);
 
 	test("`PSP22::total_supply`", async () => {
-		const { value } = await contract.query['PSP22::total_supply']();
+		const { value } = await contract.query.totalSupply();
 		expect( ['string', 'number'].includes(typeof value) ).toBe(true);
 		expect( _isAmount(value) ).toBe(true);
 	});
 
 	test("`PSP22::balance_of`", async () => {
-		const { value } = await contract.query['PSP22::balance_of'](UserAlice.address);
+		const { value } = await contract.query.balanceOf(UserAlice.address);
 		expect( ['string', 'number'].includes(typeof value) ).toBe(true);
 		expect( _isAmount(value) ).toBe(true);
 	});
 
 	test("`PSP22::balance_of`", async () => {
-		await contract.query['PSP22::balance_of'](UserCharlie.address);
-	});
-
-	test("`PSP22::balance_of`", async () => {
-		await contract.query['PSP22::balance_of'](UserCharlie.address);
+		await contract.query.balanceOf(UserCharlie.address);
 	});
 
 	test("`mint_to`", async () => {
-		const { value } = await contract.query['PSP22Mintable::mint'](UserAlice.address, '1000000');
+		const { value } = await contract.query.mint(UserAlice.address, '1000000');
 		expect( value === null ).toBe(true);
 	});
 
 	test("`PSP22Mintable::mint`", async () => {
-		var { value } = await contract.query['PSP22Mintable::mint'](UserAlice.address, '1000000');
+		var { value } = await contract.query.mint(UserAlice.address, '1000000');
 		expect( value === null ).toBe(true);
-		var { value } = await contract.query['PSP22Mintable::mint'](UserAlice.address, 1000000);
+		var { value } = await contract.query.mint(UserAlice.address, 1000000);
 		expect( value === null ).toBe(true);
 	});
 
 	test("`PSP22::allowance`", async () => {
-		const { value } = await contract.query['PSP22::allowance'](UserCharlie.address, UserCharlie.address);
+		const { value } = await contract.query.allowance(UserCharlie.address, UserCharlie.address);
 		expect( ['string', 'number'].includes(typeof value) ).toBe(true);
 		expect( _isAmount(value) ).toBe(true);
 	});
 
 	test("`PSP22::increase_allowance` & `PSP22::decrease_allowance`", async () => {
-		var { value } = await contract.query['PSP22::increase_allowance'](UserAlice.address, '1000000');
+		var { value } = await contract.query.increaseAllowance(UserAlice.address, '1000000');
 		expect( value === null ).toBe(true);
-		await contract.tx['PSP22::increase_allowance'](UserAlice.address, '1000000');
-		var { value } = await contract.query['PSP22::decrease_allowance'](UserAlice.address, '1000000');
+		await contract.tx.increaseAllowance(UserAlice.address, '1000000');
+		var { value } = await contract.query.decreaseAllowance(UserAlice.address, '1000000');
 		expect( value === null ).toBe(true);
 	});
 
 	test("`PSP22::transfer`", async () => {
-		await contract.tx['PSP22Mintable::mint'](UserAlice.address, '10');
+		await contract.tx.mint(UserAlice.address, '10');
 
-		const { value } = await contract.query['PSP22::transfer'](UserBob.address, '10', []);
+		const { value } = await contract.query.transfer(UserBob.address, '10', []);
 		expect( value === null ).toBe(true);
 	});
 });
