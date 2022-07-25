@@ -1,0 +1,40 @@
+import BN from 'bn.js';
+{{#if additionalImports.length}}
+{{#each additionalImports}}
+import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
+{{/each}}{{/if}}
+{{#each tsTypes}}
+{{#if bodyReturnType}}{{{bodyReturnType}}}
+
+{{/if}}
+{{/each}}
+
+export class ReturnNumber {
+	readonly rawNumber: BN;
+
+	constructor(
+		value: number | string,
+	) {
+		if (typeof value == 'number') {
+			this.rawNumber = new BN(value);
+		} else {
+			this.rawNumber = new BN(value, 16);
+		}
+	}
+
+	toString() {
+		return this.rawNumber.toString();
+	}
+
+	toHuman() {
+		return this.toString();
+	}
+
+	toNumber() {
+		return this.rawNumber.toNumber();
+	}
+
+	static ToBN(value: number | string) {
+		return new ReturnNumber(value).rawNumber;
+	}
+}

@@ -116,12 +116,24 @@ export class TypeParser {
 	private generatePrimitive = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type;
 
+		const typeName = type.def.asPrimitive.toString();
+
+		if (typeName == 'U128' || typeName == 'U256' || typeName == 'I128' || typeName == 'I256') {
+			return new TypeInfo(
+				typeId,
+				parsePrimitiveArgs(typeName),
+				'ReturnNumber',
+				parsePrimitiveArgs(typeName),
+				'ReturnTypes.ReturnNumber',
+			);
+		}
+
 		return new TypeInfo(
 			typeId,
-			parsePrimitiveArgs(type.def.asPrimitive.toString()),
-			parsePrimitiveReturns(type.def.asPrimitive.toString()),
-			parsePrimitiveArgs(type.def.asPrimitive.toString()),
-			parsePrimitiveReturns(type.def.asPrimitive.toString()),
+			parsePrimitiveArgs(typeName),
+			parsePrimitiveReturns(typeName),
+			parsePrimitiveArgs(typeName),
+			parsePrimitiveReturns(typeName),
 		);
 	};
 

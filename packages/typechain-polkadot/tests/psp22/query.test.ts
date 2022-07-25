@@ -3,7 +3,7 @@ import Constructors from '../generated/constructors/my_psp22';
 import {ApiPromise, Keyring} from "@polkadot/api";
 import type {KeyringPair} from "@polkadot/keyring/types";
 import {GetAccounts} from "../config";
-
+import type {ReturnNumber} from "../generated/types-returns/my_psp22";
 
 describe("Correctness of the PSP22 contract' methods types", () => {
 	let api : ApiPromise;
@@ -85,7 +85,7 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 	});
 });
 
-function _isAmount(value : number | string | undefined) {
+function _isAmount(value : ReturnNumber | undefined) {
 	const number = Number(value);
 	return Number.isInteger(number) && number >= 0;
 }
