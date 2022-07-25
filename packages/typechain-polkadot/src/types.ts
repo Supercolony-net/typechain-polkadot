@@ -19,6 +19,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import BN from "bn.js";
+
 export interface Method {
 	name: string;
 	originalName: string;
@@ -30,7 +32,7 @@ export interface Method {
 	}[];
 	payable ? : boolean;
 	returnType ? : undefined | null | {
-		id : string | number,
+		id : number | string;
 		tsStr : string,
 	};
 	mutating ? : boolean;
