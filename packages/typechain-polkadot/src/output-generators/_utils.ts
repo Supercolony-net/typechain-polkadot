@@ -19,12 +19,18 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import {Abi} from "@polkadot/api-contract";
 import path from "path";
 import fs from "fs";
 import Handlebars from "handlebars";
 import toCamelCase from 'camelcase';
 import {Method} from "../types";
 
+/**
+ * Reads handlebars templates from the given template name from {@link src/templates}
+ *
+ * @param {string} template - Template name
+ */
 export function readTemplate (template: string): string {
 	// Inside the api repo itself, it will be 'auto'
 	const rootDir = __dirname + '/../templates';
@@ -67,8 +73,12 @@ Handlebars.registerHelper( 'constructReturnType', function(fn: Method) {
 	return '';
 });
 
-import {Abi} from "@polkadot/api-contract";
-
+/**
+ * Preprocess abi to avoid bugs in the generated code
+ *
+ * @param _abiStr - ABI as string
+ * @returns Abi - Preprocessed ABI
+ */
 export function preprocessABI(_abiStr: string): Abi {
 	const abiJson = JSON.parse(_abiStr);
 

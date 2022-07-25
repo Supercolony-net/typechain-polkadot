@@ -23,6 +23,10 @@ import {__assureDirExists} from "./generators/_utils";
 import * as FsExtraAPI from "fs-extra";
 import PathAPI from "path";
 
+/**
+ * Generates a directories' hierarchy for the given path
+ * @param absPathToOutput - The absolute path to the output directory
+ */
 export function generateProjectStructure(absPathToOutput: string) {
 	__assureDirExists(absPathToOutput, '');
 	__assureDirExists(absPathToOutput, '_sdk');

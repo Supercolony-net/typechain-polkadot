@@ -7,10 +7,12 @@
 	  "publish": "npx lerna publish --registry=https://npm.pkg.github.com/",
 	  "start-typechain": "npx typechain-polkadot --in ./artifacts --out ./out",
 	  "lint": "eslint \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
-	  "lint:fix": "eslint --fix \"{packages, examples}/**/*.{js,jsx,ts,tsx}\""
+	  "lint:fix": "eslint --fix \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
+	  "gen-docs": "npx typedoc --out docs-generated"
 	},
 	"devDependencies": {
 		"lerna": "^5.1.8",
-	  	"typechain-polkadot": "file:packages/typechain-polkadot"
+	  	"typechain-polkadot": "file:packages/typechain-polkadot",
+	  	"typedoc": "^0.23.9"
 	}
 }

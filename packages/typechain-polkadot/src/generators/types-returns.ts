@@ -23,6 +23,13 @@ import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
 
+/**
+ * Generates the types-returns/<fileName>.ts file.
+ *
+ * @param abi - The ABI of the contract
+ * @param fileName - The name of the file to write to
+ * @param absPathToOutput - The absolute path to the output directory
+ */
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
 

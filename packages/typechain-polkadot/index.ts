@@ -19,8 +19,29 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ *  ## Typechain-polkadot
+ *
+ *	User-friendly tool to generate TypeScript types from Polkadot Contract ABIs.
+ *
+ *
+ *	@remarks
+ *	This tool generates TypeScript types from Polkadot Contract ABIs. It also provides Runtime-code to interact with the contracts.
+ *  To deploy contract you should also provide .contract file with wasm and abi.
+ *  If you don't need to deploy it you can just provide .json file with contract ABI.
+ *
+ *  @example
+ *  # Usage from CLI
+ *  ```bash
+ *     $ npm i @supercolony/typechain-polkadot
+ *     $ npx @supercolony/typechain-polkadot --in path/to/abis --out path/to/output/folder
+ *  ```
+ *
+ *  @packageDocumentation
+ */
+
+
 import * as FsAPI from 'fs';
-import * as FsExtraAPI from 'fs-extra';
 import * as PathAPI from 'path';
 import YARGS from 'yargs';
 

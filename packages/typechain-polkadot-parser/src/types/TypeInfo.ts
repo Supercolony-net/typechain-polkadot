@@ -27,6 +27,18 @@ export class TypeInfo {
 	bodyArgType ?: string;
 	bodyReturnType ?: string;
 
+	/**
+	 * @constructor
+	 * @memberOf TypeInfo
+	 *
+	 * @param id - The id of the type
+	 * @param tsArgType - Typescript-type of type when it used for arguments
+	 * @param tsReturnType - Typescript-type of type when it used for return values
+	 * @param tsArgTypePrefixed - Typescript-type of type when it used for arguments, with prefix (ArgumentTypes.*)
+	 * @param tsReturnTypePrefixed - Typescript-type of type when it used for return values, with prefix (ReturnTypes.*)
+	 * @param bodyArgType - Body of Typescipt-type if it is a composite type or enum (for arguments)
+	 * @param bodyReturnType - Body of Typescipt-type if it is a composite type or enum (for return values)
+	 */
 	constructor(id: number, tsArgType: string, tsReturnType: string, bodyArgType?: string, bodyReturnType?: string) {
 		this.id = id;
 		this.tsArgType = tsArgType;

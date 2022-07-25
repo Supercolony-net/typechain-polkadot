@@ -19,6 +19,18 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ *  ## Typechain-Polkadot-Parser
+ *
+ *	Utility-package for parsing types from ABIs for @supercolony-net/typechain-polkadot.
+ *
+ *
+ *	@remarks
+ *	This tool generates TypeScript types from Polkadot Contract ABIs.
+ *
+ *  @packageDocumentation
+ */
+
 import {Abi} from "@polkadot/api-contract";
 import {
 	generateClassEnum,
@@ -35,6 +47,12 @@ export class TypeParser {
 	readonly tsTypes: Array<TypeInfo> = [];
 	private abiTypes: Vec<PortableType>;
 
+	/**
+	 * @constructor
+	 * @param abi: The ABI to parse (should be preprocessed with preprocessABI (see in {@link ./src/utils:preprocessABI}))
+	 *
+	 * @remark When you are creating instances of this class calling constructor, types are automatically parsing.
+	 */
 	constructor(abi: Abi) {
 		this.abiTypes = abi.metadata.types;
 
@@ -43,10 +61,26 @@ export class TypeParser {
 		});
 	}
 
+	/**
+	 * getType
+	 *
+	 * @param {number} id - The index of the type in the ABI
+	 * @returns {TypeInfo} TypeInfo
+	 */
 	public getType(id: number): TypeInfo {
 		return this.tsTypes[id]!;
 	}
 
+	/**
+	 * generateType
+	 *
+	 * @param typeId - The in
+	 *
+	 * @returns {TypeInfo} TypeInfo
+	 *
+	 * @remarks
+	 * This function generates TypeInfo for the given typeId using recursive algorithm.
+	 */
 	private generateType = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type;
 
@@ -68,6 +102,11 @@ export class TypeParser {
 		}
 	};
 
+	/**
+	 * Function to generate TypeInfo for Composite type
+	 *
+	 * @param typeId - The index of the type in the ABI
+	 */
 	private generateComposite = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type;
 
@@ -109,6 +148,10 @@ export class TypeParser {
 		);
 	};
 
+	/**
+	 * Function to generate TypeInfo for Variant type
+	 * @param typeId - The index of the type in the ABI
+	 */
 	private generatePrimitive = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type;
 
@@ -119,6 +162,10 @@ export class TypeParser {
 		);
 	};
 
+	/**
+	 * Function to generate TypeInfo for Variant type
+	 * @param typeId - The index of the type in the ABI
+	 */
 	private generateSequence = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type.def.asSequence.type.toJSON() as number;
 
@@ -129,6 +176,10 @@ export class TypeParser {
 		);
 	};
 
+	/**
+	 * Function to generate TypeInfo for Variant type
+	 * @param typeId - The index of the type in the ABI
+	 */
 	private generateArray = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type.def.asArray.type.toJSON() as number;
 
@@ -139,6 +190,10 @@ export class TypeParser {
 		);
 	};
 
+	/**
+	 * Function to generate TypeInfo for Variant type
+	 * @param typeId - The index of the type in the ABI
+	 */
 	private generateTuple = (typeId: number): TypeInfo => {
 		const type = this.abiTypes[typeId]!.type.def.asTuple.toJSON() as number[];
 		if (type.length == 0) {
@@ -155,6 +210,10 @@ export class TypeParser {
 		);
 	};
 
+	/**
+	 * Function to generate TypeInfo for Variant type
+	 * @param typeID - The index of the type in the ABI
+	 */
 	private generateVariant = (typeID: number): TypeInfo => {
 		const type = this.abiTypes[typeID]!.type;
 		const variant = this.abiTypes[typeID]!.type.def.asVariant;

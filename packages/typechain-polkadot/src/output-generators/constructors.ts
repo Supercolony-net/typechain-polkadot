@@ -27,4 +27,12 @@ import {Import, Method} from "../types";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("constructors"));
 
+/**
+ * Generates file content for constructors/<fileName>.ts using Handlebars
+ *
+ * @param {string} fileName - The name of the file to write to
+ * @param {string} pathToContractFile - The path to the .contract file
+ * @param {Method[]} methods - The methods to generate for the file
+ * @returns {string} Generated file content
+ */
 export const FILE = (fileName : string, pathToContractFile : string, methods: Method[]) => generateForMetaTemplate({fileName, pathToContractFile: pathToContractFile, methods});

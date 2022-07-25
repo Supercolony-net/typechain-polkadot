@@ -24,6 +24,14 @@ import {__writeFileSync} from "./_utils";
 import * as BUILD_EXTRINSIC_TEMPLATES from "../output-generators/build-extrinsic";
 import {Import, Method} from "../types";
 import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+
+/**
+ * Generates the build-extrinsic/<fileName>.ts file.
+ *
+ * @param abi - The ABI of the contract
+ * @param fileName - The name of the file to write to
+ * @param absPathToOutput - The absolute path to the output directory
+ */
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
 

@@ -26,6 +26,14 @@ import {Method} from "../types";
 import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
 import PathAPI from "path";
 
+/**
+ * Generates the constructors/<fileName>.ts file.
+ *
+ * @param abi - The ABI of the contract
+ * @param fileName - The name of the file to write to
+ * @param absPathToOutput - The absolute path to the output directory
+ * @param absPathToABIs - The absolute path to the ABIs directory
+ */
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
 	const relPathFromOutL1toABIs = PathAPI.relative(
 		process.cwd(),

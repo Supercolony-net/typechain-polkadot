@@ -27,4 +27,12 @@ import {Import} from "../types";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("contract"));
 
+/**
+ * Generates file content for contract/<fileName>.ts using Handlebars
+ *
+ * @param {string} fileName - The name of the file to write to
+ * @param {string} abiDirRelPath - The relative path to the ABI directory
+ * @param {Import[]} additionalImports - Any additional imports to add to the file
+ * @returns {string} Generated file content
+ */
 export const FILE = (fileName : string, abiDirRelPath : string, additionalImports: Import[]) => generateForMetaTemplate({fileName, abiDirRelPath, additionalImports});

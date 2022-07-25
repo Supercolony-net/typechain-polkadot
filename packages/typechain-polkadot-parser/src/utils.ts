@@ -71,6 +71,12 @@ export class ${enumName}Builder {
 }`;
 };
 
+/**
+ * Preprocesses the ABI to avoid changes from polkadot.js
+ *
+ * @param _abiStr - The ABI to preprocess
+ * @returns The preprocessed ABI
+ */
 export function preprocessABI(_abiStr: string): Abi {
 	const abiJson = JSON.parse(_abiStr);
 

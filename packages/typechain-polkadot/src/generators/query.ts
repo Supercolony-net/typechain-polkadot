@@ -25,6 +25,13 @@ import * as QUERY_TEMPLATES from "../output-generators/query";
 import {Import, Method} from "../types";
 import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
 
+/**
+ * Generates the query/<fileName>.ts file.
+ *
+ * @param abi - The ABI of the contract
+ * @param fileName - The name of the file to write to
+ * @param absPathToOutput - The absolute path to the output directory
+ */
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
 

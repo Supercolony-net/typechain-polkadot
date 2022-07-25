@@ -27,4 +27,11 @@ import {Import, Type} from "../types";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("return-values"));
 
+/**
+ * Generates file content for return-values/<fileName>.ts using Handlebars
+ *
+ * @param {Type[]} types - The types to generate for the file
+ * @param {Import[]} additionalImports - Any additional imports to add to the file
+ * @returns {string} - Generated file content
+ */
 export const FILE = (types : Type[], additionalImports: Import[]) => generateForMetaTemplate({types, additionalImports});

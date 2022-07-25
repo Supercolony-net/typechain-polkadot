@@ -25,6 +25,13 @@ import * as MIXED_METHODS_TEMPLATES from "../output-generators/mixed-methods";
 import {Import, Method} from "../types";
 import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
 
+/**
+ * Generates the mixed-methods/<fileName>.ts file.
+ *
+ * @param abi - The ABI of the contract
+ * @param fileName - The name of the file to write to
+ * @param absPathToOutput - The absolute path to the output directory
+ */
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
 

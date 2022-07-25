@@ -27,6 +27,14 @@ import {Import, Method, Type} from "../types";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate('arguments'));
 
+/**
+ * Generates the arguments for a method.
+ *
+ * @param {Type[]} argsTypes - The types of the arguments.
+ * @param {Method[]} methods - The methods to generate arguments for.
+ * @param {Import[]} additionalImports - The additional imports to add to the file.
+ * @returns {string} The generated file contents.
+ */
 export function FILE(
 	argsTypes: Type[],
 	methods : Method[],

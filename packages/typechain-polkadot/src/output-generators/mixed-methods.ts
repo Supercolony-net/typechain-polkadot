@@ -27,4 +27,12 @@ import {Import, Method} from "../types";
 
 const generateForMetaTemplate = Handlebars.compile(readTemplate("mixed-methods"));
 
+/**
+ * Generates file content for mixed-methods/<fileName>.ts using Handlebars
+ *
+ * @param {string} fileName - The name of the file to write to
+ * @param {Method[]} methods - The methods to generate for the file
+ * @param {Import[]} additionalImports - Any additional imports to add to the file
+ * @returns {string} Generated file content
+ */
 export const FILE = (fileName : string, methods : Method[], additionalImports: Import[]) => generateForMetaTemplate({fileName, methods, additionalImports});
