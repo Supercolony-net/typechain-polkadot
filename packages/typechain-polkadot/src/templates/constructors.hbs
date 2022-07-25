@@ -20,42 +20,40 @@ export default class Constructors {
 	}
 
 	{{#each methods}}
-    	/**{{#if args.length}}
-    	 * @arg: args: [
-    	 {{#each args}}
-    	 * {{{@index}}}: {{{name}}} - {{{type.id}}},
-    	{{/each}}
-    	 * ]
-    	{{/if}} */
-    	async "{{{toCamelCase name}}}" (
-    	{{#each args}}
-    		{{{name}}}: {{{type.tsStr}}},
-    	{{/each}}
-    		__options ? : ConstructorOptions,
-    	) {
-    		const __contract = JSON.parse(Files.readFileSync("{{{../pathToContractFile}}}").toString());
+	/**{{#if args.length}}
+     {{#each args}}
+     * @param {{{name}}} - {{{@index}}}
+    {{/each}}
+    {{/if}} */
+    async "{{{toCamelCase name}}}" (
+    {{#each args}}
+    	{{{name}}}: {{{type.tsStr}}},
+    {{/each}}
+    	__options ? : ConstructorOptions,
+    ) {
+    	const __contract = JSON.parse(Files.readFileSync("{{{../pathToContractFile}}}").toString());
 
-			const code = new CodePromise(this.nativeAPI, __contract, __contract.source.wasm);
+		const code = new CodePromise(this.nativeAPI, __contract, __contract.source.wasm);
 
-			const gasLimit = 100000 * 1000000 || __options?.gasLimit;
-			const storageDepositLimit = __options?.storageDepositLimit;
+		const gasLimit = 100000 * 1000000 || __options?.gasLimit;
+		const storageDepositLimit = __options?.storageDepositLimit;
 
-			const tx = code.tx["{{{toCamelCase originalName}}}"]!({ gasLimit, storageDepositLimit, value: __options?.value }, {{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}});
+		const tx = code.tx["{{{toCamelCase originalName}}}"]!({ gasLimit, storageDepositLimit, value: __options?.value }, {{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}});
 
-			let response;
-			try {
-				response = await _signAndSend(this.nativeAPI.registry, tx, this.signer);
-			}
-			catch (error) {
-				console.log(error);
-			}
+		let response;
+		try {
+			response = await _signAndSend(this.nativeAPI.registry, tx, this.signer);
+		}
+		catch (error) {
+			console.log(error);
+		}
 
-			return {
-				result: response as SignAndSendSuccessResponse,
-				// @ts-ignore
-				address: (response as SignAndSendSuccessResponse)!.result!.contract.address.toString(),
-			}
-    	}
+		return {
+			result: response as SignAndSendSuccessResponse,
+			// @ts-ignore
+			address: (response as SignAndSendSuccessResponse)!.result!.contract.address.toString(),
+		}
+   	}
 
     {{/each}}
 }

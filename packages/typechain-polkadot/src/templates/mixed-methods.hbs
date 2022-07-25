@@ -34,11 +34,9 @@ export default class Methods {
 
 {{#each methods}}
 	/**{{#if args.length}}
-	 * @arg: args: [
 	 {{#each args}}
-	 * {{{@index}}}: {{{name}}},
+	 * @param {{{name}}} - {{{@index}}}
 	 {{/each}}
-	 * ]
 	{{/if}} */
 	"{{{toCamelCase name}}}" (
 	{{#each args}}
