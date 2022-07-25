@@ -9,8 +9,7 @@ import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } fro
 {{/if}}
 {{/each}}
 
-
-class ReturnNumber {
+export class ReturnNumber {
 	readonly rawNumber: BN;
 
 	constructor(
