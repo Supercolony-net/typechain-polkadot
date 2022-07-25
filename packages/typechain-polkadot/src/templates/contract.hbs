@@ -19,16 +19,41 @@ export default class Contract {
 	readonly tx : TxSignAndSendMethods;
 	readonly methods : MixedMethods;
 
+	readonly address : string;
+	readonly signer : KeyringPair;
+
+	private nativeContract : ContractPromise;
+	private nativeAPI : ApiPromise;
+
 	constructor(
 		address : string,
 		signer : KeyringPair,
 		nativeAPI : ApiPromise,
 	) {
-		const nativeContract = new ContractPromise(nativeAPI, ABI, address);
+		this.address = address;
+		this.nativeContract = new ContractPromise(nativeAPI, ABI, address);
+		this.nativeAPI = nativeAPI;
+		this.signer = signer;
 
-		this.query = new QueryMethods(nativeContract, signer.address);
-		this.buildExtrinsic = new BuildExtrinsicMethods(nativeContract);
-		this.tx = new TxSignAndSendMethods(nativeAPI, nativeContract, signer);
-		this.methods = new MixedMethods(nativeAPI, nativeContract, signer);
+		this.query = new QueryMethods(this.nativeContract, signer.address);
+		this.buildExtrinsic = new BuildExtrinsicMethods(this.nativeContract);
+		this.tx = new TxSignAndSendMethods(nativeAPI, this.nativeContract, signer);
+		this.methods = new MixedMethods(nativeAPI, this.nativeContract, signer);
+	}
+
+	get name() : string {
+		return this.nativeContract.abi.info.contract.name.toString();
+	}
+
+	withSigner(signer : KeyringPair) : Contract {
+		return new Contract(this.address, signer, this.nativeAPI);
+	}
+
+	withAddress(address : string) : Contract {
+		return new Contract(address, this.signer, this.nativeAPI);
+	}
+
+	withAPI(api : ApiPromise) : Contract {
+		return new Contract(this.address, this.signer, api);
 	}
 }
