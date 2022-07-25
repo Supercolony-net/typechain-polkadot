@@ -38,7 +38,7 @@ describe('MY_PSP34', () => {
 			tx,
 		} = contract;
 
-		const resultBefore = ((await query.totalSupply()).value) as number;
+		const resultBefore = Number((await query.totalSupply()).value);
 
 		await tx.mint(UserAlice.address, IdBuilder.U8(resultBefore.valueOf() + 1));
 
@@ -53,7 +53,7 @@ describe('MY_PSP34', () => {
 			tx,
 		} = contract;
 
-		const totalSupply = (await (query.totalSupply())).value as number;
+		const totalSupply = Number((await (query.totalSupply())).value);
 
 		// @ts-ignore
 		await tx.mint(UserAlice.address, IdBuilder.U16(totalSupply.valueOf() + 1));
@@ -67,7 +67,7 @@ describe('MY_PSP34', () => {
 			tx,
 		} = contract;
 
-		const totalSupply = (await (query.totalSupply())).value as number;
+		const totalSupply = Number((await (query.totalSupply())).value);
 
 		const id = totalSupply + 1;
 
@@ -78,7 +78,7 @@ describe('MY_PSP34', () => {
 		await tx.mint(UserAlice.address, IdBuilder.U128(id));
 		await tx.mint(UserAlice.address, IdBuilder.Bytes([id]));
 
-		const totalSupplyAfter = (await (query.totalSupply())).value as number;
+		const totalSupplyAfter = Number((await (query.totalSupply())).value);
 
 		// @ts-ignore
 		await expect(totalSupplyAfter.valueOf() - totalSupply.valueOf()).toBe(6);
