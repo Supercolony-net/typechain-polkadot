@@ -5,7 +5,7 @@
 
 ## Overview :page_facing_up:
 
-Typechain was created by [Supercolony](supercolony.net) to ......
+Typechain was created by [Supercolony](supercolony.net) to to improve developers’ experience working with ink! smartcontracts.
 
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
@@ -49,11 +49,6 @@ When contracts descriptions come both with ABI and source code (`*.contract` fil
 Typechain participates in the Web3 Grants, you can find the roadmap there:
 - [Grant I](https://github.com/Supercolony-net/Open-Grants-Program/blob/feature/typechain/applications/typechain-polkadot.md)
 - Grant II - Comming soon....
-
-More common roadmap of tasks:
-- [x] .....
-- [x] .....
-- [ ] .....
 
 -----------
 #### Made with ❤️ by [Supercolony](https://supercolony.net)
