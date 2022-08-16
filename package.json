@@ -1,5 +1,5 @@
 {
-	"name": "@supercolony-net/typechain-polkadot",
+	"name": "@supercolony/typechain-polkadot",
 	"version": "0.1.1",
 	"scripts": {
 		"start": "ts-node index.ts --in artifacts --out out",
