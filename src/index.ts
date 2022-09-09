@@ -23,6 +23,7 @@ import {Abi} from "@polkadot/api-contract";
 
 import {INK_TYPES_TO_TS_ARGUMENTS, INK_TYPES_TO_TS_RETURNS} from "./consts";
 import assert from "assert";
+import camelcase from "camelcase";
 
 export interface ParsedABI {
 	types: Array<{id: number, tsStr: string, type: string}>,
@@ -44,7 +45,7 @@ const generateInterface = (interfaceName: string, argumentNames: string[], argum
     assert(argumentNames.length == argumentTypes.length);
 
     return `export type ${interfaceName} = {
-\t${argumentNames.map((e, i) => `${e}: ${argumentTypes[i]}`).join(',\n\t')}
+\t${argumentNames.map((e, i) => `${camelcase(e)}: ${argumentTypes[i]}`).join(',\n\t')}
 }`;
 };
 

@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import deployPSP22_Token from './psp22';
 import deployPSP34_Token from './psp34';
 import deployContractWithEnums from './contractWithEnums';
+import deployStructExample from './structExample';
 
 
 dotenv.config({ path: __dirname + '/.env' });
@@ -19,25 +20,29 @@ async function run() {
 
     const deployerSigner = network.getSigners()[0];
 
-    const PSP22Address = await deployPSP22_Token(deployerSigner);
+    // const PSP22Address = await deployPSP22_Token(deployerSigner);
 
-    const alice = keyring.addFromUri('//Alice');
-    const bob   = keyring.addFromUri('//Bob');
+    // const alice = keyring.addFromUri('//Alice');
+    // const bob   = keyring.addFromUri('//Bob');
 
-    console.log(`export const TOKEN = '${PSP22Address}';`);
+    // console.log(`export const TOKEN = '${PSP22Address}';`);
 
-    const PSP22Contract = await attachContract('my_psp22', PSP22Address);
+    // const PSP22Contract = await attachContract('my_psp22', PSP22Address);
 
-    await PSP22Contract.tx["psp22Mintable::mint"](alice.address, '1000000000000000000000000000000000000');
-    await PSP22Contract.tx["psp22Mintable::mint"](bob.address, '1000000000000000000000000000000000000');
+    // await PSP22Contract.tx["psp22Mintable::mint"](alice.address, '1000000000000000000000000000000000000');
+    // await PSP22Contract.tx["psp22Mintable::mint"](bob.address, '1000000000000000000000000000000000000');
 
-    const psp34Address = await deployPSP34_Token(deployerSigner);
+    // const psp34Address = await deployPSP34_Token(deployerSigner);
 
-    console.log(`export const PSP34_TOKEN = '${psp34Address}';`);
+    // console.log(`export const PSP34_TOKEN = '${psp34Address}';`);
 
-    const contactWithEnumsAddress = await deployContractWithEnums(deployerSigner);
+    // const contactWithEnumsAddress = await deployContractWithEnums(deployerSigner);
 
-    console.log(`export const CONTRACT_WITH_ENUMS = '${contactWithEnumsAddress}';`);
+    // console.log(`export const CONTRACT_WITH_ENUMS = '${contactWithEnumsAddress}';`);
+
+    const structExample = await deployStructExample(deployerSigner);
+
+    console.log(`export const STRUCT_EXAMPLE = '${structExample}';`);
 
     await api.disconnect();
 }

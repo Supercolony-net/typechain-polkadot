@@ -1,0 +1,138 @@
+{
+  "source": {
+    "hash": "0xf38d2f8951e5cfd9f72840a60b5f59c2eb83ea19ebb614545d6ebed4439cba12",
+    "language": "ink! 3.3.1",
+    "compiler": "rustc 1.65.0-nightly"
+  },
+  "contract": {
+    "name": "struct_example",
+    "version": "0.1.0",
+    "authors": [
+      ""
+    ]
+  },
+  "V3": {
+    "spec": {
+      "constructors": [
+        {
+          "args": [],
+          "docs": [],
+          "label": "new",
+          "payable": false,
+          "selector": "0x9bae9d5e"
+        }
+      ],
+      "docs": [],
+      "events": [],
+      "messages": [
+        {
+          "args": [],
+          "docs": [],
+          "label": "return_struct",
+          "mutates": false,
+          "payable": false,
+          "returnType": {
+            "displayName": [
+              "ExampleStruct"
+            ],
+            "type": 0
+          },
+          "selector": "0x81c6afde"
+        }
+      ]
+    },
+    "storage": {
+      "struct": {
+        "fields": []
+      }
+    },
+    "types": [
+      {
+        "id": 0,
+        "type": {
+          "def": {
+            "composite": {
+              "fields": [
+                {
+                  "name": "some_important_decimal",
+                  "type": 1,
+                  "typeName": "u16"
+                },
+                {
+                  "name": "some_u128",
+                  "type": 2,
+                  "typeName": "u128"
+                },
+                {
+                  "name": "some_address",
+                  "type": 3,
+                  "typeName": "AccountId"
+                }
+              ]
+            }
+          },
+          "path": [
+            "struct_example",
+            "struct_example",
+            "ExampleStruct"
+          ]
+        }
+      },
+      {
+        "id": 1,
+        "type": {
+          "def": {
+            "primitive": "u16"
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": {
+          "def": {
+            "primitive": "u128"
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": {
+          "def": {
+            "composite": {
+              "fields": [
+                {
+                  "type": 4,
+                  "typeName": "[u8; 32]"
+                }
+              ]
+            }
+          },
+          "path": [
+            "ink_env",
+            "types",
+            "AccountId"
+          ]
+        }
+      },
+      {
+        "id": 4,
+        "type": {
+          "def": {
+            "array": {
+              "len": 32,
+              "type": 5
+            }
+          }
+        }
+      },
+      {
+        "id": 5,
+        "type": {
+          "def": {
+            "primitive": "u8"
+          }
+        }
+      }
+    ]
+  }
+}
