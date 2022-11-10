@@ -29,7 +29,7 @@ import type {
 
 const DEF_GAS_LIMIT_AND_VALUE : GasLimitAndValue = {
 	value: 0,
-	gasLimit: -1,
+	gasLimit: 1000000 * 1000000,
 };
 
 type QueryReturnType<T> = {
@@ -211,7 +211,7 @@ function _genValidGasLimitAndValue(gasLimitAndValue ? : GasLimitAndValue) : GasL
 	let { value, gasLimit } = gasLimitAndValue;
 
 	if(!value) value = 0;
-	if(gasLimit == null) gasLimit = -1;
+	if(gasLimit == null) gasLimit = 1000000 * 1000000;
 
 	return { value, gasLimit };
 }

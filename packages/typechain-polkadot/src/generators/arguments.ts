@@ -22,7 +22,7 @@
 import {Abi} from "@polkadot/api-contract";
 import * as ARGUMENTS_TEMPLATES from "../output-generators/arguments";
 import {__writeFileSync} from "./_utils";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the arguments/<fileName>.ts file.

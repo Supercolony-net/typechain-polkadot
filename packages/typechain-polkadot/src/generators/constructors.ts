@@ -23,7 +23,7 @@ import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import * as CONTRACT_TEMPLATES from "../output-generators/constructors";
 import {Method} from "../types";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 import PathAPI from "path";
 
 /**

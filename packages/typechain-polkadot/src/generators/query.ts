@@ -23,7 +23,7 @@ import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import * as QUERY_TEMPLATES from "../output-generators/query";
 import {Import, Method} from "../types";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the query/<fileName>.ts file.

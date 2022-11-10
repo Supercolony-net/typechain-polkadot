@@ -22,7 +22,7 @@
 /**
  *  ## Typechain-Polkadot-Parser
  *
- *	Utility-package for parsing types from ABIs for @supercolony-net/typechain-polkadot.
+ *	Utility-package for parsing types from ABIs for @727-ventures/typechain-polkadot.
  *
  *
  *	@remarks

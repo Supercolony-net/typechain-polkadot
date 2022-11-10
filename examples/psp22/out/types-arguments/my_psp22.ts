@@ -5,43 +5,43 @@ export type AccountId = string
 export type Key = string
 
 export interface PSP22Error {
-	Custom ? : string,
-	InsufficientBalance ? : null,
-	InsufficientAllowance ? : null,
-	ZeroRecipientAddress ? : null,
-	ZeroSenderAddress ? : null,
-	SafeTransferCheckFailed ? : string
+	custom ? : string,
+	insufficientBalance ? : null,
+	insufficientAllowance ? : null,
+	zeroRecipientAddress ? : null,
+	zeroSenderAddress ? : null,
+	safeTransferCheckFailed ? : string
 }
 
 export class PSP22ErrorBuilder {
 	static Custom(value: string): PSP22Error {
 		return {
-			Custom: value
+			custom: value,
 		};
 	}
 	static InsufficientBalance(): PSP22Error {
 		return {
-			InsufficientBalance: null
+			insufficientBalance: null,
 		};
 	}
 	static InsufficientAllowance(): PSP22Error {
 		return {
-			InsufficientAllowance: null
+			insufficientAllowance: null,
 		};
 	}
 	static ZeroRecipientAddress(): PSP22Error {
 		return {
-			ZeroRecipientAddress: null
+			zeroRecipientAddress: null,
 		};
 	}
 	static ZeroSenderAddress(): PSP22Error {
 		return {
-			ZeroSenderAddress: null
+			zeroSenderAddress: null,
 		};
 	}
 	static SafeTransferCheckFailed(value: string): PSP22Error {
 		return {
-			SafeTransferCheckFailed: value
+			safeTransferCheckFailed: value,
 		};
 	}
 }

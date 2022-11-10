@@ -21,7 +21,7 @@
 
 import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the types-returns/<fileName>.ts file.

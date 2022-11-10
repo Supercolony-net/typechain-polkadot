@@ -1,43 +1,43 @@
 import type BN from 'bn.js';
 
 export interface Id {
-	U8 ? : number,
-	U16 ? : number,
-	U32 ? : number,
-	U64 ? : number,
-	U128 ? : (string | number),
-	Bytes ? : Array<number>
+	u8 ? : number,
+	u16 ? : number,
+	u32 ? : number,
+	u64 ? : number,
+	u128 ? : (string | number),
+	bytes ? : Array<number>
 }
 
 export class IdBuilder {
 	static U8(value: number): Id {
 		return {
-			U8: value
+			u8: value,
 		};
 	}
 	static U16(value: number): Id {
 		return {
-			U16: value
+			u16: value,
 		};
 	}
 	static U32(value: number): Id {
 		return {
-			U32: value
+			u32: value,
 		};
 	}
 	static U64(value: number): Id {
 		return {
-			U64: value
+			u64: value,
 		};
 	}
 	static U128(value: (string | number)): Id {
 		return {
-			U128: value
+			u128: value,
 		};
 	}
 	static Bytes(value: Array<number>): Id {
 		return {
-			Bytes: value
+			bytes: value,
 		};
 	}
 }
@@ -47,43 +47,43 @@ export type AccountId = string | number[]
 export type Key = string | number[]
 
 export interface PSP34Error {
-	Custom ? : string,
-	SelfApprove ? : null,
-	NotApproved ? : null,
-	TokenExists ? : null,
-	TokenNotExists ? : null,
-	SafeTransferCheckFailed ? : string
+	custom ? : string,
+	selfApprove ? : null,
+	notApproved ? : null,
+	tokenExists ? : null,
+	tokenNotExists ? : null,
+	safeTransferCheckFailed ? : string
 }
 
 export class PSP34ErrorBuilder {
 	static Custom(value: string): PSP34Error {
 		return {
-			Custom: value
+			custom: value,
 		};
 	}
 	static SelfApprove(): PSP34Error {
 		return {
-			SelfApprove: null
+			selfApprove: null,
 		};
 	}
 	static NotApproved(): PSP34Error {
 		return {
-			NotApproved: null
+			notApproved: null,
 		};
 	}
 	static TokenExists(): PSP34Error {
 		return {
-			TokenExists: null
+			tokenExists: null,
 		};
 	}
 	static TokenNotExists(): PSP34Error {
 		return {
-			TokenNotExists: null
+			tokenNotExists: null,
 		};
 	}
 	static SafeTransferCheckFailed(value: string): PSP34Error {
 		return {
-			SafeTransferCheckFailed: value
+			safeTransferCheckFailed: value,
 		};
 	}
 }

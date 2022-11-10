@@ -17,7 +17,7 @@ Given, that a front-end developer needs to do this with every contracts update, 
 In your project install this package:
 
 ```bash
-npm i -D @supercolony-net/typechain-polkadot
+npm i -D @727-ventures/typechain-polkadot
 ```
 
 Now you can use it to generate TS definitions & runtime code for your ABIs.
@@ -25,7 +25,7 @@ Now you can use it to generate TS definitions & runtime code for your ABIs.
 Given, that you've put input files in `path/to/input` folder, and want generated code to land in `path/to/output` folder, run the following command:
 
 ```bash
-npx @supercolony-net/typechain-polkadot --in path/to/input --out path/to/output
+npx @727-ventures/typechain-polkadot --in path/to/input --out path/to/output
 ```
 
 > Referer to [tech docs](./docs/tech-specs.md) and [about](./docs/about.md) section for more information. For usage examples in TypeScript, please, refer to this repo: https://github.com/Supercolony-net/typechain-polkadot_example

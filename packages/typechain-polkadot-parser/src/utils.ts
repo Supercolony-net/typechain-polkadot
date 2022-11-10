@@ -23,6 +23,7 @@ import {INK_TYPES_TO_TS_ARGUMENTS, INK_TYPES_TO_TS_RETURNS} from "./consts";
 import assert from "assert";
 import {Abi} from "@polkadot/api-contract";
 import {TypeInfo} from "./types/TypeInfo";
+import camelcase from "camelcase";
 
 export const parsePrimitiveReturns = (primitive: string): string => {
 	// @ts-ignore
@@ -37,35 +38,51 @@ export const parsePrimitiveArgs = (primitive: string): string => {
 export const generateInterfaceReturns = (interfaceName: string, argumentNames: string[], argumentTypes: TypeInfo[]) => {
 	assert(argumentNames.length == argumentTypes.length);
 
+	if (argumentNames.filter(a => a === '').length > 0) {
+		if (argumentNames.length === 1) {
+			return `export type ${interfaceName} = ${argumentTypes[0]!.tsReturnType};`;
+		} else {
+			return `export type ${interfaceName} = [${argumentTypes.map(a => a!.tsReturnType).join(', ')}];`;
+		}
+	}
+
 	return `export type ${interfaceName} = {
-\t${argumentNames.map((e, i) => `${e}: ${argumentTypes[i]!.tsReturnType}`).join(',\n\t')}
+\t${argumentNames.map((e, i) => `${camelcase(e)}: ${argumentTypes[i]!.tsReturnType}`).join(',\n\t')}
 }`;
 };
 
 export const generateInterfaceArgs = (interfaceName: string, argumentNames: string[], argumentTypes: TypeInfo[]) => {
 	assert(argumentNames.length == argumentTypes.length);
 
+	if (argumentNames.filter(a => a === '').length > 0) {
+		if (argumentNames.length === 1) {
+			return `export type ${interfaceName} = ${argumentTypes[0]!.tsArgType};`;
+		} else {
+			return `export type ${interfaceName} = [${argumentTypes.map(a => a!.tsArgType).join(', ')}];`;
+		}
+	}
+
 	return `export type ${interfaceName} = {
-\t${argumentNames.map((e, i) => `${e}: ${argumentTypes[i]!.tsArgType}`).join(',\n\t')}
+\t${argumentNames.map((e, i) => `${camelcase(e)}: ${argumentTypes[i]!.tsArgType}`).join(',\n\t')}
 }`;
 };
 
 export const generateEnum = (enumName: string, enumFields: string[]): string => {
 	return `export enum ${enumName} {
-	${enumFields.join(',\n\t')}
+	${enumFields.map(e => `${camelcase(e)} = '${e}'`).join(',\n\t')}
 }`;
 };
 
 export const generateClassEnum = (enumName: string, enumFields: string[], enumValues: string[]): string => {
 	assert(enumFields.length == enumValues.length);
 	return `export interface ${enumName} {
-	${enumFields.map((e, i) => `${e} ? : ${enumValues[i]}`).join(',\n\t')}
+	${enumFields.map((e, i) => `${camelcase(e)} ? : ${enumValues[i]}`).join(',\n\t')}
 }
 
 export class ${enumName}Builder {
 	${enumFields.map((e, i) => `static ${e}(${enumValues[i] !== 'null' ? `value: ${enumValues[i]}` : ''}): ${enumName} {
 		return {
-		${enumValues[i] !== 'null' ? `\t${e}: value` : `\t${e}: null`}
+		${enumValues[i] !== 'null' ? `\t${camelcase(e)}: value` : `\t${camelcase(e)}: null`},
 		};
 	}`).join('\n\t')}
 }`;

@@ -23,7 +23,7 @@ import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import * as TX_SIGN_AND_SEND_TEMPLATES from "../output-generators/tx-sign-and-send";
 import {Import, Method} from "../types";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the tx-sign-and-send/<fileName>.ts file.

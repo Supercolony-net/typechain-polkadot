@@ -23,7 +23,7 @@ import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import * as MIXED_METHODS_TEMPLATES from "../output-generators/mixed-methods";
 import {Import, Method} from "../types";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the mixed-methods/<fileName>.ts file.

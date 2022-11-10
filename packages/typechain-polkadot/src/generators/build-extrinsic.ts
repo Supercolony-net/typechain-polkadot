@@ -23,7 +23,7 @@ import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import * as BUILD_EXTRINSIC_TEMPLATES from "../output-generators/build-extrinsic";
 import {Import, Method} from "../types";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the build-extrinsic/<fileName>.ts file.

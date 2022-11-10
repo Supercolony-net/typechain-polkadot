@@ -1,6 +1,6 @@
 {
-  "name": "@supercolony-net/typechain-polkadot",
-  "version": "0.2.3",
+  "name": "@727-ventures/typechain-polkadot",
+  "version": "0.1.1",
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
     "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
@@ -23,10 +23,10 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "@polkadot/api": "^8.6.2",
-    "@polkadot/api-contract": "^8.6.2",
-    "@polkadot/keyring": "^9.3.1",
-    "@supercolony-net/typechain-polkadot-parser": "^0.0.6",
+    "@polkadot/api": "^9.6.1",
+    "@polkadot/api-contract": "^9.6.1",
+    "@polkadot/keyring": "^9.6.1",
+    "@727-ventures/typechain-polkadot-parser": "^0.1.0",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^17.0.34",
     "@types/yargs": "^17.0.10",

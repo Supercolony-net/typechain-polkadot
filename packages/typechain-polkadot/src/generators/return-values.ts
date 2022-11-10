@@ -22,7 +22,7 @@
 import {Abi} from "@polkadot/api-contract";
 import {__writeFileSync} from "./_utils";
 import * as OK_RETURNS_TEMPLATES from "../output-generators/return-values";
-import {TypeParser} from "@supercolony-net/typechain-polkadot-parser";
+import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 
 /**
  * Generates the return-values/<fileName>.ts file.
