@@ -1,6 +1,6 @@
 {
   "name": "@727-ventures/typechain-polkadot",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
     "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
