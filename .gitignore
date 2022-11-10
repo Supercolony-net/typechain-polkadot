@@ -1,8 +1,9 @@
-.idea
+/.idea
 
 node_modules
 
+/artifacts
+
 /out
 /dist
-
-package-lock.json
+lerna-debug.log

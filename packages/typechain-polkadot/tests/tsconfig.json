@@ -1,0 +1,39 @@
+{
+	"include": [
+		"./**/*.test.ts",
+	],
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": false,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"target": "esnext",
+		"sourceMap": true,
+		"declaration": true,
+		"noEmit": true,
+		"resolveJsonModule": true,
+
+		"strict": true,
+		"alwaysStrict": true,
+
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noUncheckedIndexedAccess": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+
+		"useUnknownInCatchVariables": true,
+		"importsNotUsedAsValues": "error",
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"isolatedModules": false,
+		"lib": ["dom", "esnext"],
+		"importHelpers": true,
+		"jsx": "react",
+		"skipLibCheck": true,
+	},
+}

@@ -1,0 +1,11 @@
+/* This file is auto-generated */
+
+import BN from 'bn.js';
+{{#if additionalImports.length}}{{#each additionalImports}}import type { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
+{{/each}}{{/if}}
+export default interface OkishReturnValueTypes {
+{{#each types}}
+	/** */
+	"{{{id}}}" : {{{tsStr}}};
+{{/each}}
+};

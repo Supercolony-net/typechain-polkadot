@@ -33,15 +33,15 @@ export default class Methods {
 	/**
 	 * @arg: args: [
 	 * 0: spender,
-	 * 1: delta_value,
+	 * 1: deltaValue,
 	 * ]
 	 */
 	"PSP22::decrease_allowance" (
 		spender: ArgumentsTypes[2],
-		delta_value: ArgumentsTypes[0],
+		deltaValue: ArgumentsTypes[0],
 		__options: GasLimit,
 	){
-		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::decreaseAllowance", [spender, delta_value], __options);
+		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::decreaseAllowance", [spender, deltaValue], __options);
 	}
 
 	/**
@@ -73,15 +73,15 @@ export default class Methods {
 	/**
 	 * @arg: args: [
 	 * 0: spender,
-	 * 1: delta_value,
+	 * 1: deltaValue,
 	 * ]
 	 */
 	"PSP22::increase_allowance" (
 		spender: ArgumentsTypes[2],
-		delta_value: ArgumentsTypes[0],
+		deltaValue: ArgumentsTypes[0],
 		__options: GasLimit,
 	){
-		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::increaseAllowance", [spender, delta_value], __options);
+		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::increaseAllowance", [spender, deltaValue], __options);
 	}
 
 	/** */

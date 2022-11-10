@@ -1,6 +1,6 @@
 /* This file is auto-generated */
 
-import type BN from 'bn.js';
+import BN from 'bn.js';
 import { AccountId } from '../types-arguments/my_psp22';
 
 export interface ArgumentsTypes {
