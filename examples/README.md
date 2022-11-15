@@ -22,3 +22,7 @@ This directory contains examples of parsed contracts and pieces of advice how to
 ```bash
 npx typechain-polkadot --in artifacts --out out
 ```
+or if you not installed typechain
+```bash
+npx @727-ventures/typechain-polkadot --in artifacts --out out
+```
