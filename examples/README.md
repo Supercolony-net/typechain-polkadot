@@ -26,3 +26,5 @@ or if you not installed typechain
 ```bash
 npx @727-ventures/typechain-polkadot --in artifacts --out out
 ```
+
+> Note: you should move metadata.json to artifacts directory and rename it to <contract-name>.json, also if you want to deploy the contract you should also move <contract-name>.contract to artifacts directory from your target dir
