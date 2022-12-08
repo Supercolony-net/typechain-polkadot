@@ -1,20 +1,20 @@
 {
   "name": "@727-ventures/typechain-polkadot-parser",
-  "version": "0.1.0",
+  "version": "0.1.1-beta.1",
   "description": "Parser that can generate typescript definitions from ABI of the contract",
   "scripts": {
     "test": "ts-node index.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
+    "url": "git+https://github.com/727-Ventures/typechain-polkadot.git"
   },
-  "author": "Supercolony-net",
+  "author": "727-Ventures",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
+    "url": "https://github.com/727-Ventures/typechain-polkadot/issues"
   },
-  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
+  "homepage": "https://github.com/727-Ventures/typechain-polkadot#readme",
   "dependencies": {
     "@polkadot/api": "^9.6.1",
     "@polkadot/api-contract": "^9.6.1",

@@ -1,8 +1,8 @@
-![created by sc](https://user-images.githubusercontent.com/24861482/182869484-fb90e4a9-6289-48a5-82ea-e8c9bc0097ad.png)
+![created by 727](https://727.ventures/img/logo.png)
 
 ## Overview :page_facing_up:
 
-Typechain was created by [Supercolony](supercolony.net) to to improve developers’ experience working with ink! smartcontracts.
+Typechain was created by [727-Ventures](https://727.ventures/) to to improve developers’ experience working with ink! smartcontracts.
 
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
@@ -18,16 +18,16 @@ Interaction with blockchain is done with polkadot.js library, which only has abs
 Install the package as dependency:
 
 ```bash
-yarn add @supercolony/typechain-polkadot
+npm i @727-ventures/typechain-polkadot
 ```
 
-Pass the folder with artifacts(in the example it is `artifacts`) as input argument 
+Pass the folder with artifacts(in the example it is `artifacts`) as input argument
 and the output folder(in the example it is `typed_contracts`):
 ```bash
-npx typechain-polkadot --in artifacts --out typed_contracts
+npx @727-ventures/typechain-polkadot --in artifacts --out typed_contracts
 ```
 
-Import the contract what you want to use(in the example it is [`my_psp22`](https://github.com/Supercolony-net/openbrush-contracts/tree/main/examples/psp22)):
+Import the contract what you want to use(in the example it is [`my_psp22`](https://github.com/727-Ventures/openbrush-contracts/tree/main/examples/psp22)):
 ```typescript
 import MyPSP22 from "../typed_contracts/contracts/my_psp22"
 ```
@@ -35,13 +35,13 @@ import MyPSP22 from "../typed_contracts/contracts/my_psp22"
 In the code you can find all available methods and constructors.
 
 Right now, you can't instantiate the contract via typechain(coming soon),
-but you can wrap any already deployed contract. If in the code you already 
+but you can wrap any already deployed contract. If in the code you already
 have instantiated `contract` then you can easily wrap it:
 
 ```typescript
 const typed_contract = new MyPSP22(
-    contract.address.toString(), 
-    signer /* who will sign transactions*/, 
+    contract.address.toString(),
+    signer /* who will sign transactions*/,
     contract.api
 );
 ```
@@ -83,4 +83,4 @@ Typechain participates in the Web3 Grants, you can find the roadmap there:
 - Grant II - Comming soon....
 
 -----------
-#### Made with ❤️ by [Supercolony](https://supercolony.net)
+#### Made with ❤️ by [727-Ventures](https://727.ventures/)

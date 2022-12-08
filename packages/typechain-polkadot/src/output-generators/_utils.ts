@@ -79,10 +79,16 @@ Handlebars.registerHelper( 'constructReturnType', function(fn: Method) {
  * @param _abiStr - ABI as string
  * @returns Abi - Preprocessed ABI
  */
+
+function __getV3(abiJson: any) {
+	if (abiJson.V3) return abiJson.V3;
+	return abiJson;
+}
+
 export function preprocessABI(_abiStr: string): Abi {
 	const abiJson = JSON.parse(_abiStr);
 
-	for (const method of abiJson.V3.spec.messages) {
+	for (const method of __getV3(abiJson).spec.messages) {
 		for (const arg of method.args) {
 			for (let i = 0; i < arg.type.displayName.length; i++) {
 				arg.type.displayName[i] = `_${arg.type.displayName[i]}`;
@@ -90,7 +96,7 @@ export function preprocessABI(_abiStr: string): Abi {
 		}
 	}
 
-	for (const method of abiJson.V3.spec.constructors) {
+	for (const method of __getV3(abiJson).spec.constructors) {
 		for (const arg of method.args) {
 			for (let i = 0; i < arg.type.displayName.length; i++) {
 				arg.type.displayName[i] = `_${arg.type.displayName[i]}`;
@@ -100,7 +106,7 @@ export function preprocessABI(_abiStr: string): Abi {
 
 	const typeNamesCount = new Map<string, number>();
 
-	for (const {type} of abiJson.V3.types) {
+	for (const {type} of __getV3(abiJson).types) {
 		if (type.path === undefined) continue;
 		if (type.path[type.path.length - 1] == 'Mapping') continue;
 
@@ -114,7 +120,7 @@ export function preprocessABI(_abiStr: string): Abi {
 	}
 
 	let __i = 0;
-	for (const {type} of abiJson.V3.types) {
+	for (const {type} of __getV3(abiJson).types) {
 		__i++;
 		if (type.path === undefined) continue;
 		if (type.path[type.path.length - 1] == 'Mapping') continue;
