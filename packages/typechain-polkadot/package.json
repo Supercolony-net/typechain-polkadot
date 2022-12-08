@@ -1,6 +1,6 @@
 {
   "name": "@727-ventures/typechain-polkadot",
-  "version": "0.1.2",
+  "version": "0.1.3-beta.1",
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
     "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
@@ -26,7 +26,7 @@
     "@polkadot/api": "^9.6.1",
     "@polkadot/api-contract": "^9.6.1",
     "@polkadot/keyring": "^9.6.1",
-    "@727-ventures/typechain-polkadot-parser": "^0.1.0",
+    "@727-ventures/typechain-polkadot-parser": "^0.1.1-beta.1",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^17.0.34",
     "@types/yargs": "^17.0.10",
@@ -52,14 +52,14 @@
     "ts-jest": "^28.0.3",
     "typescript": "^4.7.4"
   },
-  "author": "Supercolony-net",
-  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
+  "author": "727-Ventures",
+  "homepage": "https://github.com/727-Ventures/typechain-polkadot#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
+    "url": "git+https://github.com/727-Ventures/typechain-polkadot.git"
   },
   "bugs": {
-    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
+    "url": "https://github.com/727-Ventures/typechain-polkadot/issues"
   },
   "gitHead": "749d761b2937953405e9be3a7765de5ff7e8ca0a"
 }
