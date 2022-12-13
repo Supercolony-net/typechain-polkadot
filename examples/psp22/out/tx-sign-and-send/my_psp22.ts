@@ -30,7 +30,7 @@ export default class Methods {
 	 * 2: data,
 	 * ]
 	 */
-	"PSP22::transfer" (
+	"transfer" (
 		to: ArgumentsTypes[2],
 		value: ArgumentsTypes[0],
 		data: ArgumentsTypes[9],
@@ -45,7 +45,7 @@ export default class Methods {
 	 * 1: deltaValue,
 	 * ]
 	 */
-	"PSP22::decrease_allowance" (
+	"decrease_allowance" (
 		spender: ArgumentsTypes[2],
 		deltaValue: ArgumentsTypes[0],
 		__options ? : GasLimit,
@@ -58,7 +58,7 @@ export default class Methods {
 	 * 0: owner,
 	 * ]
 	 */
-	"PSP22::balance_of" (
+	"balance_of" (
 		owner: ArgumentsTypes[2],
 		__options ? : GasLimit,
 	){
@@ -71,7 +71,7 @@ export default class Methods {
 	 * 1: spender,
 	 * ]
 	 */
-	"PSP22::allowance" (
+	"allowance" (
 		owner: ArgumentsTypes[2],
 		spender: ArgumentsTypes[2],
 		__options ? : GasLimit,
@@ -85,7 +85,7 @@ export default class Methods {
 	 * 1: deltaValue,
 	 * ]
 	 */
-	"PSP22::increase_allowance" (
+	"increase_allowance" (
 		spender: ArgumentsTypes[2],
 		deltaValue: ArgumentsTypes[0],
 		__options ? : GasLimit,
@@ -94,7 +94,7 @@ export default class Methods {
 	}
 
 	/** */
-	"PSP22::total_supply" (
+	"total_supply" (
 		__options ? : GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::totalSupply", [], __options);
@@ -108,7 +108,7 @@ export default class Methods {
 	 * 3: data,
 	 * ]
 	 */
-	"PSP22::transfer_from" (
+	"transfer_from" (
 		from: ArgumentsTypes[2],
 		to: ArgumentsTypes[2],
 		value: ArgumentsTypes[0],
@@ -124,7 +124,7 @@ export default class Methods {
 	 * 1: value,
 	 * ]
 	 */
-	"PSP22::approve" (
+	"approve" (
 		spender: ArgumentsTypes[2],
 		value: ArgumentsTypes[0],
 		__options ? : GasLimit,
@@ -138,7 +138,7 @@ export default class Methods {
 	 * 1: amount,
 	 * ]
 	 */
-	"PSP22Mintable::mint" (
+	"mint" (
 		account: ArgumentsTypes[2],
 		amount: ArgumentsTypes[0],
 		__options ? : GasLimit,

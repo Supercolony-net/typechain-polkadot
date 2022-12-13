@@ -37,12 +37,12 @@ describe('MY_PSP34', () => {
 			query,
 		} = contract;
 
-		const totalSupply = (await (query['PSP34::total_supply']())).value as number;
+		const totalSupply = (await (query.total_supply())).value as number;
 		const id = totalSupply + 1;
 
-		await contract.tx['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U8(id));
+		await contract.tx.mint(UserAlice.address, IdBuilder.U8(id));
 
-		const result = await query['PSP34::approve'](UserBob.address, IdBuilder.U8(id), true);
+		const result = await query.approve(UserBob.address, IdBuilder.U8(id), true);
 
 		expect(result.value).toBe(null);
 	});
@@ -53,11 +53,11 @@ describe('MY_PSP34', () => {
 			tx,
 		} = contract;
 
-		const totalSupply = (await (query['PSP34::total_supply']())).value as number;
+		const totalSupply = (await (query.total_supply())).value as number;
 
-		await tx['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U16(totalSupply.valueOf() + 1));
+		await tx.mint(UserAlice.address, IdBuilder.U16(totalSupply.valueOf() + 1));
 
-		const result = await query['PSP34::transfer'](UserBob.address, IdBuilder.U16(totalSupply.valueOf() + 1), []);
+		const result = await query.transfer(UserBob.address, IdBuilder.U16(totalSupply.valueOf() + 1), []);
 
 		expect(result.value).toBe(null);
 	});
@@ -67,25 +67,25 @@ describe('MY_PSP34', () => {
 			query,
 		} = contract;
 
-		const totalSupply = (await (query['PSP34::total_supply']())).value as number;
+		const totalSupply = (await (query.total_supply())).value as number;
 		const id = totalSupply + 1;
 
-		let result = await query['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U8(id));
+		let result = await query.mint(UserAlice.address, IdBuilder.U8(id));
 		expect(result.value).toBe(null);
 
-		result = await query['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U16(id));
+		result = await query.mint(UserAlice.address, IdBuilder.U16(id));
 		expect(result.value).toBe(null);
 
-		result = await query['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U32(id));
+		result = await query.mint(UserAlice.address, IdBuilder.U32(id));
 		expect(result.value).toBe(null);
 
-		result = await query['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U64(id));
+		result = await query.mint(UserAlice.address, IdBuilder.U64(id));
 		expect(result.value).toBe(null);
 
-		result = await query['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U128(id));
+		result = await query.mint(UserAlice.address, IdBuilder.U128(id));
 		expect(result.value).toBe(null);
 
-		result = await query['PSP34Mintable::mint'](UserAlice.address, IdBuilder.Bytes([id]));
+		result = await query.mint(UserAlice.address, IdBuilder.Bytes([id]));
 		expect(result.value).toBe(null);
 	});
 
@@ -94,12 +94,12 @@ describe('MY_PSP34', () => {
 			query,
 		} = contract;
 
-		const totalSupply = (await (query['PSP34::total_supply']())).value as number;
+		const totalSupply = (await (query.total_supply())).value as number;
 		const id = totalSupply + 1;
 
-		await contract.tx['PSP34Mintable::mint'](UserAlice.address, IdBuilder.U8(id));
+		await contract.tx.mint(UserAlice.address, IdBuilder.U8(id));
 
-		const result = await query['PSP34::allowance'](UserAlice.address, UserBob.address, IdBuilder.U8(id));
+		const result = await query.allowance(UserAlice.address, UserBob.address, IdBuilder.U8(id));
 
 		expect(result.value).toBe(false);
 	});
@@ -109,7 +109,7 @@ describe('MY_PSP34', () => {
 			query,
 		} = contract;
 
-		await query['PSP34::balance_of'](UserAlice.address);
+		await query.balance_of(UserAlice.address);
 	});
 
 	test('OwnerOf', async () => {
@@ -117,7 +117,7 @@ describe('MY_PSP34', () => {
 			query,
 		} = contract;
 
-		await query['PSP34::owner_of'](IdBuilder.U8(1));
+		await query.owner_of(IdBuilder.U8(1));
 	});
 
 	test('TotalSupply', async () => {
@@ -125,6 +125,6 @@ describe('MY_PSP34', () => {
 			query,
 		} = contract;
 
-		await query['PSP34::total_supply']();
+		await query.total_supply();
 	});
 });

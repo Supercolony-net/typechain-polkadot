@@ -25,7 +25,7 @@ export default class Methods {
 	 * 0: owner,
 	 * ]
 	 */
-	"PSP34::balance_of" (
+	"balance_of" (
 		owner: ArgumentsTypes[8],
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< OkishReturns["4"] > >{
@@ -39,7 +39,7 @@ export default class Methods {
 	 * 2: id,
 	 * ]
 	 */
-	"PSP34::allowance" (
+	"allowance" (
 		owner: ArgumentsTypes[8],
 		operator: ArgumentsTypes[8],
 		id: ArgumentsTypes[14],
@@ -55,7 +55,7 @@ export default class Methods {
 	 * 2: data,
 	 * ]
 	 */
-	"PSP34::transfer" (
+	"transfer" (
 		to: ArgumentsTypes[8],
 		id: ArgumentsTypes[1],
 		data: ArgumentsTypes[7],
@@ -65,7 +65,7 @@ export default class Methods {
 	}
 
 	/** */
-	"PSP34::collection_id" (
+	"collection_id" (
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< OkishReturns["1"] > >{
 		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::collectionId", [], __options);
@@ -78,7 +78,7 @@ export default class Methods {
 	 * 2: approved,
 	 * ]
 	 */
-	"PSP34::approve" (
+	"approve" (
 		operator: ArgumentsTypes[8],
 		id: ArgumentsTypes[14],
 		approved: ArgumentsTypes[16],
@@ -92,7 +92,7 @@ export default class Methods {
 	 * 0: id,
 	 * ]
 	 */
-	"PSP34::owner_of" (
+	"owner_of" (
 		id: ArgumentsTypes[1],
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< OkishReturns["20"] > >{
@@ -100,7 +100,7 @@ export default class Methods {
 	}
 
 	/** */
-	"PSP34::total_supply" (
+	"total_supply" (
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< OkishReturns["6"] > >{
 		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::totalSupply", [], __options);
@@ -112,7 +112,7 @@ export default class Methods {
 	 * 1: id,
 	 * ]
 	 */
-	"PSP34Mintable::mint" (
+	"mint" (
 		account: ArgumentsTypes[8],
 		id: ArgumentsTypes[1],
 		__options ? : GasLimit,

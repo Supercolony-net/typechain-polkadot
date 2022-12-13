@@ -39,7 +39,7 @@ export default class Constructors {
 			const gasLimit = 100000 * 1000000 || __options?.gasLimit;
 			const storageDepositLimit = __options?.storageDepositLimit;
 
-			const tx = code.tx["{{{name}}}"]!({ gasLimit, storageDepositLimit, value: __options?.value }, {{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}});
+			const tx = code.tx["{{{originalName}}}"]!({ gasLimit, storageDepositLimit, value: __options?.value }, {{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}});
 
 			let response;
 			try {
