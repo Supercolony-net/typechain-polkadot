@@ -46,12 +46,22 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
 	}));
 
+	let _methodsNames = abi.messages.map((m, i) => {
+		return {
+			original: m.identifier,
+			cut: m.identifier.split("::").pop()!
+		};
+	});
+
+
 	const imports: Import[] = [];
 	const methods: Method[] = [];
 
 	for(const __message of abi.messages) {
+		const _methodName = _methodsNames.find(_m => _m.original === __message.identifier)!;
 		methods.push({
-			name: __message.identifier,
+			name: _methodName.cut,
+			originalName: _methodName.original,
 			args: __message.args.map(__a => ({
 				name: __a.name,
 				type: _argsTypes.find(_a => _a.id === __a.type.lookupIndex)!,

@@ -12,12 +12,12 @@ export interface ArgumentsTypes {
 }
 
 export interface ArgumentsTuples {
-	"PSP34::balance_of": readonly [ AccountId ];
-	"PSP34::allowance": readonly [ AccountId,  AccountId,  Id | null ];
-	"PSP34::transfer": readonly [ AccountId,  Id,  Array<(number | string | BN)> ];
-	"PSP34::collection_id": readonly [ ];
-	"PSP34::approve": readonly [ AccountId,  Id | null,  boolean ];
-	"PSP34::owner_of": readonly [ Id ];
-	"PSP34::total_supply": readonly [ ];
-	"PSP34Mintable::mint": readonly [ AccountId,  Id ];
+	"balance_of": readonly [ AccountId ];
+	"allowance": readonly [ AccountId,  AccountId,  Id | null ];
+	"transfer": readonly [ AccountId,  Id,  Array<(number | string | BN)> ];
+	"collection_id": readonly [ ];
+	"approve": readonly [ AccountId,  Id | null,  boolean ];
+	"owner_of": readonly [ Id ];
+	"total_supply": readonly [ ];
+	"mint": readonly [ AccountId,  Id ];
 }

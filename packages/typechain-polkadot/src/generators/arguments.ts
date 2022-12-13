@@ -62,10 +62,18 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 			path: `../types-arguments/${fileName}`,
 		});
 	}
+	const _methodsNames = abi.messages.map((m, i) => {
+		return {
+			original: m.identifier,
+			cut: m.identifier.split("::").pop()!
+		};
+	});
 
 	const methods = abi.messages.map(__m => {
+		const _methodName = _methodsNames.find(_m => _m.original === __m.identifier)!;
 		return ({
-			name: __m.identifier,
+			name: _methodName.cut,
+			originalName: _methodName.original,
 			args: __m.args.map(__a => ({
 				name: __a.name,
 				type: _argsTypes.find(_a => _a.id == __a.type.lookupIndex)!,

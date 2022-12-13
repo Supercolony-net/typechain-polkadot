@@ -49,10 +49,19 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 	const imports: Import[] = [];
 	const methods: Method[] = [];
 
+	let _methodsNames = abi.messages.map((m, i) => {
+		return {
+			original: m.identifier,
+			cut: m.identifier.split("::").pop()!
+		};
+	});
+
 	for(const __message of abi.messages) {
+		const _methodName = _methodsNames.find(__m => __m.original === __message.identifier)!;
 		if(__message.isMutating) {
 			methods.push({
-				name: __message.identifier,
+				name: _methodName.cut,
+				originalName: _methodName.original,
 				args: __message.args.map(__a => ({
 					name: __a.name,
 					type: _argsTypes.find(_a => _a.id === __a.type.lookupIndex)!,
@@ -63,7 +72,8 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		}
 		else {
 			methods.push({
-				name: __message.identifier,
+				name: _methodName.cut,
+				originalName: _methodName.original,
 				args: __message.args.map(__a => ({
 					name: __a.name,
 					type: _argsTypes.find(_a => _a.id === __a.type.lookupIndex)!,

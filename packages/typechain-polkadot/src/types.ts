@@ -21,6 +21,7 @@
 
 export interface Method {
 	name: string;
+	originalName: string;
 	args : {
 		name : string;
 		type : {
