@@ -36,12 +36,12 @@ describe("", () => {
 
 	jest.setTimeout(10000);
 
-	test("`PSP22::total_supply`", async () => {
-		await contract.tx.total_supply();
+	test("`PSP22::totalSupply`", async () => {
+		await contract.tx.totalSupply();
 	});
 
-	test("`PSP22::balance_of`", async () => {
-		await contract.tx.balance_of(UserAlice.address);
+	test("`PSP22::balanceOf`", async () => {
+		await contract.tx.balanceOf(UserAlice.address);
 	});
 
 	test("`mint_to`", async () => {
@@ -56,9 +56,9 @@ describe("", () => {
 		await contract.query.allowance(UserAlice.address, UserAlice.address);
 	});
 
-	test("`PSP22::increase_allowance` & `PSP22::decrease_allowance`", async () => {
-		await contract.tx.increase_allowance(UserAlice.address, '1000000');
-		await contract.tx.decrease_allowance(UserAlice.address, '1000000');
+	test("`PSP22::increaseAllowance` & `PSP22::decreaseAllowance`", async () => {
+		await contract.tx.increaseAllowance(UserAlice.address, '1000000');
+		await contract.tx.decreaseAllowance(UserAlice.address, '1000000');
 	});
 
 	test("`PSP22::transfer`", async () => {

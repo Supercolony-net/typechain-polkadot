@@ -38,16 +38,16 @@ describe('MY_PSP34', () => {
 			tx,
 		} = contract;
 
-		const resultA = await query.get_message(EnumExampleBuilder.A("Hello"));
+		const resultA = await query.getMessage(EnumExampleBuilder.A("Hello"));
 		expect(resultA.value).toEqual("Hello");
 
-		const resultB = await query.get_message(EnumExampleBuilder.B(42));
+		const resultB = await query.getMessage(EnumExampleBuilder.B(42));
 		expect(resultB.value).toEqual("42");
 
-		const resultC = await query.get_message(EnumExampleBuilder.C(AnotherEnumBuilder.A([42])));
+		const resultC = await query.getMessage(EnumExampleBuilder.C(AnotherEnumBuilder.A([42])));
 		expect(resultC.value).toEqual("[42]");
 
-		const resultE = await query.get_message(EnumExampleBuilder.E());
+		const resultE = await query.getMessage(EnumExampleBuilder.E());
 		expect(resultE.value).toEqual("E");
 	});
 

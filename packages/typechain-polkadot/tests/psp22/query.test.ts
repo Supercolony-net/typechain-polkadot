@@ -35,24 +35,24 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 
 	jest.setTimeout(10000);
 
-	test("`PSP22::total_supply`", async () => {
-		const { value } = await contract.query.total_supply();
+	test("`PSP22::totalSupply`", async () => {
+		const { value } = await contract.query.totalSupply();
 		expect( ['string', 'number'].includes(typeof value) ).toBe(true);
 		expect( _isAmount(value) ).toBe(true);
 	});
 
-	test("`PSP22::balance_of`", async () => {
-		const { value } = await contract.query.balance_of(UserAlice.address);
+	test("`PSP22::balanceOf`", async () => {
+		const { value } = await contract.query.balanceOf(UserAlice.address);
 		expect( ['string', 'number'].includes(typeof value) ).toBe(true);
 		expect( _isAmount(value) ).toBe(true);
 	});
 
-	test("`PSP22::balance_of`", async () => {
-		await contract.query.balance_of(UserCharlie.address);
+	test("`PSP22::balanceOf`", async () => {
+		await contract.query.balanceOf(UserCharlie.address);
 	});
 
-	test("`PSP22::balance_of`", async () => {
-		await contract.query.balance_of(UserCharlie.address);
+	test("`PSP22::balanceOf`", async () => {
+		await contract.query.balanceOf(UserCharlie.address);
 	});
 
 	test("`mint_to`", async () => {
@@ -73,11 +73,11 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 		expect( _isAmount(value) ).toBe(true);
 	});
 
-	test("`PSP22::increase_allowance` & `PSP22::decrease_allowance`", async () => {
-		var { value } = await contract.query.increase_allowance(UserAlice.address, '1000000');
+	test("`PSP22::increaseAllowance` & `PSP22::decreaseAllowance`", async () => {
+		var { value } = await contract.query.increaseAllowance(UserAlice.address, '1000000');
 		expect( value === null ).toBe(true);
-		await contract.tx.increase_allowance(UserAlice.address, '1000000');
-		var { value } = await contract.query.decrease_allowance(UserAlice.address, '1000000');
+		await contract.tx.increaseAllowance(UserAlice.address, '1000000');
+		var { value } = await contract.query.decreaseAllowance(UserAlice.address, '1000000');
 		expect( value === null ).toBe(true);
 	});
 
