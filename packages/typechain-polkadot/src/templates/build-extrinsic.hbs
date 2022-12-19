@@ -25,13 +25,13 @@ export default class Methods {
 	 {{/each}}
 	 * ]
 	{{/if}} */
-	"{{{name}}}" (
+	"{{{toCamelCase name}}}" (
 	{{#each args}}
 		{{{name}}}: ArgumentsTypes[{{{type.id}}}],
 	{{/each}}
 		__options: {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
 	){{{constructReturnType this}}}{
-		return {{{constructReturn this}}} "{{{toCamelCase originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
+		return {{{constructReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
 	}
 
 {{/each}}

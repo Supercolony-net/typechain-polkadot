@@ -22,6 +22,9 @@
 import {__assureDirExists} from "./generators/_utils";
 import * as FsExtraAPI from "fs-extra";
 import PathAPI from "path";
+import Handlebars from "handlebars";
+import toCamelCase from "camelcase";
+import {stringCamelCase} from "@polkadot/util";
 
 /**
  * Generates a directories' hierarchy for the given path
@@ -45,3 +48,9 @@ export function generateProjectStructure(absPathToOutput: string) {
 	__assureDirExists(absPathToOutput, "types-returns");
 	__assureDirExists(absPathToOutput, "constructors");
 }
+
+Handlebars.registerHelper('toCamelCase', toCamelCase);
+
+Handlebars.registerHelper('toCamelCaseForFunctions', function (fn: string) {
+	return stringCamelCase(fn);
+});
