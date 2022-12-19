@@ -83,4 +83,4 @@ Typechain participates in the Web3 Grants, you can find the roadmap there:
 - Grant II - Comming soon....
 
 -----------
-#### Made with ❤️ by [727-Ventures](https://supercolony.net/)
+#### Made with ❤️ by [Supercolony](https://supercolony.net/)
