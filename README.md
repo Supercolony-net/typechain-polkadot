@@ -74,6 +74,8 @@ Given, that a front-end developer needs to do this with every contracts update, 
 
 When contracts descriptions come both with ABI and source code (`*.contract` files), our tool will provide means for deployment as well.
 
+Also, Typechain-Polkadot uses awesome tool Handlebars for generating code from templates. It is a very flexible and powerful tool, which allows to generate code from templates with a lot of different logic.
+For example, you can generate code for different contracts with different logic, or you can generate code for different methods with different logic.
 
 ## Roadmap 🚗
 

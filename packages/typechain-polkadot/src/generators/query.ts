@@ -46,10 +46,10 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
 	}));
 
-	let _methodsNames = abi.messages.map((m, i) => {
+	const _methodsNames = abi.messages.map((m, i) => {
 		return {
 			original: m.identifier,
-			cut: m.identifier.split("::").pop()!
+			cut: m.identifier.split("::").pop()!,
 		};
 	});
 
