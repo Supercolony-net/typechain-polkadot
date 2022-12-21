@@ -11,6 +11,6 @@ export interface ArgumentsTypes {
 
 export interface ArgumentsTuples {
 {{#each methods}}
-	"{{{name}}}": readonly [{{#each args}} {{{type.tsStr}}}{{#unless @last}}, {{/unless}}{{/each}} ];
+	"{{{toCamelCase name}}}": readonly [{{#each args}} {{{type.tsStr}}}{{#unless @last}}, {{/unless}}{{/each}} ];
 {{/each}}
 }

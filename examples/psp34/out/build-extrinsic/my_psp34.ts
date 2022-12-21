@@ -19,7 +19,7 @@ export default class Methods {
 	 * 0: owner,
 	 * ]
 	 */
-	"balance_of" (
+	"balanceOf" (
 		owner: ArgumentsTypes[8],
 		__options: GasLimit,
 	){
@@ -59,7 +59,7 @@ export default class Methods {
 	}
 
 	/** */
-	"collection_id" (
+	"collectionId" (
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::collectionId", [], __options);
@@ -86,7 +86,7 @@ export default class Methods {
 	 * 0: id,
 	 * ]
 	 */
-	"owner_of" (
+	"ownerOf" (
 		id: ArgumentsTypes[1],
 		__options: GasLimit,
 	){
@@ -94,7 +94,7 @@ export default class Methods {
 	}
 
 	/** */
-	"total_supply" (
+	"totalSupply" (
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::totalSupply", [], __options);

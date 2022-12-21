@@ -8,7 +8,7 @@ This directory contains examples of parsed contracts and pieces of advice how to
 - Add to your package.json file the following and install it with `npm i`:
 ```json
 "dependencies": {
-  "@727-ventures/typechain-polkadot": "0.1.4",
+  "@727-ventures/typechain-polkadot": "0.1.6",
   "@types/node": "^17.0.34",
   "ts-node": "^10.7.0",
   "typescript": "^4.6.4",

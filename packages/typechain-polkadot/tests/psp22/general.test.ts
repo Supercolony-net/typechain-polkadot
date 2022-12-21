@@ -37,12 +37,12 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 	jest.setTimeout(10000);
 
 	test("total_supply works", async () => {
-		expect((await contract.query.total_supply()).value).toBe(40);
+		expect((await contract.query.totalSupply()).value).toBe(40);
 	});
 
-	test("balance_of works", async () => {
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+	test("balanceOf works", async () => {
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 	});
 
 	test("allowance works", async () => {
@@ -54,35 +54,35 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value).toBe(10);
 		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value).toBe(0);
 
-		await contract.tx.increase_allowance(UserBob.address, '10');
+		await contract.tx.increaseAllowance(UserBob.address, '10');
 
 		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value).toBe(20);
 		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value).toBe(0);
 
-		await contract.tx.decrease_allowance(UserBob.address, '20');
+		await contract.tx.decreaseAllowance(UserBob.address, '20');
 
 		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value).toBe(0);
 		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value).toBe(0);
 	});
 
 	test("Transfer works", async () => {
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 
 		await contract.tx.transfer(UserBob.address, '10', []);
 
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(10);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(30);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(10);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(30);
 
 		await contract_bob.tx.transfer(UserAlice.address, '10', []);
 
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 	});
 
 	test("Cannot transfer above the amount", async () => {
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 
 		try {
 			await (contract.tx.transfer(UserBob.address, '30', []));
@@ -92,35 +92,35 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 			// @ts-ignore
 			expect(e.error.message).toBe('Module');
 		}
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 	});
 
 	test("TransferFrom works", async () => {
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 
 		await contract.tx.approve(UserBob.address, '10');
 
-		await contract_bob.tx.transfer_from(UserAlice.address, UserBob.address, '10', []);
+		await contract_bob.tx.transferFrom(UserAlice.address, UserBob.address, '10', []);
 
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(10);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(30);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(10);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(30);
 
 		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value).toBe(0);
 
 		await contract_bob.tx.transfer(UserAlice.address, '10', []);
 
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 	});
 
 	test("Transfer without approval should fail", async () => {
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 
 		try {
-			await contract_bob.tx.transfer_from(UserAlice.address, UserBob.address, '10', []);
+			await contract_bob.tx.transferFrom(UserAlice.address, UserBob.address, '10', []);
 
 			throw new Error("Should not be able to transfer without approval");
 		} catch (e) {
@@ -128,15 +128,15 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 			expect(e.error.message).toBe('Module');
 		}
 
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
-		expect((await contract.query.balance_of(UserBob.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value).toBe(20);
 	});
 
 	test("PSP22Mintable::mint works", async () => {
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(20);
 
 		await contract.tx.mint(UserAlice.address, '10');
 
-		expect((await contract.query.balance_of(UserAlice.address)).value).toBe(30);
+		expect((await contract.query.balanceOf(UserAlice.address)).value).toBe(30);
 	});
 });
