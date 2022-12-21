@@ -53,6 +53,16 @@ typecchain.run(
 
 ### build-extrinsic
 
+In this namespace you can find all the functions that are related to building extrinsics.
+
+```typescript
+const tx = contract.buildExtrinsic.<methodName>(...args, options);
+
+tx.signAndSend(account, (result) => {
+	// Handle result
+});
+```
+
 ### constructors
 This namespace is used to deploy contracts, using different constructors.
 
@@ -61,7 +71,6 @@ const { result, address } = await contract.constructors.<constructorName>(...arg
 ```
 
 ### contract
-# Contract
 
 Contract is the main namespace for interacting with contracts. It contains all the functions that are related to contracts.
 
@@ -97,7 +106,7 @@ contract.withAPI(api)
 ```
 
 ### data
-Contains all info about types. It's used to parse return values from contracts.
+Utility file. Contains all info about types. It's used in runtime to parse return values from contracts.
 
 ### events
 This namespace is used to subscribe to events from contracts.
@@ -109,7 +118,7 @@ contract.events.subscribeOnTransferEvent((event) => {
 ```
 
 ### events-types
-This file contains all event types.
+This file contains all event types, which are used in the events namespace.
 
 ### mixed-methods
 This namespace contains both tx and query methods.
@@ -119,7 +128,7 @@ contract.mixedMethods.<functionName>(...args, options)
 ```
 
 ### query
-This namepsace contains all query methods. Also you can query tx to get error message.
+This namepsace contains all query methods.
 
 ```typescript
 const result = contract.query.<functionName>(...args, options)
