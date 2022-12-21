@@ -1,8 +1,8 @@
-![created by 727](https://727.ventures/img/logo.png)
+![created by Supercolony](https://supercolony.net/img/new-logo-horizontal-green-white.svg)
 
 ## Overview :page_facing_up:
 
-Typechain was created by [727-Ventures](https://727.ventures/) to to improve developers’ experience working with ink! smartcontracts.
+Typechain was created by [Supercolony](https://supercolony.net/) to to improve developers’ experience working with ink! smartcontracts.
 
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
@@ -83,4 +83,4 @@ Typechain participates in the Web3 Grants, you can find the roadmap there:
 - Grant II - Comming soon....
 
 -----------
-#### Made with ❤️ by [727-Ventures](https://727.ventures/)
+#### Made with ❤️ by [Supercolony](https://supercolony.net/)
