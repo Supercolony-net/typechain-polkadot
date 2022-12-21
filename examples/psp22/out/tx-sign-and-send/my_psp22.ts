@@ -45,7 +45,7 @@ export default class Methods {
 	 * 1: deltaValue,
 	 * ]
 	 */
-	"decrease_allowance" (
+	"decreaseAllowance" (
 		spender: ArgumentsTypes[2],
 		deltaValue: ArgumentsTypes[0],
 		__options ? : GasLimit,
@@ -58,7 +58,7 @@ export default class Methods {
 	 * 0: owner,
 	 * ]
 	 */
-	"balance_of" (
+	"balanceOf" (
 		owner: ArgumentsTypes[2],
 		__options ? : GasLimit,
 	){
@@ -85,7 +85,7 @@ export default class Methods {
 	 * 1: deltaValue,
 	 * ]
 	 */
-	"increase_allowance" (
+	"increaseAllowance" (
 		spender: ArgumentsTypes[2],
 		deltaValue: ArgumentsTypes[0],
 		__options ? : GasLimit,
@@ -94,7 +94,7 @@ export default class Methods {
 	}
 
 	/** */
-	"total_supply" (
+	"totalSupply" (
 		__options ? : GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::totalSupply", [], __options);
@@ -108,7 +108,7 @@ export default class Methods {
 	 * 3: data,
 	 * ]
 	 */
-	"transfer_from" (
+	"transferFrom" (
 		from: ArgumentsTypes[2],
 		to: ArgumentsTypes[2],
 		value: ArgumentsTypes[0],

@@ -11,12 +11,12 @@ export interface ArgumentsTypes {
 
 export interface ArgumentsTuples {
 	"transfer": readonly [ AccountId,  (string | number | BN),  Array<(number | string | BN)> ];
-	"decrease_allowance": readonly [ AccountId,  (string | number | BN) ];
-	"balance_of": readonly [ AccountId ];
+	"decreaseAllowance": readonly [ AccountId,  (string | number | BN) ];
+	"balanceOf": readonly [ AccountId ];
 	"allowance": readonly [ AccountId,  AccountId ];
-	"increase_allowance": readonly [ AccountId,  (string | number | BN) ];
-	"total_supply": readonly [ ];
-	"transfer_from": readonly [ AccountId,  AccountId,  (string | number | BN),  Array<(number | string | BN)> ];
+	"increaseAllowance": readonly [ AccountId,  (string | number | BN) ];
+	"totalSupply": readonly [ ];
+	"transferFrom": readonly [ AccountId,  AccountId,  (string | number | BN),  Array<(number | string | BN)> ];
 	"approve": readonly [ AccountId,  (string | number | BN) ];
 	"mint": readonly [ AccountId,  (string | number | BN) ];
 }

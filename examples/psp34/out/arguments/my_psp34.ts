@@ -12,12 +12,12 @@ export interface ArgumentsTypes {
 }
 
 export interface ArgumentsTuples {
-	"balance_of": readonly [ AccountId ];
+	"balanceOf": readonly [ AccountId ];
 	"allowance": readonly [ AccountId,  AccountId,  Id | null ];
 	"transfer": readonly [ AccountId,  Id,  Array<(number | string | BN)> ];
-	"collection_id": readonly [ ];
+	"collectionId": readonly [ ];
 	"approve": readonly [ AccountId,  Id | null,  boolean ];
-	"owner_of": readonly [ Id ];
-	"total_supply": readonly [ ];
+	"ownerOf": readonly [ Id ];
+	"totalSupply": readonly [ ];
 	"mint": readonly [ AccountId,  Id ];
 }
