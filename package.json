@@ -6,7 +6,7 @@
   	"scripts": {
 	  "publish": "npx lerna publish --registry=https://npm.pkg.github.com/",
 	  "start-typechain": "npx typechain-polkadot --in ./artifacts --out ./out",
-	  "lint": "eslint \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
+	  "lint": "npx eslint \"{packages, examples}/**/*.{js,jsx,ts,tsx}\" --config .eslintrc.cjs",
 	  "lint:fix": "eslint --fix \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
 	  "gen-docs": "npx typedoc --out docs-generated"
 	},
