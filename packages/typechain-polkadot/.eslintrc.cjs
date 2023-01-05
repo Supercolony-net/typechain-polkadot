@@ -1,5 +1,4 @@
 module.exports = {
-
 	parser: "@typescript-eslint/parser",
 	plugins: [
 		"node",
@@ -29,9 +28,8 @@ module.exports = {
 		"import/no-cycle": "error",
 		"import/no-self-import": "error",
 		"@typescript-eslint/consistent-type-assertions": [
-			"warn",
-			{ assertionStyle: "never" }
+			"off",
 		],
-		"@typescript-eslint/no-non-null-assertion": "warn",
+		"@typescript-eslint/no-non-null-assertion": "off",
 	},
 };
