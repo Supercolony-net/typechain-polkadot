@@ -16,3 +16,19 @@ npm run test
 ```
 
 > Note, run the command 2 in ./packages/typechain-polkadot directory
+
+## Alternative way to run tests
+
+1) Start a local node as described above
+
+2) Generate typechain-code for the contracts
+
+```bash
+npm run gen-test-ts
+```
+
+3) Run tests
+
+```bash
+npm run only-test
+```

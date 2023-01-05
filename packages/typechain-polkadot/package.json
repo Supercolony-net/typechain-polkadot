@@ -4,6 +4,7 @@
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
     "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
+	"only-test": "jest --no-cache --maxWorkers 1",
     "test": "npm run gen-test-ts && jest --no-cache --maxWorkers 1",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
