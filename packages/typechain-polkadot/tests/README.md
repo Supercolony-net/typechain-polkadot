@@ -9,16 +9,10 @@ cargo +stable build --release
 ./target/release/substrate-contracts-node --dev --tmp
 ```
 
-2) Generate Typechain types for the contracts
-
-```bash
-npm run gen-test-ts
-```
-
-3) Run tests
+2) Run tests
 
 ```bash
 npm run test
 ```
 
-> Note, run the commands 2, 3 in ./packages/typechain-polkadot directory
+> Note, run the command 2 in ./packages/typechain-polkadot directory
