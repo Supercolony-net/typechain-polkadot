@@ -64,10 +64,19 @@ tx.signAndSend(account, (result) => {
 ```
 
 ### constructors
-This namespace is used to deploy contracts, using different constructors.
+Used to deploy contracts, using different constructors.
 
 ```typescript
-const { result, address } = await contract.constructors.<constructorName>(...args, options);
+// Import here Constructors and Contract classes
+
+// Here we are creating an instance of the Constructors class, which is used to deploy contracts
+const factory = new Constructors(api, UserAlice);
+
+// You can access to the different constructors using the name of the constructor, here we will use "new"
+const {result, address} = await factory.new('10', {});
+
+// Here we are creating an instance of the Contract class, which is used to interact with the deployed contract
+contract = new Contract(address, UserAlice, api);
 ```
 
 ### contract
