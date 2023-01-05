@@ -117,18 +117,6 @@ contract.withAPI(api)
 ### data
 Utility file. Contains all info about types. It's used in runtime to parse return values from contracts.
 
-### events
-This namespace is used to subscribe to events from contracts.
-
-```typescript
-contract.events.subscribeOnTransferEvent((event) => {
-	// Event callback function
-});
-```
-
-### events-types
-This file contains all event types, which are used in the events namespace.
-
 ### mixed-methods
 This namespace contains both tx and query methods.
 
