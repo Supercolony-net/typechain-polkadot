@@ -104,7 +104,7 @@ To deploy this contract, you need to use the following code:
 // Import here Constructors and Contract classes
 
 // Here we are creating an instance of the Constructors class, which is used to deploy contracts,
-// Constructors it's typechain-generated class that contains all the constructors of the contract
+// Constructors is typechain-generated class that contains all the constructors of the contract
 const factory = new Constructors(api, UserAlice);
 
 // You can access to the different constructors using the name of the constructor, here we will use "new"
