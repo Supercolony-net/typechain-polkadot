@@ -2,7 +2,7 @@ If you have any questions regarding Typechain-Polkadot, you can join the [Brushf
 
 ## Overview :page_facing_up:
 
-Typechain is maintained by [Brushfam](https://www.brushfam.io/) team to to improve developers’ experience working with ink! smartcontracts.
+Typechain is maintained by [Brushfam](https://www.brushfam.io/) team to improve developers’ experience working with ink! smart contracts.
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
 
