@@ -2,7 +2,7 @@
 
 ## Overview :page_facing_up:
 
-Typechain was created by [Supercolony](supercolony.net) to to improve developers’ experience working with ink! smartcontracts.
+Typechain was created by [Supercolony](supercolony.net) to improve developers’ experience working with ink! smartcontracts.
 
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
