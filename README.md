@@ -1,10 +1,8 @@
-![created by Supercolony](https://supercolony.net/img/new-logo-horizontal-green-white.svg)
-
 If you have any questions regarding Typechain-Polkadot, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers.
 
 ## Overview :page_facing_up:
 
-Typechain was created by [Supercolony](https://supercolony.net/) and is maintained by [Brushfam](https://www.brushfam.io/) to to improve developers’ experience working with ink! smartcontracts.
+Typechain is maintained by [Brushfam](https://www.brushfam.io/) team to improve developers’ experience working with ink! smart contracts.
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
 
@@ -81,9 +79,6 @@ For example, you can generate code for different contracts with different logic,
 ## Roadmap 🚗
 
 Typechain participates in the Web3 Grants, you can find the roadmap there:
-- [Grant I](https://github.com/w3f/Grants-Program/blob/master/applications/typechain-polkadot.md)
+- [Grant I](https://github.com/w3f/Grants-Program/blob/master/applications/typechain-polkadot-follow-up.md)
   - [Delivery milestone 1](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-milestone-1.md#milestone-delivery-mailbox)
-- Grant II - Comming soon....
-
------------
-#### Made with ❤️ by [Supercolony](https://supercolony.net/)
+  - [Delivery milestone 2](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-milestone-2.md)
