@@ -1,9 +1,12 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { ArgumentsTypes } from '../arguments/{{{fileName}}}';
-import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
-import { buildSubmittableExtrinsic } from '../_sdk/tx';
+import type { GasLimit, GasLimitAndRequiredValue } from '@727-ventures/typechain-types';
+import { buildSubmittableExtrinsic } from '@727-ventures/typechain-types';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type BN from 'bn.js';
+import type { ApiPromise } from '@polkadot/api';
+
 {{#if additionalImports.length}}
 {{#each additionalImports}}
 import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
@@ -11,27 +14,31 @@ import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } fro
 
 export default class Methods {
 	private __nativeContract : ContractPromise;
+	private __apiPromise: ApiPromise;
+
 
 	constructor(
 		nativeContract : ContractPromise,
+		apiPromise: ApiPromise,
 	) {
 		this.__nativeContract = nativeContract;
+		this.__apiPromise = apiPromise;
 	}
 {{#each methods}}
-	/**{{#if args.length}}
-	 * @arg: args: [
+	/**
+	 * {{{toCamelCase name}}}
+	 *
 	 {{#each args}}
-	 * {{{@index}}}: {{{name}}},
+	 * @param { {{{type.tsStr}}} } {{{toCamelCase name}}},
 	 {{/each}}
-	 * ]
-	{{/if}} */
+	*/
 	"{{{toCamelCase name}}}" (
 	{{#each args}}
-		{{{name}}}: ArgumentsTypes[{{{type.id}}}],
+		{{{name}}}: {{{type.tsStr}}},
 	{{/each}}
 		__options: {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
-	){{{constructReturnType this}}}{
-		return {{{constructReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
+	){{{buildReturnType this}}}{
+		return {{{buildReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
 	}
 
 {{/each}}

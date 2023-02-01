@@ -28,8 +28,9 @@ module.exports = {
 		"import/no-cycle": "error",
 		"import/no-self-import": "error",
 		"@typescript-eslint/consistent-type-assertions": [
-			"off",
+			"warn",
+			{ assertionStyle: "never" }
 		],
-		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/no-non-null-assertion": "warn",
 	},
 };

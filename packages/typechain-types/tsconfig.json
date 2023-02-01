@@ -1,0 +1,42 @@
+/* Visit https://aka.ms/tsconfig.json to read more about this file */
+{
+	"include": [
+		"index.ts",
+		"src/**/*.ts",
+		"out",
+	],
+	"exclude": ["node_modules"],
+
+	"compilerOptions": {
+		"target": "es5",
+//		"module": "commonjs",
+//		"moduleResolution": "Node",
+//
+		"checkJs": false,
+		"skipLibCheck": true,
+//		"resolveJsonModule": true,
+//
+//		"strict": true,
+//		"alwaysStrict": true,
+//		"forceConsistentCasingInFileNames": true,
+//		"noUncheckedIndexedAccess": true,
+//		"noFallthroughCasesInSwitch": true,
+//
+		"esModuleInterop": true,
+//		"incremental": true,
+
+		"allowJs": true,
+		// Generate d.ts files
+		"declaration": true,
+		// This compiler run should
+		// only output d.ts files
+//		"emitDeclarationOnly": true,
+		// Types should go into this directory.
+		// Removing this would place the .d.ts files
+		// next to the .js files
+		"outDir": "dist",
+		// go to js file when using IDE functions like
+		// "Go to Definition" in VSCode
+		"declarationMap": true
+	},
+}

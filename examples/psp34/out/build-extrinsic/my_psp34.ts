@@ -1,9 +1,11 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { ArgumentsTypes } from '../arguments/my_psp34';
-import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
-import { buildSubmittableExtrinsic } from '../_sdk/tx';
+import type { GasLimit, GasLimitAndRequiredValue } from '@727-ventures/typechain-types';
+import { buildSubmittableExtrinsic } from '@727-ventures/typechain-types';
+import type * as ArgumentTypes from '../types-arguments/my_psp34';
+import type BN from 'bn.js';
+
 
 
 export default class Methods {
@@ -15,50 +17,53 @@ export default class Methods {
 		this.__nativeContract = nativeContract;
 	}
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * ]
-	 */
+	 * balanceOf
+	 *
+	 * @param { ArgumentTypes.AccountId } owner,
+	*/
 	"balanceOf" (
-		owner: ArgumentsTypes[8],
+		owner: ArgumentTypes.AccountId,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::balanceOf", [owner], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * 1: operator,
-	 * 2: id,
-	 * ]
-	 */
+	 * allowance
+	 *
+	 * @param { ArgumentTypes.AccountId } owner,
+	 * @param { ArgumentTypes.AccountId } operator,
+	 * @param { ArgumentTypes.Id | null } id,
+	*/
 	"allowance" (
-		owner: ArgumentsTypes[8],
-		operator: ArgumentsTypes[8],
-		id: ArgumentsTypes[14],
+		owner: ArgumentTypes.AccountId,
+		operator: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id | null,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::allowance", [owner, operator, id], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: to,
-	 * 1: id,
-	 * 2: data,
-	 * ]
-	 */
+	 * transfer
+	 *
+	 * @param { ArgumentTypes.AccountId } to,
+	 * @param { ArgumentTypes.Id } id,
+	 * @param { Array<(number | string | BN)> } data,
+	*/
 	"transfer" (
-		to: ArgumentsTypes[8],
-		id: ArgumentsTypes[1],
-		data: ArgumentsTypes[7],
+		to: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id,
+		data: Array<(number | string | BN)>,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::transfer", [to, id, data], __options);
 	}
 
-	/** */
+	/**
+	 * collectionId
+	 *
+	*/
 	"collectionId" (
 		__options: GasLimit,
 	){
@@ -66,34 +71,37 @@ export default class Methods {
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: operator,
-	 * 1: id,
-	 * 2: approved,
-	 * ]
-	 */
+	 * approve
+	 *
+	 * @param { ArgumentTypes.AccountId } operator,
+	 * @param { ArgumentTypes.Id | null } id,
+	 * @param { boolean } approved,
+	*/
 	"approve" (
-		operator: ArgumentsTypes[8],
-		id: ArgumentsTypes[14],
-		approved: ArgumentsTypes[16],
+		operator: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id | null,
+		approved: boolean,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::approve", [operator, id, approved], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: id,
-	 * ]
-	 */
+	 * ownerOf
+	 *
+	 * @param { ArgumentTypes.Id } id,
+	*/
 	"ownerOf" (
-		id: ArgumentsTypes[1],
+		id: ArgumentTypes.Id,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34::ownerOf", [id], __options);
 	}
 
-	/** */
+	/**
+	 * totalSupply
+	 *
+	*/
 	"totalSupply" (
 		__options: GasLimit,
 	){
@@ -101,14 +109,14 @@ export default class Methods {
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: account,
-	 * 1: id,
-	 * ]
-	 */
+	 * mint
+	 *
+	 * @param { ArgumentTypes.AccountId } account,
+	 * @param { ArgumentTypes.Id } id,
+	*/
 	"mint" (
-		account: ArgumentsTypes[8],
-		id: ArgumentsTypes[1],
+		account: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp34Mintable::mint", [account, id], __options);

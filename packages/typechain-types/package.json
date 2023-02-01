@@ -1,0 +1,34 @@
+{
+  "name": "@727-ventures/typechain-types",
+  "version": "0.0.20",
+  "description": "Types and utility function for TypeChain",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
+  },
+  "author": "Supercolony-net",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "test": "jest",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
+  "dependencies": {
+    "@polkadot/api": "^9.10.3",
+    "@polkadot/api-contract": "^9.10.3",
+    "@types/bn.js": "^5.1.0",
+    "@types/node": "^18.0.3",
+    "camelcase": "^6.3.0",
+    "typescript": "^4.9.4"
+  }
+}

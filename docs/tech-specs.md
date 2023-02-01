@@ -9,6 +9,8 @@ In your project install this package like so:
 npm i -D @727-ventures/typechain-polkadot
 ```
 
+> Also important note that Typechain and Typechain-compiler uses `@727-ventures/typechain-types`, `@polkadot/api` and `@polkadot/api-contract` packages, so you need to install them as well.
+
 Now you can use it to generate TS definitions & runtime code for your ABIs.
 
 Given, that you've put input files in `path/to/input` folder, and want generated code to land in `path/to/output` folder, run the following command:
@@ -18,6 +20,17 @@ npx @727-ventures/typechain-polkadot --in path/to/input --out path/to/output
 ```
 
 > **(i)** Both generated code and ABI files are meant to stay in your source code and be committed. You have a full ownership of the generated code and can use however you like.
+
+--------
+
+## Using via Typechain-Compiler
+
+Typechain-Compiler is a utility package for compiling smart contracts, and generating TypeScript definitions & runtime code for them.
+
+### Set-up
+
+Refer to [Typechain-Compiler](./../packages/typechain-compiler/README.md) docs for set-up instructions.
+
 
 --------
 ## Input
@@ -88,6 +101,16 @@ const {
 	arg1, ..., argN, // Typed arguments
 	options // : CallOptions
 );
+```
+
+- `events` namespace - Contains static methods for subscribing to contract events.
+
+```typescript
+contract.events.subscribeOnTransferEvent((event) => {
+	expect(event).toMatchObject(eventsToBeSent[eventsCount]!);
+
+	eventsCount++;
+});
 ```
 
 

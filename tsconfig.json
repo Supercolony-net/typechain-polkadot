@@ -1,6 +1,8 @@
 {
   "extends": "./base.tsconfig.json",
-  "files": [],
+  "files": [
+	"tests/**/*.ts"
+  ],
   "references": [
 	{
 	  "path": "./packages/typechain-polkadot/tsconfig.ref.json"

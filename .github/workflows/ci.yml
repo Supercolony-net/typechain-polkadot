@@ -1,0 +1,40 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+#  examples-builds:
+#  eslint:
+#  eslint-on-output:
+  integration-tests:
+    concurrency:
+      group: integration-tests-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    needs: examples-builds
+    container:
+      image: ghcr.io/supercolony-net/openbrush-contracts-ci
+      options: --user root
+      env:
+        CARGO_TARGET_DIR: /usr/local/cache/target
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/checkout@v3
+      - name: Yarn install dependencies
+        run: |
+          npm install
+
+      - name: Cache contract artifacts
+        id: cache-contract-artifacts
+        uses: actions/cache@v3
+        with:
+          path: artifacts
+          key: cache-contract-artifacts-${{ github.sha }}
+
+      - name: Run Test Mocha
+        run: |
+          npm run test

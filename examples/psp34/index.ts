@@ -22,7 +22,7 @@ async function main() {
 	const totalSupply = await contract.query.totalSupply();
 	const balance = await contract.query.balanceOf(aliceKeyringPair.address);
 
-	console.log(`%c Total supply before minting: ${totalSupply.value}`, 'color: green');
+	console.log(`%c Total supply before minting: ${totalSupply.value.toNumber()}`, 'color: green');
 	console.log(`%c Balance of Alice before minting: ${balance.value}`, 'color: green');
 
 	const mintTx = await contract.tx.mint(aliceKeyringPair.address, IdBuilder.U8(1));
@@ -30,7 +30,7 @@ async function main() {
 	const totalSupplyAfterMint = await contract.query.totalSupply();
 	const balanceAfterMint = await contract.query.balanceOf(aliceKeyringPair.address);
 
-	console.log(`%c Total supply after minting: ${totalSupplyAfterMint.value}`, 'color: green');
+	console.log(`%c Total supply after minting: ${totalSupplyAfterMint.value.toNumber()}`, 'color: green');
 	console.log(`%c Balance of Alice after minting: ${balanceAfterMint.value}`, 'color: green');
 
 	await api.disconnect();

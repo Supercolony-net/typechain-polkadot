@@ -22,8 +22,14 @@
 import {INK_TYPES_TO_TS_ARGUMENTS, INK_TYPES_TO_TS_RETURNS} from "./consts";
 import assert from "assert";
 import {Abi} from "@polkadot/api-contract";
-import {TypeInfo} from "./types/TypeInfo";
+import {TypeInfo, TypeTS} from "./types/TypeInfo";
 import camelcase from "camelcase";
+
+function __getV3(abiJson: any) {
+	if (abiJson.V3) return abiJson.V3;
+	return abiJson;
+}
+
 
 export const parsePrimitiveReturns = (primitive: string): string => {
 	// @ts-ignore
@@ -94,12 +100,6 @@ export class ${enumName}Builder {
  * @param _abiStr - The ABI to preprocess
  * @returns The preprocessed ABI
  */
-
-function __getV3(abiJson: any) {
-	if (abiJson.V3) return abiJson.V3;
-	return abiJson;
-}
-
 export function preprocessABI(_abiStr: string): Abi {
 	const abiJson = JSON.parse(_abiStr);
 
@@ -135,7 +135,7 @@ export function preprocessABI(_abiStr: string): Abi {
 		const count = typeNamesCount.get(type.path[type.path.length - 1]);
 		if (type.path.length > 0 && (count ? count : 0) > 1) {
 			if (type.path.length > 3) {
-				abiJson.V3.types[__i - 1].type.path[type.path.length - 1] = `${type.path[type.path.length - 2]}_${type.path[type.path.length - 1]}`;
+				__getV3(abiJson).types[__i - 1].type.path[type.path.length - 1] = `${type.path[type.path.length - 2]}_${type.path[type.path.length - 1]}`;
 			}
 		}
 	}

@@ -55,6 +55,7 @@ export function txSignAndSend(
 	nativeContract : ContractPromise,
 	keyringPair : KeyringPair,
 	title : string,
+	handler: (response: SignAndSendSuccessResponse) => SignAndSendSuccessResponse = response => response,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
 ) {
@@ -62,7 +63,7 @@ export function txSignAndSend(
 		nativeContract,
 		title, args, gasLimitAndValue,
 	);
-	return _signAndSend(nativeAPI.registry, submittableExtrinsic, keyringPair);
+	return handler(_signAndSend(nativeAPI.registry, submittableExtrinsic, keyringPair));
 }
 
 export function buildSubmittableExtrinsic(
