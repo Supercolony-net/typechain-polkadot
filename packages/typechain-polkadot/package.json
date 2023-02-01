@@ -1,6 +1,6 @@
 {
   "name": "@727-ventures/typechain-polkadot",
-  "version": "0.6.5",
+  "version": "0.6.8",
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
@@ -21,10 +21,10 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "@polkadot/api": "^9.10.3",
-    "@polkadot/api-contract": "^9.10.3",
+    "@polkadot/api": "^9.13.4",
+    "@polkadot/api-contract": "^9.13.4",
     "@polkadot/keyring": "^10.2.1",
-    "@727-ventures/typechain-polkadot-parser": "0.3.4",
+    "@727-ventures/typechain-polkadot-parser": "0.3.6",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^17.0.34",
     "@types/yargs": "^17.0.10",

@@ -227,7 +227,7 @@ function _genValidGasLimitAndValue(api, gasLimitAndValue) {
                                 : api.consts.system.maximumBlockWeight).v1Weight.muln(64).div(util_1.BN_HUNDRED),
                             proofSize: MAX_CALL_GAS,
                         }),
-                        value: util_1.BN_ZERO
+                        value: util_1.BN_ZERO,
                     }];
             }
             value = gasLimitAndValue.value, gasLimit = gasLimitAndValue.gasLimit;
