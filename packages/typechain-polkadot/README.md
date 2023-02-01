@@ -31,24 +31,6 @@ After installing the package, you can use it as a CLI tool. To use it, run the f
 npx @727-ventures/typechain-polkadot --input path/to/abis --output path/to/output
 ```
 
-### Library
-
-You can also use typechain-polkadot as a library. To use it, you need to import it in your code:
-
-```typescript
-import {Typechain} from '@727-ventures/typechain-polkadot/src/types/typechain';
-import {testPathPatternToRegExp} from "jest-util";
-
-const typechain = new Typechain();
-
-typechain.loadDefaultPlugins();
-
-typecchain.run(
-	pathToInput,
-	pathToOutput
-)
-```
-
 ## Methods and namespaces used in the typechain, and their description
 
 ### build-extrinsic
@@ -221,8 +203,6 @@ Typechain-polkadot uses plugins to generate code. By default, it uses the follow
 - mixed-methods [docs](./docs/mixed-methods.md)
 - query [docs](./docs/query.md)
 - tx-sign-and-send [docs](./docs/tx-sign-and-send.md)
-- types-arguments [docs](./docs/types-arguments.md)
-- types-returns [docs](./docs/types-returns.md)
 
 
 
