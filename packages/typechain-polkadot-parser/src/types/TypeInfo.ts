@@ -29,6 +29,7 @@ export class TypeInfo {
 	// For enums and composites
 	bodyArgType ?: string;
 	bodyReturnType ?: string;
+	isResult?: boolean;
 
 	/**
 	 * @constructor
@@ -51,7 +52,7 @@ export class TypeInfo {
 		tsReturnTypePrefixed: string,
 		typeDescription: TypeTS,
 		bodyArgType?: string,
-		bodyReturnType?: string
+		bodyReturnType?: string,
 	) {
 		this.id = id;
 		this.tsArgType = tsArgType;
@@ -68,7 +69,7 @@ export class TypeInfo {
 	 * @returns {TypeInfo} - A new empty TypeInfo object
 	 */
 	static get EMPTY_TYPE_INFO() {
-		return new TypeInfo(0, '', '', '', '', new TypeTS('', false, true), '', '');
+		return new TypeInfo(0, '', '', '', '', new TypeTS('', false,false, true), '', '');
 	}
 }
 
@@ -77,13 +78,15 @@ export class TypeTS {
 	body: null | undefined | string | {
 		[index: string]: TypeTS | null;
 	};
+	isResult: boolean;
 	isPrimitive: boolean;
 	isConvertable: boolean;
 
-	constructor(name: string, isConvertable: boolean, isPrimitive: boolean, body?: null | undefined | string | {
+	constructor(name: string, isResult: boolean, isConvertable: boolean, isPrimitive: boolean, body?: null | undefined | string | {
 		[index: string]: TypeTS | null;
 	}) {
 		this.name = name;
+		this.isResult = isResult;
 		this.isConvertable = isConvertable;
 		this.isPrimitive = isPrimitive;
 		this.body = body;

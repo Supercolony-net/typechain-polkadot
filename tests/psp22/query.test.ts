@@ -38,13 +38,13 @@ describe("Correctness of the PSP22 contract' methods types query", () => {
 	test("`PSP22::total_supply`", async () => {
 		const { value, gasRequired } = await contract.query.totalSupply();
 		expect( ['string', 'number', 'object'].includes(typeof value) ).toBe(true);
-		expect( _isAmount(value) ).toBe(true);
+		expect( _isAmount(value.unwrapRecursively()) ).toBe(true);
 	});
 
 	test("`PSP22::balance_of`", async () => {
 		const { value } = await contract.query.balanceOf(UserAlice.address);
 		expect( ['string', 'number', 'object'].includes(typeof value) ).toBe(true);
-		expect( _isAmount(value) ).toBe(true);
+		expect( _isAmount(value.unwrapRecursively()) ).toBe(true);
 	});
 
 	test("`PSP22::balance_of`", async () => {
@@ -53,35 +53,35 @@ describe("Correctness of the PSP22 contract' methods types query", () => {
 
 	test("`mint_to`", async () => {
 		const { value } = await contract.query.mint(UserAlice.address, '1000000');
-		expect( value.ok === null ).toBe(true);
+		expect( value.unwrapRecursively() === null ).toBe(true);
 	});
 
 	test("`PSP22Mintable::mint`", async () => {
 		var { value } = await contract.query.mint(UserAlice.address, '1000000');
-		expect( value.ok === null ).toBe(true);
+		expect( value.unwrapRecursively() === null ).toBe(true);
 		var { value } = await contract.query.mint(UserAlice.address, 1000000);
-		expect( value.ok === null ).toBe(true);
+		expect( value.unwrapRecursively() === null ).toBe(true);
 	});
 
 	test("`PSP22::allowance`", async () => {
 		const { value } = await contract.query.allowance(UserCharlie.address, UserCharlie.address);
 		expect( ['string', 'number', 'object'].includes(typeof value) ).toBe(true);
-		expect( _isAmount(value) ).toBe(true);
+		expect( _isAmount(value.unwrapRecursively()) ).toBe(true);
 	});
 
 	test("`PSP22::increase_allowance` & `PSP22::decrease_allowance`", async () => {
 		var { value } = await contract.query.increaseAllowance(UserAlice.address, '1000000');
-		expect( value.ok === null ).toBe(true);
+		expect( value.unwrapRecursively() === null ).toBe(true);
 		await contract.tx.increaseAllowance(UserAlice.address, '1000000');
 		var { value } = await contract.query.decreaseAllowance(UserAlice.address, '1000000');
-		expect( value.ok === null ).toBe(true);
+		expect( value.unwrapRecursively() === null ).toBe(true);
 	});
 
 	test("`PSP22::transfer`", async () => {
 		await contract.tx.mint(UserAlice.address, '10');
 
 		const { value } = await contract.query.transfer(UserBob.address, '10', []);
-		expect( value.ok === null ).toBe(true);
+		expect( value.unwrapRecursively() === null ).toBe(true);
 	});
 });
 

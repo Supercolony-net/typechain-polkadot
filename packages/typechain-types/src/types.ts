@@ -92,21 +92,44 @@ export type QueryOkCallError = QueryCallError | {
 	value : any;
 };
 
-export interface Result<T, E> {
-	ok ?: T,
-	err ?: E,
+export class Result<T, E> {
+	constructor(ok?: T, err?: E) {
+		this.ok = ok;
+		this.err = err;
+	}
+
+	ok ?: T;
+	err ?: E;
+
+	unwrap(): T {
+		if (this.ok) {
+			return this.ok;
+		}
+
+		throw this.err;
+	}
+
+	unwrapRecursively(): T {
+		if (this.ok) {
+			if (this.ok instanceof Result) {
+				return this.ok.unwrapRecursively();
+			}
+
+			return this.ok;
+		}
+
+		if(this.err)throw this.err;
+
+		return this.ok;
+	}
 }
 
 export class ResultBuilder{
 	static Ok<T, E>(value : T) : Result<T, E> {
-		return {
-			ok: value,
-		};
+		return new Result<T, E>(value, undefined);
 	}
 	static Err<T, E>(error : E) : Result<T, E> {
-		return {
-			err: error,
-		};
+		return new Result<T, E>(undefined, error);
 	}
 }
 

@@ -26,7 +26,7 @@ import type {
 	RequestArgumentType, GasLimitAndValue,
 	QueryCallError, QueryOkCallError,
 } from './types';
-import {ReturnNumber} from "./types";
+import {Result, ResultBuilder, ReturnNumber} from "./types";
 import {Weight, WeightV2} from '@polkadot/types/interfaces';
 import {ApiPromise} from "@polkadot/api";
 import { BN_ONE, BN_ZERO, BN_HUNDRED } from '@polkadot/util';
@@ -241,6 +241,12 @@ async function _genValidGasLimitAndValue(api: ApiPromise, gasLimitAndValue ? : G
 export function handleReturnType(result: any, typeDescription: any): any {
 	if (typeof result === 'undefined' || typeof typeDescription === 'undefined') return result;
 	if (result === null || typeDescription == null) return result;
+	if(typeDescription.isResult) {
+		return new Result(
+			handleReturnType(result.ok, typeDescription.body.ok),
+			handleReturnType(result.err, typeDescription.body.err)
+		);
+	}
 	if(typeDescription.name === 'ReturnNumber') return new ReturnNumber(result as (string | number));
 	if(typeof result !== 'object' || typeof typeDescription !== 'object' || typeDescription.isPrimitive) return result;
 	if(typeDescription.name === 'Array') {

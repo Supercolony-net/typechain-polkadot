@@ -158,6 +158,7 @@ export class TypeParser {
 					event.label.toString(),
 					false,
 					false,
+					false,
 					eventBodyStructure,
 				),
 				eventBody,
@@ -241,7 +242,7 @@ ${event.args.map((arg) => {
 				compositeName,
 				`ArgumentTypes.${compositeName}`,
 				`ReturnTypes.${compositeName}`,
-				new TypeTS(compositeName, false, true, 'string | number[]'),
+				new TypeTS(compositeName, false,false, true, 'string | number[]'),
 				`export type ${compositeName} = string | number[]`,
 				`export type ${compositeName} = string | number[]`,
 			);
@@ -275,7 +276,7 @@ ${event.args.map((arg) => {
 			compositeName,
 			`ArgumentTypes.${compositeName}`,
 			tsReturnTypePrefixed,
-			new TypeTS(compositeName, false, false, typeBody),
+			new TypeTS(compositeName, false,false, false, typeBody),
 			compositeBodyArgs,
 			compositeBodyReturns,
 		);
@@ -298,7 +299,7 @@ ${event.args.map((arg) => {
 				'ReturnNumber',
 				parsePrimitiveArgs(typeName),
 				'ReturnNumber',
-				new TypeTS('ReturnNumber', true, false),
+				new TypeTS('ReturnNumber', false, true, false),
 			);
 		}
 
@@ -308,7 +309,7 @@ ${event.args.map((arg) => {
 			parsePrimitiveReturns(typeName),
 			parsePrimitiveArgs(typeName),
 			parsePrimitiveReturns(typeName),
-			new TypeTS(parsePrimitiveReturns(typeName), false, true),
+			new TypeTS(parsePrimitiveReturns(typeName), false,false, true),
 		);
 	};
 
@@ -326,7 +327,7 @@ ${event.args.map((arg) => {
 			`Array<${this.generateType(type).tsReturnType}>`,
 			`Array<${this.generateType(type).tsArgTypePrefixed}>`,
 			`Array<${this.generateType(type).tsReturnTypePrefixed}>`,
-			new TypeTS('Array', false, false,{'0': this.generateType(type).typeDescription}),
+			new TypeTS('Array', false, false, false,{'0': this.generateType(type).typeDescription}),
 		);
 	};
 
@@ -344,7 +345,7 @@ ${event.args.map((arg) => {
 			`Array<${this.generateType(type).tsReturnType}>`,
 			`Array<${this.generateType(type).tsArgTypePrefixed}>`,
 			`Array<${this.generateType(type).tsReturnTypePrefixed}>`,
-			new TypeTS('Array', false, false,{'0': this.generateType(type).typeDescription}),
+			new TypeTS('Array', false, false, false,{'0': this.generateType(type).typeDescription}),
 		);
 	};
 
@@ -362,7 +363,7 @@ ${event.args.map((arg) => {
 				'null',
 				'null',
 				'null',
-				new TypeTS('null', false, true),
+				new TypeTS('null', false,false, true),
 			);
 		}
 
@@ -380,7 +381,7 @@ ${event.args.map((arg) => {
 			`[${type.map(type => this.generateType(type).tsReturnType).join(', ')}]`,
 			`[${type.map(type => this.generateType(type).tsArgTypePrefixed).join(', ')}]`,
 			`[${type.map(type => this.generateType(type).tsReturnTypePrefixed).join(', ')}]`,
-			new TypeTS('Tuple', false, false, typeBody),
+			new TypeTS('Tuple', false, false, false, typeBody),
 		);
 	};
 
@@ -406,7 +407,7 @@ ${event.args.map((arg) => {
 				`Result<${typeOk.tsReturnType}, ${typeErr.tsReturnType}>`,
 				`Result<${typeOk.tsArgTypePrefixed}, ${typeErr.tsArgTypePrefixed}>`,
 				`Result<${typeOk.tsReturnTypePrefixed}, ${typeErr.tsReturnTypePrefixed}>`,
-				new TypeTS(`Result<${typeOk.typeDescription.name}, ${typeErr.typeDescription.name}`, false, false, {
+				new TypeTS(`Result<${typeOk.typeDescription.name}, ${typeErr.typeDescription.name}`, true, false, false, {
 					'ok': typeOk.typeDescription,
 					'err': typeErr.typeDescription,
 				}),
@@ -421,7 +422,7 @@ ${event.args.map((arg) => {
 					generatedType.tsReturnType,
 					`${generatedType.tsArgTypePrefixed} | null`,
 					generatedType.tsReturnTypePrefixed,
-					new TypeTS('Result', false, false,{'0': generatedType.typeDescription}),
+					new TypeTS('Result', false, false, false,{'0': generatedType.typeDescription}),
 				);
 			} else {
 				return new TypeInfo(
@@ -430,7 +431,7 @@ ${event.args.map((arg) => {
 					'null',
 					'null',
 					'null',
-					new TypeTS('null', false, true),
+					new TypeTS('null', false, false, true),
 				);
 			}
 		} else if (variantName == 'Option') {
@@ -442,9 +443,9 @@ ${event.args.map((arg) => {
 					`${generatedType.tsReturnTypePrefixed} | null`,
 					`${generatedType.tsArgTypePrefixed} | null`,
 					`${generatedType.tsReturnTypePrefixed} | null`,
-					new TypeTS('Option', false, false,{
+					new TypeTS('Option', false, false, false,{
 						'0': generatedType.typeDescription,
-						'1': new TypeTS('null', false, true),
+						'1': new TypeTS('null', false, false, true),
 					}),
 				);
 			}
@@ -455,7 +456,7 @@ ${event.args.map((arg) => {
 					'null',
 					'null',
 					'null',
-					new TypeTS('null', false, true),
+					new TypeTS('null', false, false, true),
 				);
 			}
 		}
@@ -488,7 +489,7 @@ ${event.args.map((arg) => {
 				variantName,
 				`ArgumentTypes.${variantName}`,
 				tsReturnTypePrefixed,
-				new TypeTS(variantName, false, false, typeBody),
+				new TypeTS(variantName, false, false, false, typeBody),
 				body,
 				body,
 			);
@@ -539,7 +540,7 @@ ${event.args.map((arg) => {
 				variantName,
 				`ArgumentTypes.${variantName}`,
 				tsReturnTypePrefixed,
-				new TypeTS(variantName, false, false, typeBody),
+				new TypeTS(variantName, false, false, false, typeBody),
 				bodyArgs,
 				bodyReturns,
 			);

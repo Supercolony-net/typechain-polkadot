@@ -1,7 +1,10 @@
+![Typechain](https://user-images.githubusercontent.com/43150707/215465145-ef41167c-ef40-4f3c-8fd8-ca56a2480810.png)
+
+If you have any questions regarding Typechain-Polkadot, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers.
+
 ## Overview :page_facing_up:
 
-Typechain was created by [Supercolony](supercolony.net) to to improve developers’ experience working with ink! smartcontracts.
-
+Typechain is maintained by [Brushfam](https://www.brushfam.io/) team to improve developers’ experience working with ink! smart contracts.
 
 Nowadays, when technologies are growing faster and faster, we should think about optimizations of different routine processes and making older stuff better. One of these optimizations is to make code typesafe that will be flexible in different situations.
 
@@ -16,16 +19,16 @@ Interaction with blockchain is done with polkadot.js library, which only has abs
 Install the package as dependency:
 
 ```bash
-yarn add @727-ventures/typechain-polkadot
+npm i @727-ventures/typechain-polkadot
 ```
 
 Pass the folder with artifacts(in the example it is `artifacts`) as input argument
 and the output folder(in the example it is `typed_contracts`):
 ```bash
-npx typechain-polkadot --in artifacts --out typed_contracts
+npx @727-ventures/typechain-polkadot --in artifacts --out typed_contracts
 ```
 
-Import the contract what you want to use(in the example it is [`my_psp22`](https://github.com/Supercolony-net/openbrush-contracts/tree/main/examples/psp22)):
+Import the contract what you want to use(in the example it is [`my_psp22`](https://github.com/727-Ventures/openbrush-contracts/tree/main/examples/psp22)):
 ```typescript
 import MyPSP22 from "../typed_contracts/contracts/my_psp22"
 ```
@@ -72,13 +75,12 @@ Given, that a front-end developer needs to do this with every contracts update, 
 
 When contracts descriptions come both with ABI and source code (`*.contract` files), our tool will provide means for deployment as well.
 
+Also, Typechain-Polkadot uses awesome tool Handlebars for generating code from templates. It is a very flexible and powerful tool, which allows to generate code from templates with a lot of different logic.
+For example, you can generate code for different contracts with different logic, or you can generate code for different methods with different logic.
 
 ## Roadmap 🚗
 
 Typechain participates in the Web3 Grants, you can find the roadmap there:
-- [Grant I](https://github.com/w3f/Grants-Program/blob/master/applications/typechain-polkadot.md)
+- [Grant I](https://github.com/w3f/Grants-Program/blob/master/applications/typechain-polkadot-follow-up.md)
 	- [Delivery milestone 1](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-milestone-1.md#milestone-delivery-mailbox)
-- Grant II - Comming soon....
-
------------
-#### Made with ❤️ by [Supercolony](https://supercolony.net)
+	- [Delivery milestone 2](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-milestone-2.md)

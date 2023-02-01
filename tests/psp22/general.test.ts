@@ -24,7 +24,6 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 		const factory = new Constructors(api, UserAlice);
 
 		const {address} = await factory.new('10', {});
-		console.log("Alice: ", UserAlice.address);
 
 		contract = new Contract(address, UserAlice, api);
 		contract_bob = new Contract(address, UserBob, api);
@@ -40,52 +39,52 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 	jest.setTimeout(10000);
 
 	test("total_supply works", async () => {
-		expect((await contract.query.totalSupply()).value.toNumber()).toBe(40);
+		expect((await contract.query.totalSupply()).value.unwrapRecursively().toNumber()).toBe(40);
 	});
 
 	test("balance_of works", async () => {
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 	});
 
 	test("allowance works", async () => {
-		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.toNumber()).toBe(0);
-		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.unwrapRecursively().toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(0);
 
 		await contract.tx.approve(UserBob.address, '10');
 
-		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.toNumber()).toBe(10);
-		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.unwrapRecursively().toNumber()).toBe(10);
+		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(0);
 
 		await contract.tx.increaseAllowance(UserBob.address, '10');
 
-		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(0);
 
 		await contract.tx.decreaseAllowance(UserBob.address, '20');
 
-		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.toNumber()).toBe(0);
-		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.unwrapRecursively().toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserBob.address, UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(0);
 	});
 
 	test("Transfer works", async () => {
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 
 		await contract.tx.transfer(UserBob.address, '10', []);
 
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(10);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(30);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(10);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(30);
 
 		await contract_bob.tx.transfer(UserAlice.address, '10', []);
 
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 	});
 
 	test("Cannot transfer above the amount", async () => {
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 
 		try {
 			await (contract.tx.transfer(UserBob.address, '30', []));
@@ -95,32 +94,32 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 			// @ts-ignore
 			expect(e.error.message).toBe('Module');
 		}
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 	});
 
 	test("TransferFrom works", async () => {
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 
 		await contract.tx.approve(UserBob.address, '10');
 
 		await contract_bob.tx.transferFrom(UserAlice.address, UserBob.address, '10', []);
 
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(10);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(30);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(10);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(30);
 
-		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.toNumber()).toBe(0);
+		expect((await contract.query.allowance(UserAlice.address, UserBob.address)).value.unwrapRecursively().toNumber()).toBe(0);
 
 		await contract_bob.tx.transfer(UserAlice.address, '10', []);
 
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 	});
 
 	test("Transfer without approval should fail", async () => {
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 
 		try {
 			await contract_bob.tx.transferFrom(UserAlice.address, UserBob.address, '10', []);
@@ -131,21 +130,19 @@ describe("Correctness of the PSP22 contract' methods types", () => {
 			expect(e.error.message).toBe('Module');
 		}
 
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
-		expect((await contract.query.balanceOf(UserBob.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserBob.address)).value.unwrapRecursively().toNumber()).toBe(20);
 	});
 
 	test("PSP22Mintable::mint works", async () => {
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(20);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(20);
 
 		await contract.tx.mint(UserAlice.address, '10');
 
-		expect((await contract.query.balanceOf(UserAlice.address)).value.toNumber()).toBe(30);
+		expect((await contract.query.balanceOf(UserAlice.address)).value.unwrapRecursively().toNumber()).toBe(30);
 	});
 
 	test("PSP22", async () => {
 		await contract.tx.mint(UserAlice.address, '1000000000000000000000000');
-
-		console.log((await contract.query.totalSupply()).value)
-	})
+	});
 });

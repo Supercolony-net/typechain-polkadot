@@ -52,9 +52,12 @@ export type QueryOkCallError = QueryCallError | {
     issue: 'BODY_ISNT_OKERR';
     value: any;
 };
-export interface Result<T, E> {
+export declare class Result<T, E> {
+    constructor(ok?: T, err?: E);
     ok?: T;
     err?: E;
+    unwrap(): T;
+    unwrapRecursively(): T;
 }
 export declare class ResultBuilder {
     static Ok<T, E>(value: T): Result<T, E>;

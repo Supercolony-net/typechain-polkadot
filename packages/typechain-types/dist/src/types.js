@@ -23,22 +23,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReturnNumber = exports.ResultBuilder = void 0;
+exports.ReturnNumber = exports.ResultBuilder = exports.Result = void 0;
 var bn_js_1 = __importDefault(require("bn.js"));
 ;
 ;
+var Result = /** @class */ (function () {
+    function Result(ok, err) {
+        this.ok = ok;
+        this.err = err;
+    }
+    Result.prototype.unwrap = function () {
+        if (this.ok) {
+            return this.ok;
+        }
+        throw this.err;
+    };
+    Result.prototype.unwrapRecursively = function () {
+        if (this.ok) {
+            if (this.ok instanceof Result) {
+                return this.ok.unwrapRecursively();
+            }
+            return this.ok;
+        }
+        if (this.err)
+            throw this.err;
+        return this.ok;
+    };
+    return Result;
+}());
+exports.Result = Result;
 var ResultBuilder = /** @class */ (function () {
     function ResultBuilder() {
     }
     ResultBuilder.Ok = function (value) {
-        return {
-            ok: value,
-        };
+        return new Result(value, undefined);
     };
     ResultBuilder.Err = function (error) {
-        return {
-            err: error,
-        };
+        return new Result(undefined, error);
     };
     return ResultBuilder;
 }());
