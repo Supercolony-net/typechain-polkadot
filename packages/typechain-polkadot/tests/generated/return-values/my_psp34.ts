@@ -16,4 +16,4 @@ export default interface OkishReturnValueTypes {
 	"20" : AccountId | null;
 	/** */
 	"6" : (string | number);
-};
+}

@@ -218,7 +218,7 @@ async function _genValidGasLimitAndValue(api: ApiPromise, gasLimitAndValue ? : G
 				).v1Weight.muln(64).div(BN_HUNDRED),
 				proofSize: MAX_CALL_GAS,
 			}) as WeightV2,
-			value: BN_ZERO
+			value: BN_ZERO,
 		};
 	}
 

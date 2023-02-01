@@ -21,18 +21,18 @@ export default class Constructors {
 	}
 
 {{#each methods}}
-    /**
-    * {{{toCamelCase name}}}
-    *
-    {{#each args}}
+	/**
+	* {{{toCamelCase name}}}
+	*
+	{{#each args}}
 	* @param { {{{type.tsStr}}} } {{{toCamelCase name}}},
 	{{/each}}
 	*/
    	async "{{{toCamelCase name}}}" (
    	{{#each args}}
-   		{{{name}}}: {{{type.tsStr}}},
-   	{{/each}}
-   		__options ? : ConstructorOptions,
+		{{{name}}}: {{{type.tsStr}}},
+	{{/each}}
+		__options ? : ConstructorOptions,
    	) {
    		const __contract = JSON.parse(Files.readFileSync("{{{../pathToContractFile}}}").toString());
 		const code = new CodePromise(this.nativeAPI, __contract, __contract.source.wasm);
@@ -53,7 +53,7 @@ export default class Constructors {
 			result: response as SignAndSendSuccessResponse,
 			// @ts-ignore
 			address: (response as SignAndSendSuccessResponse)!.result!.contract.address.toString(),
-		}
-   	}
+		};
+	}
 {{/each}}
 }

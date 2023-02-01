@@ -90,7 +90,7 @@ function main() {
 			let targetInfo = {
 				path: PathAPI.resolve(PathAPI.dirname(tomlFile), 'target', 'ink'),
 				name: getContractNameFromToml(tomlFile),
-			}
+			};
 
 			if (config.isWorkspace) {
 				targetInfo = {

@@ -83,7 +83,7 @@ if (pluginsDir) {
 
 	const pluginFiles = FsAPI.readdirSync(pluginsDir);
 
-	let pluginFileNames: string[] = [];
+	const pluginFileNames: string[] = [];
 
 	for (const file of pluginFiles) {
 		if (file.endsWith('.plugin.ts')) {

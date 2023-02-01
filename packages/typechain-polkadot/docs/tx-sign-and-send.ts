@@ -63,7 +63,7 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	let _methodsNames = abi.messages.map((m, i) => {
 		return {
 			original: m.identifier,
-			cut: m.identifier.split("::").pop()!
+			cut: m.identifier.split("::").pop()!,
 		};
 	});
 

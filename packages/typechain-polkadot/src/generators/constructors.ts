@@ -72,7 +72,7 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathTo
 	let _methodsNames = abi.constructors.map((m, i) => {
 		return {
 			original: m.identifier,
-			cut: m.identifier.split("::").pop()!
+			cut: m.identifier.split("::").pop()!,
 		};
 	});
 

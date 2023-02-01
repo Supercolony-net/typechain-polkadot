@@ -19,7 +19,7 @@ export default class EventsClass {
 {{#each events}}
 	public subscribeOn{{name}}Event(callback : (event : EventTypes.{{name}}) => void) {
 		const callbackWrapper = (args: any[], event: any) => {
-			let _event: Record < string, any > = {};
+			const _event: Record < string, any > = {};
 
 			for (let i = 0; i < args.length; i++) {
 				_event[event.args[i]!.name] = args[i]!.toJSON();

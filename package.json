@@ -13,8 +13,8 @@
 		"gen-test-ts": "npx @727-ventures/typechain-polkadot --in tests/artifacts --out tests/generated",
 		"only-test": "npx jest --no-cache --maxWorkers 1",
 		"test": "npm run gen-test-ts && npm run only-test",
-		"lint": "eslint \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
-		"lint:fix": "eslint --fix \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
+		"lint": "eslint \"{packages, examples}/**/*.ts\"",
+		"lint:fix": "eslint --fix \"{packages, examples}/**/*.ts\"",
 	    "gen-docs": "npx typedoc --out docs-generated"
 	},
 	"dependencies": {
