@@ -1,6 +1,7 @@
 import {CodePromise} from "@polkadot/api-contract";
 import type {KeyringPair} from "@polkadot/keyring/types";
 import Files from "fs";
+import path from "path";
 import type {ApiPromise} from "@polkadot/api";
 import {_signAndSend, SignAndSendSuccessResponse} from "../_sdk/tx";
 import type {ConstructorOptions} from "../_sdk/types";
@@ -32,7 +33,7 @@ export default class Constructors {
     	{{/each}}
     		__options ? : ConstructorOptions,
     	) {
-    		const __contract = JSON.parse(Files.readFileSync("{{{../pathToContractFile}}}").toString());
+    		const __contract = JSON.parse(Files.readFileSync(path.resolve(__dirname, "{{{../pathToContractFile}}}")).toString());
 
 			const code = new CodePromise(this.nativeAPI, __contract, __contract.source.wasm);
 
