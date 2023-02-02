@@ -78,6 +78,16 @@ When contracts descriptions come both with ABI and source code (`*.contract` fil
 Also, Typechain-Polkadot uses awesome tool Handlebars for generating code from templates. It is a very flexible and powerful tool, which allows to generate code from templates with a lot of different logic.
 For example, you can generate code for different contracts with different logic, or you can generate code for different methods with different logic.
 
+## Documentation 📚
+
+- [About and mini-guide (recommended)](docs/about.md)
+- [Typechain-Polkadot](packages/typechain-polkadot/README.md)
+- [Typechain-compiler](packages/typechain-compiler/README.md)
+- [Testing](tests/README.md)
+- [Examples](examples/README.md)
+- [Article 1](https://medium.com/p/7c184067523f)
+- [Article 2 TBD]()
+
 ## Roadmap 🚗
 
 Typechain participates in the Web3 Grants, you can find the roadmap there:
