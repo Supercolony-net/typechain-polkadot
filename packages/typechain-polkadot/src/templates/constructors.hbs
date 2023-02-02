@@ -33,7 +33,7 @@ export default class Constructors {
     	{{/each}}
     		__options ? : ConstructorOptions,
     	) {
-    		const __contract = JSON.parse(Files.readFileSync(path.resolve(__dirname, "{{{../pathToContractFile}}}")).toString());
+    		const __contract = JSON.parse(Files.readFileSync(path.resolve(__dirname, "{{{../contractDirRelPath}}}/{{{../fileName}}}.contract")).toString());
 
 			const code = new CodePromise(this.nativeAPI, __contract, __contract.source.wasm);
 
