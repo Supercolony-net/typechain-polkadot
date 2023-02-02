@@ -5,7 +5,7 @@
 ```bash
 git clone https://github.com/paritytech/substrate-contracts-node
 cd ./substrate-contracts-node
-git checkout v0.19.0
+git checkout v0.23.0
 cargo +stable build --release
 ./target/release/substrate-contracts-node --dev --tmp
 ```

@@ -24,7 +24,7 @@ export function decodeEvents(events: any[], contract: ContractPromise, fileName:
 
 		const {args, event} = contract.abi.decodeEvent(data);
 
-		let _event: Record < string, any > = {};
+		const _event: Record < string, any > = {};
 
 		for (let i = 0; i < args.length; i++) {
 			_event[event.args[i]!.name] = args[i]!.toJSON();

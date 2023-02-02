@@ -1,26 +1,31 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
+import type { ApiPromise } from '@polkadot/api';
 import type { GasLimit, GasLimitAndRequiredValue, Result } from '@727-ventures/typechain-types';
 import type { QueryReturnType } from '@727-ventures/typechain-types';
 import { queryJSON, queryOkJSON, handleReturnType } from '@727-ventures/typechain-types';
 import type * as ArgumentTypes from '../types-arguments/my_psp34_enumerable';
 import type * as ReturnTypes from '../types-returns/my_psp34_enumerable';
 import type BN from 'bn.js';
+//@ts-ignore
 import {ReturnNumber} from '@727-ventures/typechain-types';
 import {getTypeDescription} from './../shared/utils';
 
 
 export default class Methods {
 	private __nativeContract : ContractPromise;
+	private __apiPromise: ApiPromise;
 	private __callerAddress : string;
 
 	constructor(
 		nativeContract : ContractPromise,
+		nativeApi : ApiPromise,
 		callerAddress : string,
 	) {
 		this.__nativeContract = nativeContract;
 		this.__callerAddress = callerAddress;
+		this.__apiPromise = nativeApi;
 	}
 
 	/**
@@ -31,7 +36,7 @@ export default class Methods {
 	"collectionId" (
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< ReturnTypes.Id > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::collectionId", [], __options , (result) => { return handleReturnType(result, getTypeDescription(1, 'my_psp34_enumerable')); });
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::collectionId", [], __options , (result) => { return handleReturnType(result, getTypeDescription(1, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -42,7 +47,7 @@ export default class Methods {
 	"totalSupply" (
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp34::totalSupply", [], __options , (result) => { return new ReturnNumber(result as (number | string)); });
+		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::totalSupply", [], __options , (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -55,7 +60,7 @@ export default class Methods {
 		owner: ArgumentTypes.AccountId,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< number > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::balanceOf", [owner], __options );
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::balanceOf", [owner], __options );
 	}
 
 	/**
@@ -72,7 +77,7 @@ export default class Methods {
 		approved: boolean,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34::approve", [operator, id, approved], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::approve", [operator, id, approved], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -89,7 +94,7 @@ export default class Methods {
 		id: ArgumentTypes.Id | null,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< boolean > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::allowance", [owner, operator, id], __options );
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::allowance", [owner, operator, id], __options );
 	}
 
 	/**
@@ -106,7 +111,7 @@ export default class Methods {
 		data: Array<(number | string | BN)>,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34::transfer", [to, id, data], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::transfer", [to, id, data], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -119,7 +124,7 @@ export default class Methods {
 		id: ArgumentTypes.Id,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< ReturnTypes.AccountId | null > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::ownerOf", [id], __options , (result) => { return handleReturnType(result, getTypeDescription(19, 'my_psp34_enumerable')); });
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::ownerOf", [id], __options , (result) => { return handleReturnType(result, getTypeDescription(19, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -134,7 +139,7 @@ export default class Methods {
 		id: ArgumentTypes.Id,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34Mintable::mint", [account, id], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34Mintable::mint", [account, id], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -149,7 +154,7 @@ export default class Methods {
 		id: ArgumentTypes.Id,
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34Burnable::burn", [account, id], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34Burnable::burn", [account, id], __options , (result) => { return handleReturnType(result, getTypeDescription(23, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -162,7 +167,7 @@ export default class Methods {
 		index: (string | number | BN),
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< Result<ReturnTypes.Id, ReturnTypes.PSP34Error> > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34Enumerable::tokenByIndex", [index], __options , (result) => { return handleReturnType(result, getTypeDescription(26, 'my_psp34_enumerable')); });
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34Enumerable::tokenByIndex", [index], __options , (result) => { return handleReturnType(result, getTypeDescription(26, 'my_psp34_enumerable')); });
 	}
 
 	/**
@@ -177,7 +182,7 @@ export default class Methods {
 		index: (string | number | BN),
 		__options ? : GasLimit,
 	): Promise< QueryReturnType< Result<ReturnTypes.Id, ReturnTypes.PSP34Error> > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34Enumerable::ownersTokenByIndex", [owner, index], __options , (result) => { return handleReturnType(result, getTypeDescription(26, 'my_psp34_enumerable')); });
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34Enumerable::ownersTokenByIndex", [owner, index], __options , (result) => { return handleReturnType(result, getTypeDescription(26, 'my_psp34_enumerable')); });
 	}
 
 }

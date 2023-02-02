@@ -44,8 +44,8 @@ export default class Contract {
 		this.signer = signer;
 		this.contractAbi = new Abi(ABI);
 
-		this.query = new QueryMethods(this.nativeContract, signer.address);
-		this.buildExtrinsic = new BuildExtrinsicMethods(this.nativeContract);
+		this.query = new QueryMethods(this.nativeContract, this.nativeAPI, signer.address);
+		this.buildExtrinsic = new BuildExtrinsicMethods(this.nativeContract, this.nativeAPI);
 		this.tx = new TxSignAndSendMethods(nativeAPI, this.nativeContract, signer);
 		this.methods = new MixedMethods(nativeAPI, this.nativeContract, signer);
 		this.events = new EventsClass(this.nativeContract, nativeAPI);
@@ -53,7 +53,7 @@ export default class Contract {
 
 	/**
 	 * name
-     *
+	 *
 	 * @returns The name of the contract.
 	*/
 	get name() : string {
@@ -74,12 +74,12 @@ export default class Contract {
 	 *
 	 * @param signer - The signer to use for signing transactions.
 	 * @returns New instance of the contract class with new signer.
-     * @example
-     * ```typescript
-     * const contract = new Contract(address, signerAlice, api);
-     * await contract.mint(signerBob.address, 100);
-     * await contract.withSigner(signerBob).transfer(signerAlice.address, 100);
-     * ```
+	 * @example
+	 * ```typescript
+	 * const contract = new Contract(address, signerAlice, api);
+	 * await contract.mint(signerBob.address, 100);
+	 * await contract.withSigner(signerBob).transfer(signerAlice.address, 100);
+	 * ```
 	*/
 	withSigner(signer : KeyringPair) : Contract {
 		return new Contract(this.address, signer, this.nativeAPI);
@@ -96,10 +96,10 @@ export default class Contract {
 	}
 
 	/**
-	* withAPI
-	*
-	* @param api - The API instance to use for queries.
-	* @returns New instance of the contract class to interact with new API.
+	 * withAPI
+	 *
+	 * @param api - The API instance to use for queries.
+	 * @returns New instance of the contract class to interact with new API.
 	*/
 	withAPI(api : ApiPromise) : Contract {
 		return new Contract(this.address, this.signer, api);

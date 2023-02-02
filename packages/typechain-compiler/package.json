@@ -1,6 +1,6 @@
 {
   "name": "@727-ventures/typechain-compiler",
-  "version": "0.5.11",
+  "version": "0.5.12",
   "description": "Util to test and compile your rust project",
   "bin": {
     "typechain-compiler": "bin/index.js"
