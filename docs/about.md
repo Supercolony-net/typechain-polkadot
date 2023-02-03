@@ -3,7 +3,7 @@ Typechain-Polkadot Documentation
 
 ## Packages of Typechain-Polkadot
 
-Typechain Polkadot have 4 main packages:
+Typechain Polkadot has 4 main packages:
 - `typechain-polkadot` - main package, which contains all logic for generating interfaces for contracts
 - `typechain-polkadot-parser` - package for parsing types of contracts received from metadata
 - `typechain-compiler` - package that allows you to run typechain easily on the big projects, it automatically compiles all contracts and generates typechain-code for them.
@@ -171,7 +171,7 @@ $ npx @727-Ventures/typechain-compiler --config typechain.config.json
 
 8) And now, you can use generated code in your project. For example, you can create a file `index.ts`:
 ```typescript
-// In this example we will deploy & interact with psp22 token to mint some tokens to the owner and get total supply.
+// In this example we will deploy & interact with psp22 token to transfer some tokens to the owner and get total supply.
 import {ApiPromise, Keyring} from "@polkadot/api";
 import Constructors from "./typechain-generated/constructors/my_psp22";
 import Contract from "./typechain-generated/contracts/my_psp22";
@@ -233,9 +233,6 @@ Whoa! We've just deployed and interacted with our contract! 🎉
 > Link to the full example: [typechain-compiler-example](https://github.com/varex83/typechain-compiler-example/tree/main)
 
 ## How to use it directly via `typechain-polkadot`?
-
-1) Install `typechain-polkadot`:
-
 Let's use previous example, but instead of using `typechain-compiler`, we will use `typechain-polkadot` directly.
 
 1) We need to compile our contracts:
@@ -251,7 +248,7 @@ cargo contract build
 $ npm install @727-ventures/typechain-polkadot
 ```
 
-3) Let's create an directory with artifacts:
+3) Let's create a directory with artifacts:
 ```bash
 $ mkdir artifacts
 ```
