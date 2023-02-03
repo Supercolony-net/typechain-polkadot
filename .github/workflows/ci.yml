@@ -13,11 +13,6 @@ jobs:
       group: integration-tests-${{ github.ref }}
       cancel-in-progress: true
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/supercolony-net/openbrush-contracts-ci
-      options: --user root
-      env:
-        CARGO_TARGET_DIR: /usr/local/cache/target
     steps:
       - uses: actions/setup-node@v1
         with:
