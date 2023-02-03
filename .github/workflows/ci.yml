@@ -13,6 +13,9 @@ jobs:
       group: integration-tests-${{ github.ref }}
       cancel-in-progress: true
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/727-ventures/typechain-polkadot-ci
+      options: --user root
     steps:
       - uses: actions/setup-node@v1
         with:
@@ -23,4 +26,9 @@ jobs:
           npm install
       - name: Run Test Mocha
         run: |
+          set +e
+          substrate-contracts-node --tmp --dev & P1=$!;
+          set -e
           npm run test
+          kill $P1
+        timeout-minutes: 3
