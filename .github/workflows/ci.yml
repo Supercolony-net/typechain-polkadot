@@ -6,8 +6,24 @@ on:
 
 jobs:
 #  examples-builds:
-#  eslint:
-#  eslint-on-output:
+  eslint:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/727-ventures/openbrush-contracts-ci
+      options: --user root
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/checkout@v3
+      - name: NPM Install dependencies
+        run: |
+          npm install
+      - name: Run ESLint
+        run: |
+          chown -R root .
+          chmod -R a+rwx .
+          npm run lint
   integration-tests:
     concurrency:
       group: integration-tests-${{ github.ref }}
@@ -21,10 +37,10 @@ jobs:
         with:
           node-version: '16.x'
       - uses: actions/checkout@v3
-      - name: Yarn install dependencies
+      - name: NPM install dependencies
         run: |
           npm install
-      - name: Run Test Mocha
+      - name: Run Test Jest
         run: |
           chown -R root .
           chmod -R a+rwx .
