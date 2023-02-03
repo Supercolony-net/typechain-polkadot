@@ -5,7 +5,25 @@ on:
     branches: [ master ]
 
 jobs:
-#  examples-builds:
+  examples-builds:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/727-ventures/openbrush-contracts-ci
+      options: --user root
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/checkout@v3
+      - name: NPM Install dependencies
+        run: |
+          npm install
+      - name: Build examples
+        run: |
+          chown -R root .
+          chmod -R a+rwx .
+          cd examples/psp22
+
   eslint:
     runs-on: ubuntu-latest
     container:
@@ -23,7 +41,19 @@ jobs:
         run: |
           chown -R root .
           chmod -R a+rwx .
-          npm run lint
+          set +e
+          substrate-contracts-node --tmp --dev & P1=$!;
+          set -e
+          cd examples/psp22
+          npm run generate
+          npm run start
+          cd ../psp34
+          npm run generate
+          npm run start
+          cd ../psp1155
+          npm run generate
+          npm run start
+          kill $P1
   integration-tests:
     concurrency:
       group: integration-tests-${{ github.ref }}
