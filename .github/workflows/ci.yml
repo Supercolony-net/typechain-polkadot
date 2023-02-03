@@ -21,14 +21,6 @@ jobs:
       - name: Yarn install dependencies
         run: |
           npm install
-
-      - name: Cache contract artifacts
-        id: cache-contract-artifacts
-        uses: actions/cache@v3
-        with:
-          path: artifacts
-          key: cache-contract-artifacts-${{ github.sha }}
-
       - name: Run Test Mocha
         run: |
           npm run test
