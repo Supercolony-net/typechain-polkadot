@@ -35,11 +35,6 @@ import PathAPI from "path";
  * @param absPathToABIs - The absolute path to the ABIs directory
  */
 export default function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
-	const relPathFromOutL1toABIs = PathAPI.relative(
-		process.cwd(),
-		absPathToABIs
-	);
-
 	const parser = new TypeParser(abi);
 
 	const __allArgs = abi.constructors.map(m => m.args).flat();
@@ -76,9 +71,14 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		});
 	}
 
+	const relPathFromOutL1toABIs = PathAPI.relative(
+		PathAPI.resolve(absPathToOutput, "contracts"),
+		absPathToABIs
+	);
+
 	__writeFileSync(
 		absPathToOutput,
 		`constructors/${fileName}.ts`,
-		CONTRACT_TEMPLATES.FILE(fileName, `./${relPathFromOutL1toABIs}/${fileName}.contract`, methods)
+		CONTRACT_TEMPLATES.FILE(fileName, relPathFromOutL1toABIs, methods)
 	);
 }
