@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/727-ventures/typechain-polkadot-ci
-      options: --user root
     steps:
       - uses: actions/setup-node@v1
         with:
