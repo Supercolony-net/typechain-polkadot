@@ -12,13 +12,13 @@ Utility package for parsing ABIs of Polkadot smart contracts.
 
 - `class TypeInfo` - Contains information about a type.
 ``` typescript
-TypeInfo {
-	id: number; // - id of the type
-	tsArgType: string; // - TypeScript type of the type's arguments
-	tsReturnType: string; // - TypeScript type of the type's return value
-	bodyArgType ?: string; // - TypeScript type of the type's body arguments
-	bodyReturnType ?: string; // - TypeScript type of the type's body return value
-
-	static get EMPTY_TYPE_INFO(); // - Returns an empty `TypeInfo` object.
-}
+	id: number; // - type id
+	tsArgType: string; // - TypeScript type for function arguments
+	tsReturnType: string; // - TypeScript type for function return value
+	tsArgTypePrefixed: string; // - TypeScript type for function arguments with prefix (for imports)
+	tsReturnTypePrefixed: string; // - TypeScript type for function return value with prefix (for imports)
+	typeDescription: TypeTS; // - type description in TypeScript
+	// For enums and composites
+	bodyArgType ?: string; // - TypeScript type for function arguments
+	bodyReturnType ?: string; // - TypeScript type for function return value
 ```

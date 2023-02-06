@@ -29,7 +29,7 @@ import type {
 
 const DEF_GAS_LIMIT_AND_VALUE : GasLimitAndValue = {
 	value: 0,
-	gasLimit: 1000000 * 1000000,
+	gasLimit: -1,
 };
 
 type QueryReturnType<T> = {
@@ -54,6 +54,9 @@ export async function queryJSON<T>(
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
+	handler: (json: AnyJson) => T = (json: AnyJson): T => {
+		return json as unknown as T;
+	},
 ) : Promise< QueryReturnType<T> > {
 	const { output, gasConsumed } = await queryOutput(
 		nativeContract, callerAddress,
@@ -74,7 +77,7 @@ export async function queryJSON<T>(
 	}
 
 	return {
-		value: output.toJSON() as unknown as T,
+		value: handler(output.toJSON()),
 		gasConsumed,
 	};
 }
@@ -211,7 +214,7 @@ function _genValidGasLimitAndValue(gasLimitAndValue ? : GasLimitAndValue) : GasL
 	let { value, gasLimit } = gasLimitAndValue;
 
 	if(!value) value = 0;
-	if(gasLimit == null) gasLimit = 1000000 * 1000000;
+	if(gasLimit == null) gasLimit = -1;
 
 	return { value, gasLimit };
 }

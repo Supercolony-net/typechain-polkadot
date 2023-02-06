@@ -1,0 +1,84 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  examples-builds:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/727-ventures/openbrush-contracts-ci
+      options: --user root
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/checkout@v3
+      - name: NPM Install dependencies
+        run: |
+          npm install
+      - name: Build examples
+        run: |
+          chown -R root .
+          chmod -R a+rwx .
+          set +e
+          substrate-contracts-node --tmp --dev & P1=$!;
+          set -e
+          cd examples/psp22
+          npm i
+          npm run generate
+          npm run start
+          cd ../psp34
+          npm i
+          npm run generate
+          npm run start
+          cd ../psp34_enumerable
+          npm i
+          npm run generate
+          npm run start
+          kill $P1
+  eslint:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/727-ventures/openbrush-contracts-ci
+      options: --user root
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/checkout@v3
+      - name: NPM Install dependencies
+        run: |
+          npm install
+      - name: Run ESLint
+        run: |
+          chown -R root .
+          chmod -R a+rwx .
+          npm run lint
+  integration-tests:
+    concurrency:
+      group: integration-tests-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/727-ventures/openbrush-contracts-ci
+      options: --user root
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/checkout@v3
+      - name: NPM install dependencies
+        run: |
+          npm install
+      - name: Run Test Jest
+        run: |
+          chown -R root .
+          chmod -R a+rwx .
+          set +e
+          substrate-contracts-node --tmp --dev & P1=$!;
+          set -e
+          npm run test
+          kill $P1
+        timeout-minutes: 3

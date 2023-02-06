@@ -1,11 +1,16 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { ArgumentsTypes } from '../arguments/{{{fileName}}}';
-import type OkishReturns from '../return-values/{{{fileName}}}';
-import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
-import type { QueryReturnType } from '../_sdk/query';
-import { queryJSON, queryOkJSON } from '../_sdk/query';
+import type { ApiPromise } from '@polkadot/api';
+import type { GasLimit, GasLimitAndRequiredValue, Result } from '@727-ventures/typechain-types';
+import type { QueryReturnType } from '@727-ventures/typechain-types';
+import { queryJSON, queryOkJSON, handleReturnType } from '@727-ventures/typechain-types';
+import type * as ArgumentTypes from '../types-arguments/{{{fileName}}}';
+import type * as ReturnTypes from '../types-returns/{{{fileName}}}';
+import type BN from 'bn.js';
+//@ts-ignore
+import {ReturnNumber} from '@727-ventures/typechain-types';
+import {getTypeDescription} from './../shared/utils';
 {{#if additionalImports.length}}
 {{#each additionalImports}}
 import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
@@ -13,31 +18,35 @@ import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } fro
 
 export default class Methods {
 	private __nativeContract : ContractPromise;
+	private __apiPromise: ApiPromise;
 	private __callerAddress : string;
 
 	constructor(
 		nativeContract : ContractPromise,
+		nativeApi : ApiPromise,
 		callerAddress : string,
 	) {
 		this.__nativeContract = nativeContract;
 		this.__callerAddress = callerAddress;
+		this.__apiPromise = nativeApi;
 	}
 
 {{#each methods}}
-	/**{{#if args.length}}
-	 * @arg: args: [
+	/**
+	* {{{toCamelCase name}}}
+	*
 	{{#each args}}
-	 * {{{@index}}}: {{{toCamelCase name}}},
+	* @param { {{{type.tsStr}}} } {{{toCamelCase name}}},
 	{{/each}}
-	 * ]
-	{{/if}} */
+	* @returns { {{#if this.returnType}}{{{this.returnType.tsStr}}}{{else}}void{{/if}} }
+	*/
 	"{{{toCamelCase name}}}" (
 	{{#each args}}
-		{{{toCamelCase name}}}: ArgumentsTypes[{{{type.id}}}],
+		{{{name}}}: {{{type.tsStr}}},
 	{{/each}}
 		__options ? : {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
-	){{{constructReturnType this}}}{
-		return {{{constructReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options);
+	){{{buildReturnType this}}}{
+		return {{{buildReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options {{#buildWrapper this}}{{fileName}}{{/buildWrapper}});
 	}
 
 {{/each}}

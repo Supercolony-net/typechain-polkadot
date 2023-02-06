@@ -1,16 +1,13 @@
 {
   "name": "@727-ventures/typechain-polkadot",
-  "version": "0.1.6",
+  "version": "0.6.8",
   "scripts": {
     "start": "ts-node index.ts --in artifacts --out out",
-    "gen-test-ts": "ts-node index.ts --in tests/artifacts --out tests/generated",
-	"only-test": "jest --no-cache --maxWorkers 1",
-    "test": "npm run gen-test-ts && jest --no-cache --maxWorkers 1",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"{src,tests}/**/*.{js,jsx,ts,tsx}\""
   },
   "bin": {
-    "typechain-polkadot-dev": "bin/index.js"
+    "typechain-polkadot": "bin/index.js"
   },
   "files": [
     "index.ts",
@@ -24,25 +21,26 @@
   },
   "engineStrict": true,
   "dependencies": {
-    "@polkadot/api": "^9.6.1",
-    "@polkadot/api-contract": "^9.6.1",
-    "@polkadot/keyring": "^9.6.1",
-    "@727-ventures/typechain-polkadot-parser": "^0.1.3",
+    "@polkadot/api": "^9.13.4",
+    "@polkadot/api-contract": "^9.13.4",
+    "@polkadot/keyring": "^10.2.1",
+    "@727-ventures/typechain-polkadot-parser": "0.3.6",
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^17.0.34",
+    "@types/node": "^18.11.18",
     "@types/yargs": "^17.0.10",
     "camelcase": "^6.3.0",
     "eslint": "^8.18.0",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^9.1.0",
     "handlebars": "^4.7.7",
     "prettier": "^2.7.1",
     "ts-node": "^10.7.0",
     "yargs": "^17.5.1"
   },
   "devDependencies": {
+    "@727-ventures/typechain-types": "^0.0.22",
     "@types/bn.js": "^5.1.0",
     "@types/eslint": "^8.4.3",
-    "@types/jest": "^27.5.1",
+    "@types/jest": "^27.5.2",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "eslint": "^8.18.0",
@@ -53,14 +51,14 @@
     "ts-jest": "^28.0.3",
     "typescript": "^4.7.4"
   },
-  "author": "727-Ventures",
-  "homepage": "https://github.com/727-Ventures/typechain-polkadot#readme",
+  "author": "Supercolony-net",
+  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/727-Ventures/typechain-polkadot.git"
+    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
   },
   "bugs": {
-    "url": "https://github.com/727-Ventures/typechain-polkadot/issues"
+    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
   },
-  "gitHead": "749d761b2937953405e9be3a7765de5ff7e8ca0a"
+  "gitHead": "fe4c3cbc02a1c7f85a0e1fa390bb74b3cb9d6867"
 }

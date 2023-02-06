@@ -20,29 +20,38 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {Abi} from "@polkadot/api-contract";
-import {__writeFileSync} from "./_utils";
 import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
+import Handlebars from "handlebars";
+import {TypeInfo} from "@727-ventures/typechain-polkadot-parser/src/types/TypeInfo";
+import {Import} from "../types";
+import {readTemplate} from "../utils/handlebars-helpers";
+import {writeFileSync} from "../utils/directories";
+import {TypechainPlugin} from "../types/interfaces";
 
+const generateForMetaTemplate = Handlebars.compile(readTemplate("types-arguments"));
+
+export const FILE = (tsTypes : TypeInfo[], additionalImports: Import[]) => generateForMetaTemplate({tsTypes, additionalImports});
 /**
- * Generates the types-arguments/<fileName>.ts file.
+ * generates a types-arguments file
  *
  * @param abi - The ABI of the contract
  * @param fileName - The name of the file to write to
  * @param absPathToOutput - The absolute path to the output directory
  */
-export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
+function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
-
-	let result = '';
-
-	parser.tsTypes.forEach(type => {
-		if (type.bodyArgType)
-			result += type.bodyArgType + '\n\n';
-	});
-
-	__writeFileSync(
+	writeFileSync(
 		absPathToOutput,
 		`types-arguments/${fileName}.ts`,
-		`import type BN from 'bn.js';\n\n` + result
+		FILE(parser.tsTypes, [])
 	);
+}
+
+export default class TypesArgumentsPlugin implements TypechainPlugin {
+	generate(abi: Abi, fileName: string, absPathToABIs: string, absPathToOutput: string): void {
+		generate(abi, fileName, absPathToOutput);
+	}
+
+	name: string = "TypesArgumentsPlugin";
+	outputDir: string = "types-arguments";
 }

@@ -21,24 +21,48 @@
 
 import {Abi} from "@polkadot/api-contract";
 import PathAPI from "path";
-import {__writeFileSync} from "./_utils";
-import * as CONTRACT_TEMPLATES from "../output-generators/contract";
 import {Import} from "../types";
+import Handlebars from "handlebars";
+import {readTemplate} from "../utils/handlebars-helpers";
+import {writeFileSync} from "../utils/directories";
+import {TypechainPlugin} from "../types/interfaces";
+
+const generateForMetaTemplate = Handlebars.compile(readTemplate("contract"));
 
 /**
- * Generates the contracts/<fileName>.ts file.
+ * Generates file content for contract/<fileName>.ts using Handlebars
+ *
+ * @param fileName - The name of the file to write to
+ * @param abiDirRelPath - The relative path to the ABI directory
+ * @param additionalImports - Any additional imports to add to the file
+ * @returns {string} Generated file content
+ */
+export const FILE = (fileName : string, abiDirRelPath : string, additionalImports: Import[]) => generateForMetaTemplate({fileName, abiDirRelPath, additionalImports});
+
+/**
+ * generates a contract file
  *
  * @param abi - The ABI of the contract
  * @param fileName - The name of the file to write to
  * @param absPathToOutput - The absolute path to the output directory
  * @param absPathToABIs - The absolute path to the ABIs directory
  */
-export default function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
+function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
 	const imports: Import[] = [];
 	const relPathFromOutL1toABIs = PathAPI.relative(
 		PathAPI.resolve(absPathToOutput, "contracts"),
 		absPathToABIs
 	);
 
-	__writeFileSync(absPathToOutput, `contracts/${fileName}.ts`, CONTRACT_TEMPLATES.FILE(fileName, relPathFromOutL1toABIs, imports));
+	writeFileSync(absPathToOutput, `contracts/${fileName}.ts`, FILE(fileName, relPathFromOutL1toABIs, imports));
+}
+
+export default class ContractPlugin implements TypechainPlugin {
+
+	name: string = 'ContractPlugin';
+	outputDir: string = 'contracts';
+
+	generate(abi: Abi, fileName: string, absPathToABIs: string, absPathToOutput: string): void {
+		generate(abi, fileName, absPathToOutput, absPathToABIs);
+	}
 }

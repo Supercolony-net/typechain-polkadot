@@ -1,11 +1,12 @@
 import type BN from 'bn.js';
+import type {ReturnNumber} from '@727-ventures/typechain-types';
 
 export interface Id {
 	u8 ? : number,
 	u16 ? : number,
 	u32 ? : number,
 	u64 ? : number,
-	u128 ? : (string | number),
+	u128 ? : ReturnNumber,
 	bytes ? : Array<number>
 }
 
@@ -30,7 +31,7 @@ export class IdBuilder {
 			u64: value,
 		};
 	}
-	static U128(value: (string | number)): Id {
+	static U128(value: ReturnNumber): Id {
 		return {
 			u128: value,
 		};

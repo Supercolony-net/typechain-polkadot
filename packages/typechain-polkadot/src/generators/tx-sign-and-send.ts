@@ -20,19 +20,33 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {Abi} from "@polkadot/api-contract";
-import {__writeFileSync} from "./_utils";
-import * as TX_SIGN_AND_SEND_TEMPLATES from "../output-generators/tx-sign-and-send";
 import {Import, Method} from "../types";
 import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
+import Handlebars from "handlebars";
+import {writeFileSync} from "../utils/directories";
+import {readTemplate} from "../utils/handlebars-helpers";
+import {TypechainPlugin} from "../types/interfaces";
+
+const generateForMetaTemplate = Handlebars.compile(readTemplate('tx-sign-and-send'));
 
 /**
- * Generates the tx-sign-and-send/<fileName>.ts file.
+ * Generates file content for tx-sign-and-send/<fileName>.ts using Handlebars
+ *
+ * @param fileName - The name of the file to write to
+ * @param methods - The methods to generate for the file
+ * @param additionalImports - Any additional imports to add to the file
+ * @returns {string} Generated file content
+ */
+export const FILE = (fileName : string, methods : Method[], additionalImports: Import[]) => generateForMetaTemplate({fileName, methods, additionalImports});
+
+/**
+ * generates a tx-sign-and-send file
  *
  * @param abi - The ABI of the contract
  * @param fileName - The name of the file to write to
  * @param absPathToOutput - The absolute path to the output directory
  */
-export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
+function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
 
 	const __allArgs = abi.messages.map(m => m.args).flat();
@@ -43,17 +57,28 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 
 	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
 	}));
 
-	const _methodsNames = abi.messages.map((m, i) => {
+	let _methodsNames = abi.messages.map((m, i) => {
 		return {
 			original: m.identifier,
 			cut: m.identifier.split("::").pop()!,
 		};
 	});
 
-	const imports: Import[] = [];
+	_methodsNames = _methodsNames.map((m) => {
+		const _overloadsCount = _methodsNames.filter(__m => __m.cut === m.cut).length;
+		if(_overloadsCount > 1) {
+			return {
+				original: m.original,
+				cut: m.original,
+			};
+		} else {
+			return m;
+		}
+	});
+
 	const methods: Method[] = [];
 
 	for(const __message of abi.messages) {
@@ -70,6 +95,15 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		});
 	}
 
-	__writeFileSync(absPathToOutput, `tx-sign-and-send/${fileName}.ts`, TX_SIGN_AND_SEND_TEMPLATES.FILE(fileName, methods, imports));
+	writeFileSync(absPathToOutput, `tx-sign-and-send/${fileName}.ts`, FILE(fileName, methods, []));
 
+}
+
+export default class TxSignAndSendPlugin implements TypechainPlugin {
+	generate(abi: Abi, fileName: string, absPathToABIs: string, absPathToOutput: string): void {
+		generate(abi, fileName, absPathToOutput);
+	}
+
+	name: string = 'TxSignAndSendPlugin';
+	outputDir: string = 'tx-sign-and-send';
 }

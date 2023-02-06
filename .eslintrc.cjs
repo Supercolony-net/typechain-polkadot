@@ -13,6 +13,12 @@ module.exports = {
 			"typescript": { },
 		},
 	},
+	"ignorePatterns": [
+		"node_modules/",
+		"dist/",
+		"generated/",
+		"out/",
+	],
 	rules: {
 		"prettier/prettier": "off",
 		"indent": [ "error", "tab", { "SwitchCase": 1 } ],

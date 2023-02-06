@@ -31,24 +31,6 @@ After installing the package, you can use it as a CLI tool. To use it, run the f
 npx @727-ventures/typechain-polkadot --input path/to/abis --output path/to/output
 ```
 
-### Library
-
-You can also use typechain-polkadot as a library. To use it, you need to import it in your code:
-
-```typescript
-import {Typechain} from '@727-ventures/typechain-polkadot/src/types/typechain';
-import {testPathPatternToRegExp} from "jest-util";
-
-const typechain = new Typechain();
-
-typechain.loadDefaultPlugins();
-
-typecchain.run(
-	pathToInput,
-	pathToOutput
-)
-```
-
 ## Methods and namespaces used in the typechain, and their description
 
 ### build-extrinsic
@@ -189,3 +171,87 @@ This namespace is used send transactions.
 ```typescript
 const result = await contract.tx.<functionName>(...args, options)
 ```
+
+### Library
+
+You can also use typechain-polkadot as a library. To use it, you need to import it in your code:
+
+```typescript
+import {Typechain} from '@727-ventures/typechain-polkadot/src/types/typechain';
+import {testPathPatternToRegExp} from "jest-util";
+
+const typechain = new Typechain();
+
+typechain.loadDefaultPlugins();
+
+typecchain.run(
+	pathToInput,
+	pathToOutput
+)
+```
+
+## Plugins
+
+Typechain-polkadot uses plugins to generate code. By default, it uses the following plugins:
+
+- build-extrinsic [docs](./docs/build-extrinsic.md)
+- constructors [docs](./docs/constructors.md)
+- contract [docs](./docs/contract.md)
+- data [docs](./docs/data.md)
+- events [docs](./docs/events.md)
+- events-types [docs](./docs/events-types.md)
+- mixed-methods [docs](./docs/mixed-methods.md)
+- query [docs](./docs/query.md)
+- tx-sign-and-send [docs](./docs/tx-sign-and-send.md)
+
+
+
+You can also create your own plugins. To do this, you need to create a class that implements the `TypechainPlugin` interface:
+
+```typescript
+import {TypechainPlugin} from '@727-ventures/typechain-polkadot/src/types/interfaces';
+
+export class MyPlugin implements TypechainPlugin {
+  constructor() {}
+
+  name: string = 'my-plugin';
+  outputDir: string = 'my-plugin';
+
+  generate: (
+  	abi: Abi,
+	fileName: string,
+	absPathToABIs: string,
+	absPathToOutput: string
+  ): void {
+      // generate code
+  }
+
+  beforeRun ?: (
+      absPathToABIs: string,
+	  absPathToOutput: string
+  ) => void {
+      // do something before run
+  }
+}
+```
+
+Then you need to add your plugin to the list of plugins:
+
+```typescript
+typechain.loadPlugins(new MyPlugin());
+```
+
+Or you can load them via cli:
+
+```bash
+npx @727-ventures/typechain-polkadot --input path/to/abis --output path/to/output --plugins ./plugins-directory
+```
+
+Also you can use `loadPluginsFromFiles` method to load plugins from files:
+
+```typescript
+typechain.loadPluginsFromFiles(
+	'./plugins'
+)
+```
+

@@ -1,0 +1,23 @@
+{
+  "name": "psp34_enumerable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate": "npx typechain-polkadot --in ./artifacts --out ./out",
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@727-ventures/typechain-polkadot": "0.6.8",
+	"@727-ventures/typechain-types": "0.0.22",
+    "@types/node": "^18.8.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4",
+    "@polkadot/api": "^9.13.4",
+    "@polkadot/api-contract": "^9.13.4",
+    "@polkadot/keyring": "^10.3.1",
+    "@types/bn.js": "^5.1.0"
+  },
+  "author": "Supercolony-net",
+  "license": "ISC"
+}

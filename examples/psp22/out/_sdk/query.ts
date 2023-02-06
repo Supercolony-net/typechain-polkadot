@@ -26,10 +26,11 @@ import type {
 	RequestArgumentType, GasLimitAndValue,
 	QueryCallError, QueryOkCallError,
 } from './types';
+import {ReturnNumber} from "./types";
 
 const DEF_GAS_LIMIT_AND_VALUE : GasLimitAndValue = {
 	value: 0,
-	gasLimit: 1000000 * 1000000,
+	gasLimit: -1,
 };
 
 type QueryReturnType<T> = {
@@ -54,6 +55,9 @@ export async function queryJSON<T>(
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
+	handler: (json: AnyJson) => T = (json: AnyJson): T => {
+		return json as unknown as T;
+	},
 ) : Promise< QueryReturnType<T> > {
 	const { output, gasConsumed } = await queryOutput(
 		nativeContract, callerAddress,
@@ -74,7 +78,7 @@ export async function queryJSON<T>(
 	}
 
 	return {
-		value: output.toJSON() as unknown as T,
+		value: handler(output.toJSON()),
 		gasConsumed,
 	};
 }
@@ -84,13 +88,16 @@ export async function queryJSON<T>(
  *
  * @throws { QueryOkCallError }
  */
-export async function queryOkJSON<T extends AnyJson>(
+export async function queryOkJSON<T>(
 	nativeContract : ContractPromise,
 	callerAddress : string,
 	//
 	title : string,
 	args ? : readonly RequestArgumentType[],
 	gasLimitAndValue ? : GasLimitAndValue,
+	handler: (json: AnyJson) => T = (json: AnyJson): T => {
+		return json as unknown as T;
+	},
 ) : Promise< QueryReturnType<T> > {
 	const { output, gasConsumed } = await queryOutput(
 		nativeContract, callerAddress,
@@ -123,7 +130,7 @@ export async function queryOkJSON<T extends AnyJson>(
 	}
 
 	return {
-		value: _value.ok as T,
+		value: handler(_value.ok),
 		gasConsumed,
 	};
 }
@@ -211,7 +218,16 @@ function _genValidGasLimitAndValue(gasLimitAndValue ? : GasLimitAndValue) : GasL
 	let { value, gasLimit } = gasLimitAndValue;
 
 	if(!value) value = 0;
-	if(gasLimit == null) gasLimit = 1000000 * 1000000;
+	if(gasLimit == null) gasLimit = -1;
 
 	return { value, gasLimit };
+}
+
+export function handleReturnType(result: any, typeDescription: any): any {
+	if(typeof result !== 'object' || typeof typeDescription !== 'object' || typeDescription.isPrimitive) return result;
+	if(typeDescription.name === 'ReturnNumber') return new ReturnNumber(result as (string | number));
+	Object.entries(result).forEach((obj) => {
+		result[obj[0]] = handleReturnType(obj[1], typeDescription.body[obj[0]]);
+	});
+	return result;
 }

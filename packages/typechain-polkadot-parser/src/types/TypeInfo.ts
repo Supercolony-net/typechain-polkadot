@@ -23,9 +23,13 @@ export class TypeInfo {
 	id: number;
 	tsArgType: string;
 	tsReturnType: string;
+	tsArgTypePrefixed: string;
+	tsReturnTypePrefixed: string;
+	typeDescription: TypeTS;
 	// For enums and composites
 	bodyArgType ?: string;
 	bodyReturnType ?: string;
+	isResult?: boolean;
 
 	/**
 	 * @constructor
@@ -36,18 +40,63 @@ export class TypeInfo {
 	 * @param tsReturnType - Typescript-type of type when it used for return values
 	 * @param tsArgTypePrefixed - Typescript-type of type when it used for arguments, with prefix (ArgumentTypes.*)
 	 * @param tsReturnTypePrefixed - Typescript-type of type when it used for return values, with prefix (ReturnTypes.*)
-	 * @param bodyArgType - Body of Typescipt-type if it is a composite type or enum (for arguments)
-	 * @param bodyReturnType - Body of Typescipt-type if it is a composite type or enum (for return values)
+	 * @param typeDescription - Description of type when it used for arguments
+	 * @param bodyArgType - Body of Typescript-type if it is a composite type or enum (for arguments)
+	 * @param bodyReturnType - Body of Typescript-type if it is a composite type or enum (for return values)
 	 */
-	constructor(id: number, tsArgType: string, tsReturnType: string, bodyArgType?: string, bodyReturnType?: string) {
+	constructor(
+		id: number,
+		tsArgType: string,
+		tsReturnType: string,
+		tsArgTypePrefixed: string,
+		tsReturnTypePrefixed: string,
+		typeDescription: TypeTS,
+		bodyArgType?: string,
+		bodyReturnType?: string,
+	) {
 		this.id = id;
 		this.tsArgType = tsArgType;
 		this.tsReturnType = tsReturnType;
 		this.bodyArgType = bodyArgType;
 		this.bodyReturnType = bodyReturnType;
+		this.tsArgTypePrefixed = tsArgTypePrefixed;
+		this.tsReturnTypePrefixed = tsReturnTypePrefixed;
+		this.typeDescription = typeDescription;
 	}
 
+	/**
+	 * @memberOf TypeInfo
+	 * @returns {TypeInfo} - A new empty TypeInfo object
+	 */
 	static get EMPTY_TYPE_INFO() {
-		return new TypeInfo(0, '', '');
+		return new TypeInfo(0, '', '', '', '', new TypeTS('', false,false, true), '', '');
+	}
+}
+
+export class TypeTS {
+	name: string;
+	body: null | undefined | string | {
+		[index: string]: TypeTS | null;
+	};
+	isResult: boolean;
+	isPrimitive: boolean;
+	isConvertable: boolean;
+
+	constructor(name: string, isResult: boolean, isConvertable: boolean, isPrimitive: boolean, body?: null | undefined | string | {
+		[index: string]: TypeTS | null;
+	}) {
+		this.name = name;
+		this.isResult = isResult;
+		this.isConvertable = isConvertable;
+		this.isPrimitive = isPrimitive;
+		this.body = body;
+	}
+
+	logger() {
+		console.log(this);
+	}
+
+	toString() {
+		return JSON.stringify(this);
 	}
 }

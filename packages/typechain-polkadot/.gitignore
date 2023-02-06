@@ -3,6 +3,7 @@
 node_modules
 
 /artifacts
+/artifacts_debug
 
 /out
 /dist

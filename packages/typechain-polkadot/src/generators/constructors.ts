@@ -20,21 +20,41 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {Abi} from "@polkadot/api-contract";
-import {__writeFileSync} from "./_utils";
-import * as CONTRACT_TEMPLATES from "../output-generators/constructors";
 import {Method} from "../types";
 import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
 import PathAPI from "path";
+import Handlebars from "handlebars";
+import {readTemplate} from "../utils/handlebars-helpers";
+import {writeFileSync} from "../utils/directories";
+import {TypechainPlugin} from "../types/interfaces";
+
+const generateForMetaTemplate = Handlebars.compile(readTemplate("constructors"));
 
 /**
- * Generates the constructors/<fileName>.ts file.
+ * Generates file content for constructors/<fileName>.ts using Handlebars
+ *
+ * @param fileName - The name of the file to write to
+ * @param pathToContractFile - The path to the .contract file
+ * @param methods - The methods to generate for the file
+ * @returns {string} Generated file content
+ */
+export const FILE = (fileName : string, pathToContractFile : string, methods: Method[]) => generateForMetaTemplate({fileName, pathToContractFile: pathToContractFile, methods});
+
+
+/**
+ * Generates the constructors for the contract
  *
  * @param abi - The ABI of the contract
  * @param fileName - The name of the file to write to
  * @param absPathToOutput - The absolute path to the output directory
  * @param absPathToABIs - The absolute path to the ABIs directory
  */
-export default function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
+function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
+	const relPathFromOutL1toABIs = PathAPI.relative(
+		process.cwd(),
+		absPathToABIs
+	);
+
 	const parser = new TypeParser(abi);
 
 	const __allArgs = abi.constructors.map(m => m.args).flat();
@@ -46,14 +66,26 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 
 	const _argsTypes = __uniqueArgs.map(a => ({
 		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
+		tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
 	}));
 
-	const _methodsNames = abi.constructors.map((m, i) => {
+	let _methodsNames = abi.constructors.map((m, i) => {
 		return {
 			original: m.identifier,
 			cut: m.identifier.split("::").pop()!,
 		};
+	});
+
+	_methodsNames = _methodsNames.map((m) => {
+		const _overloadsCount = _methodsNames.filter(__m => __m.cut === m.cut).length;
+		if(_overloadsCount > 1) {
+			return {
+				original: m.original,
+				cut: m.original,
+			};
+		} else {
+			return m;
+		}
 	});
 
 	const methods: Method[] = [];
@@ -71,14 +103,19 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		});
 	}
 
-	const relPathFromOutL1toABIs = PathAPI.relative(
-		PathAPI.resolve(absPathToOutput, "contracts"),
-		absPathToABIs
-	);
-
-	__writeFileSync(
+	writeFileSync(
 		absPathToOutput,
 		`constructors/${fileName}.ts`,
-		CONTRACT_TEMPLATES.FILE(fileName, relPathFromOutL1toABIs, methods)
+		FILE(fileName, `./${relPathFromOutL1toABIs}/${fileName}.contract`, methods)
 	);
+}
+
+export default class ConstructorsPlugin implements TypechainPlugin {
+	name = "ConstructorsPlugin";
+	outputDir = "constructors";
+	overrides = false;
+
+	generate(abi: Abi, fileName: string, absPathToABIs: string, absPathToOutput: string): void {
+		generate(abi, fileName, absPathToOutput, absPathToABIs);
+	}
 }

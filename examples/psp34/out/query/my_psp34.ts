@@ -1,123 +1,145 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { ArgumentsTypes } from '../arguments/my_psp34';
-import type OkishReturns from '../return-values/my_psp34';
-import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
-import type { QueryReturnType } from '../_sdk/query';
-import { queryJSON, queryOkJSON } from '../_sdk/query';
+import type { ApiPromise } from '@polkadot/api';
+import type { GasLimit, GasLimitAndRequiredValue, Result } from '@727-ventures/typechain-types';
+import type { QueryReturnType } from '@727-ventures/typechain-types';
+import { queryJSON, queryOkJSON, handleReturnType } from '@727-ventures/typechain-types';
+import type * as ArgumentTypes from '../types-arguments/my_psp34';
+import type * as ReturnTypes from '../types-returns/my_psp34';
+import type BN from 'bn.js';
+//@ts-ignore
+import {ReturnNumber} from '@727-ventures/typechain-types';
+import {getTypeDescription} from './../shared/utils';
 
 
 export default class Methods {
 	private __nativeContract : ContractPromise;
+	private __apiPromise: ApiPromise;
 	private __callerAddress : string;
 
 	constructor(
 		nativeContract : ContractPromise,
+		nativeApi : ApiPromise,
 		callerAddress : string,
 	) {
 		this.__nativeContract = nativeContract;
 		this.__callerAddress = callerAddress;
+		this.__apiPromise = nativeApi;
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * ]
-	 */
+	* balanceOf
+	*
+	* @param { ArgumentTypes.AccountId } owner,
+	* @returns { number }
+	*/
 	"balanceOf" (
-		owner: ArgumentsTypes[8],
+		owner: ArgumentTypes.AccountId,
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["4"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::balanceOf", [owner], __options);
+	): Promise< QueryReturnType< number > >{
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::balanceOf", [owner], __options );
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * 1: operator,
-	 * 2: id,
-	 * ]
-	 */
+	* allowance
+	*
+	* @param { ArgumentTypes.AccountId } owner,
+	* @param { ArgumentTypes.AccountId } operator,
+	* @param { ArgumentTypes.Id | null } id,
+	* @returns { boolean }
+	*/
 	"allowance" (
-		owner: ArgumentsTypes[8],
-		operator: ArgumentsTypes[8],
-		id: ArgumentsTypes[14],
+		owner: ArgumentTypes.AccountId,
+		operator: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id | null,
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["16"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::allowance", [owner, operator, id], __options);
+	): Promise< QueryReturnType< boolean > >{
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::allowance", [owner, operator, id], __options );
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: to,
-	 * 1: id,
-	 * 2: data,
-	 * ]
-	 */
+	* transfer
+	*
+	* @param { ArgumentTypes.AccountId } to,
+	* @param { ArgumentTypes.Id } id,
+	* @param { Array<(number | string | BN)> } data,
+	* @returns { Result<null, ReturnTypes.PSP34Error> }
+	*/
 	"transfer" (
-		to: ArgumentsTypes[8],
-		id: ArgumentsTypes[1],
-		data: ArgumentsTypes[7],
+		to: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id,
+		data: Array<(number | string | BN)>,
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["17"] > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34::transfer", [to, id, data], __options);
+	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::transfer", [to, id, data], __options , (result) => { return handleReturnType(result, getTypeDescription(17, 'my_psp34')); });
 	}
 
-	/** */
+	/**
+	* collectionId
+	*
+	* @returns { ReturnTypes.Id }
+	*/
 	"collectionId" (
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["1"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::collectionId", [], __options);
+	): Promise< QueryReturnType< ReturnTypes.Id > >{
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::collectionId", [], __options , (result) => { return handleReturnType(result, getTypeDescription(1, 'my_psp34')); });
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: operator,
-	 * 1: id,
-	 * 2: approved,
-	 * ]
-	 */
+	* approve
+	*
+	* @param { ArgumentTypes.AccountId } operator,
+	* @param { ArgumentTypes.Id | null } id,
+	* @param { boolean } approved,
+	* @returns { Result<null, ReturnTypes.PSP34Error> }
+	*/
 	"approve" (
-		operator: ArgumentsTypes[8],
-		id: ArgumentsTypes[14],
-		approved: ArgumentsTypes[16],
+		operator: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id | null,
+		approved: boolean,
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["17"] > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34::approve", [operator, id, approved], __options);
+	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::approve", [operator, id, approved], __options , (result) => { return handleReturnType(result, getTypeDescription(17, 'my_psp34')); });
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: id,
-	 * ]
-	 */
+	* ownerOf
+	*
+	* @param { ArgumentTypes.Id } id,
+	* @returns { ReturnTypes.AccountId | null }
+	*/
 	"ownerOf" (
-		id: ArgumentsTypes[1],
+		id: ArgumentTypes.Id,
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["20"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::ownerOf", [id], __options);
+	): Promise< QueryReturnType< ReturnTypes.AccountId | null > >{
+		return queryJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::ownerOf", [id], __options , (result) => { return handleReturnType(result, getTypeDescription(20, 'my_psp34')); });
 	}
 
-	/** */
+	/**
+	* totalSupply
+	*
+	* @returns { ReturnNumber }
+	*/
 	"totalSupply" (
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["6"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp34::totalSupply", [], __options);
+	): Promise< QueryReturnType< ReturnNumber > >{
+		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34::totalSupply", [], __options , (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: account,
-	 * 1: id,
-	 * ]
-	 */
+	* mint
+	*
+	* @param { ArgumentTypes.AccountId } account,
+	* @param { ArgumentTypes.Id } id,
+	* @returns { Result<null, ReturnTypes.PSP34Error> }
+	*/
 	"mint" (
-		account: ArgumentsTypes[8],
-		id: ArgumentsTypes[1],
+		account: ArgumentTypes.AccountId,
+		id: ArgumentTypes.Id,
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< OkishReturns["17"] > >{
-		return queryOkJSON( this.__nativeContract, this.__callerAddress, "psp34Mintable::mint", [account, id], __options);
+	): Promise< QueryReturnType< Result<null, ReturnTypes.PSP34Error> > >{
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp34Mintable::mint", [account, id], __options , (result) => { return handleReturnType(result, getTypeDescription(17, 'my_psp34')); });
 	}
 
 }

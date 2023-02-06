@@ -3,12 +3,18 @@
 import type { ContractPromise } from '@polkadot/api-contract';
 import type { ApiPromise } from '@polkadot/api';
 import type { KeyringPair } from '@polkadot/keyring/types';
-import type { ArgumentsTypes } from '../arguments/my_psp22';
-import type OkishReturns from '../return-values/my_psp22';
-import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
-import type { QueryReturnType } from '../_sdk/query';
-import { queryJSON } from '../_sdk/query';
-import { txSignAndSend } from '../_sdk/tx';
+import type { GasLimit, GasLimitAndRequiredValue, Result } from '@727-ventures/typechain-types';
+import type { QueryReturnType } from '@727-ventures/typechain-types';
+import { queryOkJSON, queryJSON, handleReturnType } from '@727-ventures/typechain-types';
+import { txSignAndSend } from '@727-ventures/typechain-types';
+import type * as ArgumentTypes from '../types-arguments/my_psp22';
+import type * as ReturnTypes from '../types-returns/my_psp22';
+import type BN from 'bn.js';
+import {ReturnNumber} from '@727-ventures/typechain-types';
+import {getTypeDescription} from './../shared/utils';
+// @ts-ignore
+import type {EventRecord} from "@polkadot/api/submittable";
+import {decodeEvents} from "../shared/utils";
 
 
 export default class Methods {
@@ -29,126 +35,150 @@ export default class Methods {
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: to,
-	 * 1: value,
-	 * 2: data,
-	 * ]
-	 */
+	* transfer
+	*
+	* @param { ArgumentTypes.AccountId } to,
+	* @param { (string | number | BN) } value,
+	* @param { Array<(number | string | BN)> } data,
+	* @returns { void }
+	*/
 	"transfer" (
-		to: ArgumentsTypes[2],
-		value: ArgumentsTypes[0],
-		data: ArgumentsTypes[9],
+		to: ArgumentTypes.AccountId,
+		value: (string | number | BN),
+		data: Array<(number | string | BN)>,
 		__options: GasLimit,
 	){
-		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transfer", [to, value, data], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transfer", (events: EventRecord) => {
+			return decodeEvents(events, this.__nativeContract, "my_psp22");
+		}, [to, value, data], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: spender,
-	 * 1: deltaValue,
-	 * ]
-	 */
+	* decreaseAllowance
+	*
+	* @param { ArgumentTypes.AccountId } spender,
+	* @param { (string | number | BN) } deltaValue,
+	* @returns { void }
+	*/
 	"decreaseAllowance" (
-		spender: ArgumentsTypes[2],
-		deltaValue: ArgumentsTypes[0],
+		spender: ArgumentTypes.AccountId,
+		deltaValue: (string | number | BN),
 		__options: GasLimit,
 	){
-		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", [spender, deltaValue], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", (events: EventRecord) => {
+			return decodeEvents(events, this.__nativeContract, "my_psp22");
+		}, [spender, deltaValue], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * ]
-	 */
+	* balanceOf
+	*
+	* @param { ArgumentTypes.AccountId } owner,
+	* @returns { ReturnNumber }
+	*/
 	"balanceOf" (
-		owner: ArgumentsTypes[2],
+		owner: ArgumentTypes.AccountId,
 		__options: GasLimit,
-	): Promise< QueryReturnType< OkishReturns["0"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options);
+	): Promise< QueryReturnType< ReturnNumber > >{
+		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * 1: spender,
-	 * ]
-	 */
+	* allowance
+	*
+	* @param { ArgumentTypes.AccountId } owner,
+	* @param { ArgumentTypes.AccountId } spender,
+	* @returns { ReturnNumber }
+	*/
 	"allowance" (
-		owner: ArgumentsTypes[2],
-		spender: ArgumentsTypes[2],
+		owner: ArgumentTypes.AccountId,
+		spender: ArgumentTypes.AccountId,
 		__options: GasLimit,
-	): Promise< QueryReturnType< OkishReturns["0"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options);
+	): Promise< QueryReturnType< ReturnNumber > >{
+		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: spender,
-	 * 1: deltaValue,
-	 * ]
-	 */
+	* increaseAllowance
+	*
+	* @param { ArgumentTypes.AccountId } spender,
+	* @param { (string | number | BN) } deltaValue,
+	* @returns { void }
+	*/
 	"increaseAllowance" (
-		spender: ArgumentsTypes[2],
-		deltaValue: ArgumentsTypes[0],
+		spender: ArgumentTypes.AccountId,
+		deltaValue: (string | number | BN),
 		__options: GasLimit,
 	){
-		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", [spender, deltaValue], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", (events: EventRecord) => {
+			return decodeEvents(events, this.__nativeContract, "my_psp22");
+		}, [spender, deltaValue], __options);
 	}
 
-	/** */
+	/**
+	* totalSupply
+	*
+	* @returns { ReturnNumber }
+	*/
 	"totalSupply" (
 		__options: GasLimit,
-	): Promise< QueryReturnType< OkishReturns["0"] > >{
-		return queryJSON( this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options);
+	): Promise< QueryReturnType< ReturnNumber > >{
+		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: from,
-	 * 1: to,
-	 * 2: value,
-	 * 3: data,
-	 * ]
-	 */
+	* transferFrom
+	*
+	* @param { ArgumentTypes.AccountId } from,
+	* @param { ArgumentTypes.AccountId } to,
+	* @param { (string | number | BN) } value,
+	* @param { Array<(number | string | BN)> } data,
+	* @returns { void }
+	*/
 	"transferFrom" (
-		from: ArgumentsTypes[2],
-		to: ArgumentsTypes[2],
-		value: ArgumentsTypes[0],
-		data: ArgumentsTypes[9],
+		from: ArgumentTypes.AccountId,
+		to: ArgumentTypes.AccountId,
+		value: (string | number | BN),
+		data: Array<(number | string | BN)>,
 		__options: GasLimit,
 	){
-		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transferFrom", [from, to, value, data], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transferFrom", (events: EventRecord) => {
+			return decodeEvents(events, this.__nativeContract, "my_psp22");
+		}, [from, to, value, data], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: spender,
-	 * 1: value,
-	 * ]
-	 */
+	* approve
+	*
+	* @param { ArgumentTypes.AccountId } spender,
+	* @param { (string | number | BN) } value,
+	* @returns { void }
+	*/
 	"approve" (
-		spender: ArgumentsTypes[2],
-		value: ArgumentsTypes[0],
+		spender: ArgumentTypes.AccountId,
+		value: (string | number | BN),
 		__options: GasLimit,
 	){
-		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::approve", [spender, value], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::approve", (events: EventRecord) => {
+			return decodeEvents(events, this.__nativeContract, "my_psp22");
+		}, [spender, value], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: account,
-	 * 1: amount,
-	 * ]
-	 */
+	* mint
+	*
+	* @param { ArgumentTypes.AccountId } account,
+	* @param { (string | number | BN) } amount,
+	* @returns { void }
+	*/
 	"mint" (
-		account: ArgumentsTypes[2],
-		amount: ArgumentsTypes[0],
+		account: ArgumentTypes.AccountId,
+		amount: (string | number | BN),
 		__options: GasLimit,
 	){
-		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", [account, amount], __options);
+		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", (events: EventRecord) => {
+			return decodeEvents(events, this.__nativeContract, "my_psp22");
+		}, [account, amount], __options);
 	}
 
 }

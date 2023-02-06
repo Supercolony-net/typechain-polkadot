@@ -19,10 +19,11 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import type BN from 'bn.js';
+import BN from 'bn.js';
 // @ts-ignore
 import type { ContractExecResultErr } from '@polkadot/types/interfaces/contracts/types';
 import type {AnyJson} from "@polkadot/types-codec/types";
+import fs from "fs";
 
 export type RequestArgumentType = number | string | boolean | bigint
 	| (string | number)[]
@@ -32,7 +33,7 @@ export interface GasLimit {
 	/**
 	 * Defaults to `-1`
 	 */
-	gasLimit ? : bigint | BN | string | number;
+	gasLimit ? : WeightV2 | bigint | BN | string | number;
 }
 
 export interface GasLimitAndValue extends GasLimit {
@@ -89,3 +90,56 @@ export type QueryOkCallError = QueryCallError | {
 	issue : 'BODY_ISNT_OKERR',
 	value : any;
 };
+
+export interface Result<T, E> {
+	Ok ?: T,
+	Err ?: E,
+}
+
+export class ResultBuilder{
+	static Ok<T, E>(value : T) : Result<T, E> {
+		return {
+			Ok: value,
+		};
+	}
+	static Err<T, E>(error : E) : Result<T, E> {
+		return {
+			Err: error,
+		};
+	}
+}
+
+export class ReturnNumber {
+	readonly rawNumber: BN;
+
+	constructor(
+		value: number | string,
+	) {
+		if (typeof value == 'number') {
+			this.rawNumber = new BN(value);
+		} else {
+			this.rawNumber = new BN(value.substring(2), 16);
+		}
+	}
+
+	toString() {
+		return this.rawNumber.toString();
+	}
+
+	toHuman() {
+		return this.toString();
+	}
+
+	toNumber() {
+		return this.rawNumber.toNumber();
+	}
+
+	static ToBN(value: number | string) {
+		return new ReturnNumber(value).rawNumber;
+	}
+}
+
+export function getTypeDescription(id: number | string, fileName: string): any {
+	const types = JSON.parse(fs.readFileSync(__dirname + `/../data/${fileName}.json`, 'utf8'));
+	return types[id];
+}

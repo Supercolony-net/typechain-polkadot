@@ -20,19 +20,33 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {Abi} from "@polkadot/api-contract";
-import {__writeFileSync} from "./_utils";
-import * as QUERY_TEMPLATES from "../output-generators/query";
 import {Import, Method} from "../types";
 import {TypeParser} from "@727-ventures/typechain-polkadot-parser";
+import Handlebars from "handlebars";
+import {readTemplate} from "../utils/handlebars-helpers";
+import {writeFileSync} from "../utils/directories";
+import {getTypeName} from "../utils/abi";
+import {TypechainPlugin} from "../types/interfaces";
+
+const generateForMetaTemplate = Handlebars.compile(readTemplate("query"));
 
 /**
- * Generates the query/<fileName>.ts file.
+ * Generates file content for query/<fileName>.ts using Handlebars
+ * @param fileName - The name of the file to write to
+ * @param methods - The methods to generate for the file
+ * @param additionalImports - Any additional imports to add to the file
+ * @returns - Generated file content
+ */
+export const FILE = (fileName : string, methods : Method[], additionalImports: Import[]) => generateForMetaTemplate({fileName, methods, additionalImports});
+
+/**
+ * generates a query file
  *
  * @param abi - The ABI of the contract
  * @param fileName - The name of the file to write to
  * @param absPathToOutput - The absolute path to the output directory
  */
-export default function generate(abi: Abi, fileName: string, absPathToOutput: string) {
+function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	const parser = new TypeParser(abi);
 
 	const __allArgs = abi.messages.map(m => m.args).flat();
@@ -41,16 +55,30 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 		if(!__uniqueArgs.find(__a => __a.type.lookupIndex === __arg.type.lookupIndex))
 			__uniqueArgs.push(__arg);
 
-	const _argsTypes = __uniqueArgs.map(a => ({
-		id: a.type.lookupIndex!,
-		tsStr: parser.getType(a.type.lookupIndex as number).tsArgType,
-	}));
+	const _argsTypes = __uniqueArgs.map(a => {
+		return {
+			id: a.type.lookupIndex!,
+			tsStr: parser.getType(a.type.lookupIndex as number).tsArgTypePrefixed,
+		};
+	});
 
-	const _methodsNames = abi.messages.map((m, i) => {
+	let _methodsNames = abi.messages.map((m, i) => {
 		return {
 			original: m.identifier,
 			cut: m.identifier.split("::").pop()!,
 		};
+	});
+
+	_methodsNames = _methodsNames.map((m) => {
+		const _overloadsCount = _methodsNames.filter(__m => __m.cut === m.cut).length;
+		if(_overloadsCount > 1) {
+			return {
+				original: m.original,
+				cut: m.original,
+			};
+		} else {
+			return m;
+		}
 	});
 
 	const imports: Import[] = [];
@@ -66,15 +94,24 @@ export default function generate(abi: Abi, fileName: string, absPathToOutput: st
 				type: _argsTypes.find(_a => _a.id === __a.type.lookupIndex)!,
 			})),
 			returnType: __message.returnType && {
-				tsStr: parser.getType(__message.returnType!.lookupIndex as number).tsReturnType,
+				tsStr: parser.getType(__message.returnType!.lookupIndex as number).tsReturnTypePrefixed,
 				id: __message.returnType!.lookupIndex!,
 			},
 			payable: __message.isPayable,
 			mutating: __message.isMutating,
 			methodType: 'query',
+			resultQuery: getTypeName(abi, __message) === 'Result',
 		});
 	}
 
-	__writeFileSync(absPathToOutput, `query/${fileName}.ts`, QUERY_TEMPLATES.FILE(fileName, methods, imports));
+	writeFileSync(absPathToOutput, `query/${fileName}.ts`, FILE(fileName, methods, imports));
+}
 
+export default class QueryPlugin implements TypechainPlugin {
+	generate(abi: Abi, fileName: string, absPathToABIs: string, absPathToOutput: string): void {
+		generate(abi, fileName, absPathToOutput);
+	}
+
+	name = "QueryPlugin";
+	outputDir: string = "query";
 }

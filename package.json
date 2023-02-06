@@ -3,16 +3,36 @@
 	"workspaces": [
 		"packages/*"
 	],
-  	"scripts": {
-	  "publish": "npx lerna publish --registry=https://npm.pkg.github.com/",
-	  "start-typechain": "npx typechain-polkadot --in ./artifacts --out ./out",
-	  "lint": "npx eslint \"{packages, examples}/**/*.{js,jsx,ts,tsx}\" --config .eslintrc.cjs",
-	  "lint:fix": "eslint --fix \"{packages, examples}/**/*.{js,jsx,ts,tsx}\"",
-	  "gen-docs": "npx typedoc --out docs-generated"
+  	"files": [
+	  "tests/**/*"
+	],
+  	"private": true,
+	"scripts": {
+		"publish": "npx lerna publish",
+		"start-typechain": "npx @727-ventures/typechain-polkadot --in ./artifacts --out ./out",
+		"gen-test-ts": "npx @727-ventures/typechain-polkadot --in tests/artifacts --out tests/generated",
+		"only-test": "npx jest --no-cache --maxWorkers 1",
+		"test": "npm run gen-test-ts && npm run only-test",
+		"lint": "eslint \"{packages, examples}/**/*.ts\"",
+		"lint:fix": "eslint --fix \"{packages, examples}/**/*.ts\"",
+	    "gen-docs": "npx typedoc --out docs-generated"
 	},
-	"devDependencies": {
+	"dependencies": {
 		"lerna": "^5.1.8",
-	  	"typechain-polkadot": "file:packages/typechain-polkadot",
-	  	"typedoc": "^0.23.9"
+		"@727-ventures/typechain-polkadot": "file:packages/typechain-polkadot",
+		"@727-ventures/typechain-types": "file:packages/typechain-types",
+		"typedoc": "^0.23.9",
+		"@types/bn.js": "^5.1.0",
+		"@types/eslint": "^8.4.3",
+		"@types/jest": "^27.5.2",
+		"@typescript-eslint/eslint-plugin": "^5.25.0",
+		"@typescript-eslint/parser": "^5.25.0",
+		"eslint": "^8.18.0",
+		"eslint-import-resolver-typescript": "^2.7.1",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-node": "^11.1.0",
+		"hjson": "^3.2.2",
+		"ts-jest": "^28.0.3",
+		"typescript": "^4.7.4"
 	}
 }

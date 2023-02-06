@@ -1,9 +1,11 @@
 /* This file is auto-generated */
 
 import type { ContractPromise } from '@polkadot/api-contract';
-import type { ArgumentsTypes } from '../arguments/my_psp22';
-import type { GasLimit, GasLimitAndRequiredValue } from '../_sdk/types';
-import { buildSubmittableExtrinsic } from '../_sdk/tx';
+import type { GasLimit, GasLimitAndRequiredValue } from '@727-ventures/typechain-types';
+import { buildSubmittableExtrinsic } from '@727-ventures/typechain-types';
+import type * as ArgumentTypes from '../types-arguments/my_psp22';
+import type BN from 'bn.js';
+
 
 
 export default class Methods {
@@ -15,76 +17,79 @@ export default class Methods {
 		this.__nativeContract = nativeContract;
 	}
 	/**
-	 * @arg: args: [
-	 * 0: to,
-	 * 1: value,
-	 * 2: data,
-	 * ]
-	 */
+	 * transfer
+	 *
+	 * @param { ArgumentTypes.AccountId } to,
+	 * @param { (string | number | BN) } value,
+	 * @param { Array<(number | string | BN)> } data,
+	*/
 	"transfer" (
-		to: ArgumentsTypes[2],
-		value: ArgumentsTypes[0],
-		data: ArgumentsTypes[9],
+		to: ArgumentTypes.AccountId,
+		value: (string | number | BN),
+		data: Array<(number | string | BN)>,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::transfer", [to, value, data], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: spender,
-	 * 1: deltaValue,
-	 * ]
-	 */
+	 * decreaseAllowance
+	 *
+	 * @param { ArgumentTypes.AccountId } spender,
+	 * @param { (string | number | BN) } deltaValue,
+	*/
 	"decreaseAllowance" (
-		spender: ArgumentsTypes[2],
-		deltaValue: ArgumentsTypes[0],
+		spender: ArgumentTypes.AccountId,
+		deltaValue: (string | number | BN),
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::decreaseAllowance", [spender, deltaValue], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * ]
-	 */
+	 * balanceOf
+	 *
+	 * @param { ArgumentTypes.AccountId } owner,
+	*/
 	"balanceOf" (
-		owner: ArgumentsTypes[2],
+		owner: ArgumentTypes.AccountId,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::balanceOf", [owner], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: owner,
-	 * 1: spender,
-	 * ]
-	 */
+	 * allowance
+	 *
+	 * @param { ArgumentTypes.AccountId } owner,
+	 * @param { ArgumentTypes.AccountId } spender,
+	*/
 	"allowance" (
-		owner: ArgumentsTypes[2],
-		spender: ArgumentsTypes[2],
+		owner: ArgumentTypes.AccountId,
+		spender: ArgumentTypes.AccountId,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::allowance", [owner, spender], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: spender,
-	 * 1: deltaValue,
-	 * ]
-	 */
+	 * increaseAllowance
+	 *
+	 * @param { ArgumentTypes.AccountId } spender,
+	 * @param { (string | number | BN) } deltaValue,
+	*/
 	"increaseAllowance" (
-		spender: ArgumentsTypes[2],
-		deltaValue: ArgumentsTypes[0],
+		spender: ArgumentTypes.AccountId,
+		deltaValue: (string | number | BN),
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::increaseAllowance", [spender, deltaValue], __options);
 	}
 
-	/** */
+	/**
+	 * totalSupply
+	 *
+	*/
 	"totalSupply" (
 		__options: GasLimit,
 	){
@@ -92,46 +97,46 @@ export default class Methods {
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: from,
-	 * 1: to,
-	 * 2: value,
-	 * 3: data,
-	 * ]
-	 */
+	 * transferFrom
+	 *
+	 * @param { ArgumentTypes.AccountId } from,
+	 * @param { ArgumentTypes.AccountId } to,
+	 * @param { (string | number | BN) } value,
+	 * @param { Array<(number | string | BN)> } data,
+	*/
 	"transferFrom" (
-		from: ArgumentsTypes[2],
-		to: ArgumentsTypes[2],
-		value: ArgumentsTypes[0],
-		data: ArgumentsTypes[9],
+		from: ArgumentTypes.AccountId,
+		to: ArgumentTypes.AccountId,
+		value: (string | number | BN),
+		data: Array<(number | string | BN)>,
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::transferFrom", [from, to, value, data], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: spender,
-	 * 1: value,
-	 * ]
-	 */
+	 * approve
+	 *
+	 * @param { ArgumentTypes.AccountId } spender,
+	 * @param { (string | number | BN) } value,
+	*/
 	"approve" (
-		spender: ArgumentsTypes[2],
-		value: ArgumentsTypes[0],
+		spender: ArgumentTypes.AccountId,
+		value: (string | number | BN),
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22::approve", [spender, value], __options);
 	}
 
 	/**
-	 * @arg: args: [
-	 * 0: account,
-	 * 1: amount,
-	 * ]
-	 */
+	 * mint
+	 *
+	 * @param { ArgumentTypes.AccountId } account,
+	 * @param { (string | number | BN) } amount,
+	*/
 	"mint" (
-		account: ArgumentsTypes[2],
-		amount: ArgumentsTypes[0],
+		account: ArgumentTypes.AccountId,
+		amount: (string | number | BN),
 		__options: GasLimit,
 	){
 		return buildSubmittableExtrinsic( this.__nativeContract, "psp22Mintable::mint", [account, amount], __options);
