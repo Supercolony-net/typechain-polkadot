@@ -86,7 +86,7 @@ For example, you can generate code for different contracts with different logic,
 - [Testing](tests/README.md)
 - [Examples](examples/README.md)
 - [Article 1](https://medium.com/p/7c184067523f)
-- [Article 2 TBD]()
+- [Article 2](https://medium.com/brushfam/ways-how-to-use-typechain-polkadot-in-your-project-281ef80b8dd8)
 
 ## Roadmap 🚗
 
