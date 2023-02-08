@@ -67,36 +67,43 @@ const _argv = YARGS
 	.help().alias( 'h', 'help')
 	.argv;
 
-const argv = _argv as Awaited<typeof _argv>;
+async function main() {
+	const argv = _argv as Awaited<typeof _argv>;
 
-const cwdPath = process.cwd();
+	const cwdPath = process.cwd();
 
-const typechain = new TypechainPolkadot();
+	const typechain = new TypechainPolkadot();
 
-const pluginsDir = argv.pluginsDir ? PathAPI.resolve(cwdPath, argv.pluginsDir) : undefined;
+	const pluginsDir = argv.pluginsDir ? PathAPI.resolve(cwdPath, argv.pluginsDir) : undefined;
 
-typechain.loadDefaultPlugins();
+	typechain.loadDefaultPlugins();
 
-if (pluginsDir) {
-	// check all .plugin.ts files in pluginsDir
-	// and load them
+	if (pluginsDir) {
+		// check all .plugin.ts files in pluginsDir
+		// and load them
 
-	const pluginFiles = FsAPI.readdirSync(pluginsDir);
+		const pluginFiles = FsAPI.readdirSync(pluginsDir);
 
-	const pluginFileNames: string[] = [];
+		const pluginFileNames: string[] = [];
 
-	for (const file of pluginFiles) {
-		if (file.endsWith('.plugin.ts')) {
-			pluginFileNames.push(PathAPI.resolve(pluginsDir, file));
+		for (const file of pluginFiles) {
+			if (file.endsWith('.plugin.ts')) {
+				pluginFileNames.push(PathAPI.resolve(pluginsDir, file));
+			}
 		}
+
+		await typechain.loadPluginsFromFiles(pluginFileNames);
 	}
 
-	typechain.loadPluginsFromFiles(pluginFileNames);
+	await typechain.run(
+		PathAPI.resolve(cwdPath, `./${argv.input}`),
+		PathAPI.resolve(cwdPath, `./${argv.output}`)
+	);
 }
 
-typechain.run(
-	PathAPI.resolve( cwdPath, `./${argv.input}` ),
-	PathAPI.resolve( cwdPath, `./${argv.output}` )
-);
+main().catch((e) => {
+	console.error(e);
+	process.exit(1);
+});
 
 
