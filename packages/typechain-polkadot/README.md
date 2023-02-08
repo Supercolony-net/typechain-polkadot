@@ -210,28 +210,28 @@ You can also create your own plugins. To do this, you need to create a class tha
 
 ```typescript
 import {TypechainPlugin} from '@727-ventures/typechain-polkadot/src/types/interfaces';
+import {Abi} from "@polkadot/api-contract";
 
-export class MyPlugin implements TypechainPlugin {
-  constructor() {}
+/**
+ * generates a contract file
+ *
+ * @param abi - The ABI of the contract
+ * @param fileName - The name of the file to write to
+ * @param absPathToOutput - The absolute path to the output directory
+ * @param absPathToABIs - The absolute path to the ABIs directory
+ */
+function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathToABIs: string) {
+	console.log('Hello World!');
+}
 
-  name: string = 'my-plugin';
-  outputDir: string = 'my-plugin';
+export default class HelloWorldPlugin implements TypechainPlugin {
 
-  generate: (
-  	abi: Abi,
-	fileName: string,
-	absPathToABIs: string,
-	absPathToOutput: string
-  ): void {
-      // generate code
-  }
+	name: string = 'HelloWorld';
+	outputDir: string = 'HelloWorld';
 
-  beforeRun ?: (
-      absPathToABIs: string,
-	  absPathToOutput: string
-  ) => void {
-      // do something before run
-  }
+	generate(abi: Abi, fileName: string, absPathToABIs: string, absPathToOutput: string): void {
+		generate(abi, fileName, absPathToOutput, absPathToABIs);
+	}
 }
 ```
 
@@ -246,12 +246,17 @@ Or you can load them via cli:
 ```bash
 npx @727-ventures/typechain-polkadot --input path/to/abis --output path/to/output --plugins ./plugins-directory
 ```
+> Note: if you're using the cli, every plugin should end with `.plugin.ts` and have default export of the plugin itself.
 
 Also you can use `loadPluginsFromFiles` method to load plugins from files:
 
 ```typescript
 typechain.loadPluginsFromFiles(
-	'./plugins'
+	'./plugins-directory'
 )
 ```
+
+## Example of plugins usage
+
+You can find an example of plugins usage in the [examples](../../examples) directory.
 
