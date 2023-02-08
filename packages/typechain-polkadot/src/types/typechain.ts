@@ -71,10 +71,12 @@ export default class TypechainPolkadot {
 		const plugins: TypechainPlugin[] = [];
 		for (const fileName of fileNames) {
 			const plugin = await import(fileName);
-			plugins.push(plugin.default);
+			plugins.push(new plugin.default);
 		}
 
 		console.log('Succesfully loaded plugins: ', plugins.map(p => p.name).join(', '));
+
+		this.plugins.push(...plugins);
 
 		return plugins;
 	}
