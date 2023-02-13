@@ -239,7 +239,7 @@ Whoa! We've just deployed and interacted with our contract! 🎉
 
 ### Events
 
-It's optional section, but if you want to use events, you should read it.
+In this section we will handle smart contract events!
 
 1) Let's add `event` to our contract, so the final code will look like this:
 ```rust
