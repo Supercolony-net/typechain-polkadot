@@ -6,3 +6,4 @@ This namespace is used to subscribe to events from contracts.
 contract.events.subscribeOnTransferEvent((event) => {
 	// Event callback function
 });
+```
