@@ -184,7 +184,7 @@ const typechain = new Typechain();
 
 typechain.loadDefaultPlugins();
 
-typecchain.run(
+typechain.run(
 	pathToInput,
 	pathToOutput
 )
@@ -206,7 +206,7 @@ Typechain-polkadot uses plugins to generate code. By default, it uses the follow
 
 
 
-You can also create your own plugins. To do this, you need to create a class that implements the `TypechainPlugin` interface:
+You can also create your own plugins to add some custom logic to the typechain-polkadot. To do this, you need to create a class that implements the `TypechainPlugin` interface:
 
 ```typescript
 import {TypechainPlugin} from '@727-ventures/typechain-polkadot/src/types/interfaces';

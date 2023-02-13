@@ -177,15 +177,20 @@ import Constructors from "./typechain-generated/constructors/my_psp22";
 import Contract from "./typechain-generated/contracts/my_psp22";
 
 async function main() {
+    // Connect to the local node
 	const api = await ApiPromise.create();
 
+	// Create keyring pair for Alice and Bob
 	const keyring = new Keyring({type: 'sr25519'});
 
 	const aliceKeyringPair = keyring.addFromUri('//Alice');
     const bobKeyringPair = keyring.addFromUri('//Bob');
 
+    // Create instance of constructors, that will be used to deploy contracts
+	// Constructors contains all constructors from the contract
     const constructors = new Constructors(api, aliceKeyringPair);
 
+    // Deploy contract via constructor
 	const {address: TOKEN_ADDRESS} = await constructors.new(10000);
 
 	console.log('Contract deployed at:', TOKEN_ADDRESS);
