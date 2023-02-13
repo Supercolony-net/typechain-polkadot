@@ -3,9 +3,8 @@
 1) Start a local node
 
 ```bash
-git clone https://github.com/paritytech/substrate-contracts-node
+git clone https://github.com/paritytech/substrate-contracts-node --tag v0.23.0
 cd ./substrate-contracts-node
-git checkout v0.23.0
 cargo +stable build --release
 ./target/release/substrate-contracts-node --dev --tmp
 ```

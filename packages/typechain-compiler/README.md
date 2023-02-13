@@ -16,6 +16,7 @@ Now you can use it to compile smart contracts, and generate TS definitions & run
 
 ### Config file
 
+We need to create a config file, that will contain all the information about the project, and the contracts that we want to compile.
 Config file should be in `.json` format, and should contain the following fields:
 
 ```typescript
