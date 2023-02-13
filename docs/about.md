@@ -237,6 +237,141 @@ Whoa! We've just deployed and interacted with our contract! 🎉
 
 > Link to the full example: [typechain-compiler-example](https://github.com/varex83/typechain-compiler-example/tree/main)
 
+### Events
+
+In this section we will handle smart contract events!
+
+1) Let's add `event` to our contract, so the final code will look like this:
+```rust
+#![cfg_attr(not(feature = "std"), no_std)]
+#![feature(min_specialization)]
+
+#[openbrush::contract]
+pub mod my_psp22 {
+
+	// imports from openbrush
+	use openbrush::contracts::psp22::*;
+	use openbrush::traits::{DefaultEnv, Storage};
+	use ink::codegen::EmitEvent;
+
+	#[ink(storage)]
+	#[derive(Default, Storage)]
+	pub struct Contract {
+		#[storage_field]
+		psp22: psp22::Data,
+	}
+
+	#[ink(event)]
+	pub struct TransferEvent {
+		#[ink(topic)]
+		from: Option<AccountId>,
+		#[ink(topic)]
+		to: Option<AccountId>,
+		value: Balance,
+	}
+
+	// Section contains default implementation without any modifications
+	impl PSP22 for Contract {}
+
+	impl Transfer for Contract {
+		fn _after_token_transfer(&mut self, _from: Option<&AccountId>, _to: Option<&AccountId>, _amount: &Balance) -> Result<(), PSP22Error> {
+			Self::env().emit_event(TransferEvent { from: _from.copied(), to: _to.copied(), value: *_amount });
+			Ok(())
+		}
+	}
+
+	impl Contract {
+		#[ink(constructor)]
+		pub fn new(initial_supply: Balance) -> Self {
+			let mut _instance = Self::default();
+			_instance._mint_to(_instance.env().caller(), initial_supply).expect("Should mint");
+			_instance
+		}
+	}
+}
+```
+
+2) And now, let's run `typechain-compiler` in the root of our project:
+```bash
+$ npx @727-Ventures/typechain-compiler --config typechain.config.json
+```
+
+3) And now, let's add subscription to the events, so the final code will look like this:
+```typescript
+// index.ts
+// In this example we will deploy & interact with psp22 token to mint some tokens to the owner and get total supply.
+import {ApiPromise, Keyring} from "@polkadot/api";
+import Constructors from "./typechain-generated/constructors/my_psp22";
+import Contract from "./typechain-generated/contracts/my_psp22";
+
+async function main() {
+	const api = await ApiPromise.create();
+
+	const keyring = new Keyring({type: 'sr25519'});
+
+	const aliceKeyringPair = keyring.addFromUri('//Alice');
+	const bobKeyringPair = keyring.addFromUri('//Bob');
+
+	const constructors = new Constructors(api, aliceKeyringPair);
+
+	const {address: TOKEN_ADDRESS} = await constructors.new(10000);
+
+	console.log('Contract deployed at:', TOKEN_ADDRESS);
+
+	const contract = new Contract(TOKEN_ADDRESS, aliceKeyringPair, api);
+
+	const totalSupply = await contract.query.totalSupply();
+	const balance = await contract.query.balanceOf(aliceKeyringPair.address);
+
+	console.log(`%c Total supply before transfer: ${totalSupply.value.unwrap().toNumber()}`, 'color: green');
+	console.log(`%c Balance of Alice before transfer: ${balance.value.unwrap()}`, 'color: green');
+
+	contract.events.subscribeOnTransferEventEvent((event) => {
+		console.log('Transfer event received:', event);
+	});
+
+	const mintTx = await contract.tx.transfer(bobKeyringPair.address, 1, []);
+
+	const totalSupplyAfterMint = await contract.query.totalSupply();
+	const balanceAfterMint = await contract.query.balanceOf(aliceKeyringPair.address);
+
+	console.log(`%c Total supply after transfer: ${totalSupplyAfterMint.value.unwrap().toNumber()}`, 'color: green');
+	console.log(`%c Balance of Alice after transfer: ${balanceAfterMint.value.unwrap()}`, 'color: green');
+
+	await api.disconnect();
+}
+
+main().then(() => {
+	console.log('done');
+});
+```
+
+4) And now, let's run it:
+```bash
+$ npx ts-node index.ts
+```
+
+And you should see something like this:
+```bash
+Contract deployed at: 5Cc95McifGEqPsc9kfBNvWgAkDZeZ2BkQ5BCBXkHXmsNYavM
+ Total supply before transfer: 10000
+ Balance of Alice before transfer: 10000
+Transfer event received: {
+  from: null,
+  to: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+  value: ReturnNumber { rawNumber: <BN: 2710> }
+}
+Transfer event received: {
+  from: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
+  to: '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty',
+  value: ReturnNumber { rawNumber: <BN: 1> }
+}
+ Total supply after transfer: 10000
+ Balance of Alice after transfer: 9999
+done
+```
+Wow, we have successfully subscribed to events and got them!
+
 ## How to use it directly via `typechain-polkadot`?
 Let's use previous example, but instead of using `typechain-compiler`, we will use `typechain-polkadot` directly.
 
