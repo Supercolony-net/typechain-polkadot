@@ -111,7 +111,7 @@ function main() {
 			__writeFileSync(
 				artifactsPath,
 				`${targetInfo.name}.json`,
-				FsAPI.readFileSync(PathAPI.resolve(targetInfo.path, 'metadata.json'), "utf8")
+				FsAPI.readFileSync(PathAPI.resolve(targetInfo.path, `${targetInfo.name}.json`), "utf8")
 			);
 
 			__writeFileSync(
