@@ -1,4 +1,4 @@
-![Typechain](https://user-images.githubusercontent.com/43150707/215465145-ef41167c-ef40-4f3c-8fd8-ca56a2480810.png)
+![Typechain](https://user-images.githubusercontent.com/88630083/218826097-0d3d4f61-a028-45a9-a91d-1f245c4663ea.png)
 
 If you have any questions regarding Typechain-Polkadot, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers.
 
