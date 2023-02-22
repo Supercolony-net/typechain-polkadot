@@ -149,14 +149,14 @@ To dive deeper into configuration, you can check [typechain-compiler documentati
 Add the following to your `package.json`:
 ```json
 "dependencies": {
-	"@727-ventures/typechain-compiler": "^0.5.13",
+	"@727-ventures/typechain-compiler": "^0.5.16",
 	"@727-ventures/typechain-types": "^0.0.22",
 	"@types/node": "^17.0.34",
 	"ts-node": "^10.7.0",
 	"typescript": "^4.6.4",
 	"@polkadot/api": "^9.13.4",
 	"@polkadot/api-contract": "^9.13.4",
-	"@polkadot/keyring": "^9.13.4",
+	"@polkadot/keyring": "^10.4.2",
 	"@types/bn.js": "^5.1.0"
 }
 ```
@@ -166,7 +166,7 @@ And install it with `npm install`.
 
 7) Now, let's run `typechain-compiler`:
 ```bash
-$ npx @727-Ventures/typechain-compiler --config typechain.config.json
+$ npx @727-ventures/typechain-compiler --config typechain.config.json
 ```
 
 8) And now, you can use generated code in your project. For example, you can create a file `index.ts`:
