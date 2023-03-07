@@ -65,7 +65,7 @@ export declare class ResultBuilder {
 }
 export declare class ReturnNumber {
     readonly rawNumber: BN;
-    constructor(value: number | string);
+    constructor(value: number | string | BN);
     toString(): string;
     toHuman(): string;
     toNumber(): number;
