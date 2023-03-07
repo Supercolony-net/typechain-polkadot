@@ -66,11 +66,11 @@ var ResultBuilder = /** @class */ (function () {
 exports.ResultBuilder = ResultBuilder;
 var ReturnNumber = /** @class */ (function () {
     function ReturnNumber(value) {
-        if (typeof value == 'number') {
-            this.rawNumber = new bn_js_1.default(value);
+        if (typeof value == "string") {
+            this.rawNumber = new bn_js_1.default(value.substring(2), 16);
         }
         else {
-            this.rawNumber = new bn_js_1.default(value.substring(2), 16);
+            this.rawNumber = new bn_js_1.default(value);
         }
     }
     ReturnNumber.prototype.toString = function () {

@@ -30,6 +30,8 @@ export interface Config {
 }
 ```
 
+Also you can override the config value via CLI arguments.
+
 ### Compiler
 
 To compile your project, and generate TS definitions & runtime code for it, run the following command:

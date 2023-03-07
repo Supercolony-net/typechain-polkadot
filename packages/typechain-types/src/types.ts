@@ -137,12 +137,12 @@ export class ReturnNumber {
 	readonly rawNumber: BN;
 
 	constructor(
-		value: number | string,
+		value: number | string | BN,
 	) {
-		if (typeof value == 'number') {
-			this.rawNumber = new BN(value);
-		} else {
+		if (typeof value == "string") {
 			this.rawNumber = new BN(value.substring(2), 16);
+		} else {
+			this.rawNumber = new BN(value);
 		}
 	}
 

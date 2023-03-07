@@ -2,6 +2,10 @@
 
 If you have any questions regarding Typechain-Polkadot, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers.
 
+### Latest releases:
+- Typechain-Polkadot [![npm version](https://badge.fury.io/js/@727-ventures%2Ftypechain-polkadot.svg)](https://badge.fury.io/js/@727-ventures%2Ftypechain-polkadot)
+- Typechain-Compiler [![npm version](https://badge.fury.io/js/@727-ventures%2Ftypechain-compiler.svg)](https://badge.fury.io/js/@727-ventures%2Ftypechain-compiler)
+- Typechain-Types [![npm version](https://badge.fury.io/js/@727-ventures%2Ftypechain-types.svg)](https://badge.fury.io/js/@727-ventures%2Ftypechain-types)
 ## Overview :page_facing_up:
 
 Typechain is maintained by [Brushfam](https://www.brushfam.io/) team to improve developers’ experience working with ink! smart contracts.

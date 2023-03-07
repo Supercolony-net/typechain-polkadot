@@ -11,8 +11,8 @@ export function parseConfig(configStr: string): Config {
 	const config = JSON.parse(configStr);
 
 
-	if (!config.projectFiles) {
-		throw new Error("Please, specify, what files you want to generate");
+	if (config.projectFiles === undefined) {
+		config.projectFiles = [];
 	}
 
 	if (config.skipLinting === undefined) {

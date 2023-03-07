@@ -53,6 +53,18 @@ function main() {
 			type: "string",
 			default: "nightly",
 		})
+		.array("files")
+		.describe("files", "Files to compile")
+		.boolean("skipLinting")
+		.describe("skipLinting", "Skip linting")
+		.string("artifactsPath")
+		.describe("artifactsPath", "Artifacts path")
+		.string("typechainGeneratedPath")
+		.describe("typechainGeneratedPath", "Typechain generated path")
+		.boolean("isWorkspace")
+		.describe("isWorkspace", "Is workspace")
+		.string("workspacePath")
+		.describe("workspacePath", "Workspace path")
 		.help().alias("h", "help")
 		.argv;
 
@@ -67,6 +79,31 @@ function main() {
 
 	const configStr = FsAPI.readFileSync(absPathToConfig, "utf8");
 	const config = parseConfig(configStr);
+
+	if (argv.files !== undefined) {
+		// @ts-ignore
+		config.projectFiles = argv.files;
+	}
+	if (argv.skipLinting !== undefined) {
+		// @ts-ignore
+		config.skipLinting = argv.skipLinting;
+	}
+	if (argv.artifactsPath !== undefined) {
+		// @ts-ignore
+		config.artifactsPath = argv.artifactsPath;
+	}
+	if (argv.typechainGeneratedPath !== undefined) {
+		// @ts-ignore
+		config.typechainGeneratedPath = argv.typechainGeneratedPath;
+	}
+	if (argv.isWorkspace !== undefined) {
+		// @ts-ignore
+		config.isWorkspace = argv.isWorkspace;
+	}
+	if (argv.workspacePath !== undefined) {
+		// @ts-ignore
+		config.workspacePath = argv.workspacePath;
+	}
 
 	if (!isNoCompile) {
 		const files = globbySync(config.projectFiles, {onlyFiles: true});
@@ -137,7 +174,6 @@ function main() {
 
 		logger.log(chalk.greenBright(`======== Compiled Typechain' code ========`));
 	}
-
 }
 
 main();
