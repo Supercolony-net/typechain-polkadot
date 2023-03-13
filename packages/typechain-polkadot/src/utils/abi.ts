@@ -65,7 +65,11 @@ export function preprocessABI(_abiStr: string): Abi {
 	return new Abi(_abiStrWithUnderscores);
 }
 
-
+/**
+ * Gets the type name of the return type of a message
+ * @param abi - ABI
+ * @param message - Message
+ */
 export function getTypeName(abi: Abi, message: AbiMessage): string | undefined {
 	if (!message)
 		return undefined;

@@ -1,5 +1,7 @@
 ![Typechain](https://user-images.githubusercontent.com/88630083/218826097-0d3d4f61-a028-45a9-a91d-1f245c4663ea.png)
 
+![GitHub](https://img.shields.io/github/license/727-ventures/typechain-polkadot)
+
 If you have any questions regarding Typechain-Polkadot, you can join the [Brushfam Element channel](https://matrix.to/#/!utTuYglskDvqRRMQta:matrix.org?via=matrix.org&via=t2bot.io&via=web3.foundation) to find your answers and meet other ink! smart contracts developers.
 
 ### Latest releases:
