@@ -15,6 +15,7 @@ import ConstructorsPlugin from "../generators/constructors";
 import EventTypesPlugin from "../generators/events-types";
 import EventsPlugin from "../generators/events";
 import EventDataPlugin from "../generators/event-data";
+import ContractInfoPlugin from "../generators/contract-info";
 
 export default class TypechainPolkadot {
 	plugins: TypechainPlugin[] = [];
@@ -87,6 +88,7 @@ export default class TypechainPolkadot {
 }
 
 export const defaultPlugins: TypechainPlugin[] = [
+	new ContractInfoPlugin(),
 	new TypesArgumentsPlugin(),
 	new TypesReturnsPlugin(),
 	new QueryPlugin(),

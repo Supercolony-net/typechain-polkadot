@@ -38,7 +38,7 @@ const generateForMetaTemplate = Handlebars.compile(readTemplate("constructors"))
  * @param methods - The methods to generate for the file
  * @returns {string} Generated file content
  */
-export const FILE = (fileName : string, pathToContractFile : string, methods: Method[]) => generateForMetaTemplate({fileName, pathToContractFile: pathToContractFile, methods});
+export const FILE = (fileName : string, methods: Method[]) => generateForMetaTemplate({fileName, methods});
 
 
 /**
@@ -106,7 +106,7 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string, absPathTo
 	writeFileSync(
 		absPathToOutput,
 		`constructors/${fileName}.ts`,
-		FILE(fileName, `./${relPathFromOutL1toABIs}/${fileName}.contract`, methods)
+		FILE(fileName, methods)
 	);
 }
 
