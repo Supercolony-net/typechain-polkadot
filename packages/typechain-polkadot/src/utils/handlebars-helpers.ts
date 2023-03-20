@@ -88,12 +88,12 @@ Handlebars.registerHelper( 'buildReturnType', function(fn: Method) {
 	return '';
 });
 
-Handlebars.registerHelper('buildWrapper', function(fn: Method, fileName: any) {
+Handlebars.registerHelper('buildWrapper', function(fn: Method) {
 	if(fn.methodType == 'query' && fn.returnType?.tsStr == 'ReturnNumber') {
 		return ', (result) => { return new ReturnNumber(result as (number | string)); }';
 	}
 	if(fn.methodType == 'query' && fn.returnType && fn.returnType?.tsStr !== 'null' && fn.returnType?.tsStr !== 'number' && fn.returnType?.tsStr !== 'string' && fn.returnType?.tsStr !== 'boolean') {
-		return `, (result) => { return handleReturnType(result, getTypeDescription(${fn.returnType?.id}, '${fileName.data.root.fileName}')); }`;
+		return `, (result) => { return handleReturnType(result, getTypeDescription(${fn.returnType?.id}, DATA_TYPE_DESCRIPTIONS)); }`;
 	}
 });
 
