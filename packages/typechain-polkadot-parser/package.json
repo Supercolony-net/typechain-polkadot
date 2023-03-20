@@ -7,14 +7,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
+    "url": "git+https://github.com/727-ventures/typechain-polkadot.git"
   },
   "author": "Supercolony-net",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
+    "url": "https://github.com/727-ventures/typechain-polkadot/issues"
   },
-  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
+  "homepage": "https://github.com/727-ventures/typechain-polkadot#readme",
   "dependencies": {
     "@polkadot/api": "^9.13.4",
     "@polkadot/api-contract": "^9.13.4",

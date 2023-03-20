@@ -14,14 +14,12 @@
 		"only-test": "npx jest --no-cache --maxWorkers 1",
 		"test": "npm run gen-test-ts && npm run only-test",
 		"lint": "eslint \"{packages, examples}/**/*.ts\"",
-		"lint:fix": "eslint --fix \"{packages, examples}/**/*.ts\"",
-	    "gen-docs": "npx typedoc --out docs-generated"
+		"lint:fix": "eslint --fix \"{packages, examples}/**/*.ts\""
 	},
 	"dependencies": {
 		"lerna": "^5.1.8",
 		"@727-ventures/typechain-polkadot": "file:packages/typechain-polkadot",
 		"@727-ventures/typechain-types": "file:packages/typechain-types",
-		"typedoc": "^0.23.9",
 		"@types/bn.js": "^5.1.0",
 		"@types/eslint": "^8.4.3",
 		"@types/jest": "^27.5.2",

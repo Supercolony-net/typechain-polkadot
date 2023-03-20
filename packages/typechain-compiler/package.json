@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Supercolony-net/typechain-polkadot.git"
+    "url": "git+https://github.com/727-ventures/typechain-polkadot.git"
   },
   "files": [
     "index.ts",
@@ -26,9 +26,9 @@
   "author": "727-Ventures",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Supercolony-net/typechain-polkadot/issues"
+    "url": "https://github.com/727-ventures/typechain-polkadot/issues"
   },
-  "homepage": "https://github.com/Supercolony-net/typechain-polkadot#readme",
+  "homepage": "https://github.com/727-ventures/typechain-polkadot#readme",
   "dependencies": {
     "@727-ventures/typechain-polkadot": "0.6.11",
     "@types/consola": "^2.2.5",
