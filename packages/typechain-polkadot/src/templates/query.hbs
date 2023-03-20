@@ -11,6 +11,7 @@ import type BN from 'bn.js';
 //@ts-ignore
 import {ReturnNumber} from '@727-ventures/typechain-types';
 import {getTypeDescription} from './../shared/utils';
+import DATA_TYPE_DESCRIPTIONS from '../data/{{{fileName}}}.json';
 {{#if additionalImports.length}}
 {{#each additionalImports}}
 import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } from '{{{path}}}';
@@ -46,7 +47,7 @@ export default class Methods {
 	{{/each}}
 		__options ? : {{#if payable}}GasLimitAndRequiredValue{{else}}GasLimit{{/if}},
 	){{{buildReturnType this}}}{
-		return {{{buildReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options {{#buildWrapper this}}{{fileName}}{{/buildWrapper}});
+		return {{{buildReturn this}}} "{{{toCamelCaseForFunctions originalName}}}", [{{#each args}}{{{name}}}{{#unless @last}}, {{/unless}}{{/each}}], __options {{{buildWrapper this}}});
 	}
 
 {{/each}}
