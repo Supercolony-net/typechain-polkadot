@@ -4,7 +4,7 @@ import type { ApiPromise } from '@polkadot/api';
 import { Abi } from '@polkadot/api-contract';
 import type { KeyringPair } from '@polkadot/keyring/types';
 import { ContractPromise } from '@polkadot/api-contract';
-import ABI from '../../artifacts/my_psp34.json';
+import { ContractAbi } from '../contract-info/my_psp34';
 import QueryMethods from '../query/my_psp34';
 import BuildExtrinsicMethods from '../build-extrinsic/my_psp34';
 import TxSignAndSendMethods from '../tx-sign-and-send/my_psp34';
@@ -39,10 +39,10 @@ export default class Contract {
 		nativeAPI : ApiPromise,
 	) {
 		this.address = address;
-		this.nativeContract = new ContractPromise(nativeAPI, ABI, address);
+		this.nativeContract = new ContractPromise(nativeAPI, ContractAbi, address);
 		this.nativeAPI = nativeAPI;
 		this.signer = signer;
-		this.contractAbi = new Abi(ABI);
+		this.contractAbi = new Abi(ContractAbi);
 
 		this.query = new QueryMethods(this.nativeContract, this.nativeAPI, signer.address);
 		this.buildExtrinsic = new BuildExtrinsicMethods(this.nativeContract, this.nativeAPI);
