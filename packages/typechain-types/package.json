@@ -1,6 +1,6 @@
 {
   "name": "@727-ventures/typechain-types",
-  "version": "0.0.24",
+  "version": "1.0.0-beta.1",
   "description": "Types and utility function for TypeChain",
   "repository": {
     "type": "git",
@@ -24,11 +24,11 @@
   "main": "dist/index.js",
   "homepage": "https://github.com/727-ventures/typechain-polkadot#readme",
   "dependencies": {
-    "@polkadot/api": "^9.13.4",
-    "@polkadot/api-contract": "^9.13.4",
+    "@polkadot/api": "^10.1.4",
+    "@polkadot/api-contract": "^10.1.4",
     "@types/bn.js": "^5.1.0",
     "@types/node": "^18.0.3",
     "camelcase": "^6.3.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   }
 }

@@ -10,11 +10,14 @@ import { txSignAndSend } from '@727-ventures/typechain-types';
 import type * as ArgumentTypes from '../types-arguments/my_psp22';
 import type * as ReturnTypes from '../types-returns/my_psp22';
 import type BN from 'bn.js';
+//@ts-ignore
 import {ReturnNumber} from '@727-ventures/typechain-types';
 import {getTypeDescription} from './../shared/utils';
 // @ts-ignore
 import type {EventRecord} from "@polkadot/api/submittable";
 import {decodeEvents} from "../shared/utils";
+import DATA_TYPE_DESCRIPTIONS from '../data/my_psp22.json';
+import EVENT_DATA_TYPE_DESCRIPTIONS from '../event-data/my_psp22.json';
 
 
 export default class Methods {
@@ -49,7 +52,7 @@ export default class Methods {
 		__options: GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transfer", (events: EventRecord) => {
-			return decodeEvents(events, this.__nativeContract, "my_psp22");
+			return decodeEvents(events, this.__nativeContract, EVENT_DATA_TYPE_DESCRIPTIONS);
 		}, [to, value, data], __options);
 	}
 
@@ -66,7 +69,7 @@ export default class Methods {
 		__options: GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::decreaseAllowance", (events: EventRecord) => {
-			return decodeEvents(events, this.__nativeContract, "my_psp22");
+			return decodeEvents(events, this.__nativeContract, EVENT_DATA_TYPE_DESCRIPTIONS);
 		}, [spender, deltaValue], __options);
 	}
 
@@ -80,7 +83,7 @@ export default class Methods {
 		owner: ArgumentTypes.AccountId,
 		__options: GasLimit,
 	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options, (result) => { return new ReturnNumber(result as (number | string)); });
+		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::balanceOf", [owner], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -95,7 +98,7 @@ export default class Methods {
 		spender: ArgumentTypes.AccountId,
 		__options: GasLimit,
 	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options, (result) => { return new ReturnNumber(result as (number | string)); });
+		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::allowance", [owner, spender], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -111,7 +114,7 @@ export default class Methods {
 		__options: GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::increaseAllowance", (events: EventRecord) => {
-			return decodeEvents(events, this.__nativeContract, "my_psp22");
+			return decodeEvents(events, this.__nativeContract, EVENT_DATA_TYPE_DESCRIPTIONS);
 		}, [spender, deltaValue], __options);
 	}
 
@@ -123,7 +126,7 @@ export default class Methods {
 	"totalSupply" (
 		__options: GasLimit,
 	): Promise< QueryReturnType< ReturnNumber > >{
-		return queryJSON< ReturnNumber >( this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options, (result) => { return new ReturnNumber(result as (number | string)); });
+		return queryJSON< ReturnNumber >( this.__apiPromise, this.__nativeContract, this.__callerAddress, "psp22::totalSupply", [], __options, (result) => { return new ReturnNumber(result as (number | string)); });
 	}
 
 	/**
@@ -143,7 +146,7 @@ export default class Methods {
 		__options: GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::transferFrom", (events: EventRecord) => {
-			return decodeEvents(events, this.__nativeContract, "my_psp22");
+			return decodeEvents(events, this.__nativeContract, EVENT_DATA_TYPE_DESCRIPTIONS);
 		}, [from, to, value, data], __options);
 	}
 
@@ -160,7 +163,7 @@ export default class Methods {
 		__options: GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22::approve", (events: EventRecord) => {
-			return decodeEvents(events, this.__nativeContract, "my_psp22");
+			return decodeEvents(events, this.__nativeContract, EVENT_DATA_TYPE_DESCRIPTIONS);
 		}, [spender, value], __options);
 	}
 
@@ -177,7 +180,7 @@ export default class Methods {
 		__options: GasLimit,
 	){
 		return txSignAndSend( this.__apiPromise, this.__nativeContract, this.__keyringPair, "psp22Mintable::mint", (events: EventRecord) => {
-			return decodeEvents(events, this.__nativeContract, "my_psp22");
+			return decodeEvents(events, this.__nativeContract, EVENT_DATA_TYPE_DESCRIPTIONS);
 		}, [account, amount], __options);
 	}
 
