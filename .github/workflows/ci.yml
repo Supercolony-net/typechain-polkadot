@@ -8,7 +8,7 @@ jobs:
   examples-builds:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/727-ventures/typechain-polkadot-ci
+      image: ghcr.io/brushfam/typechain-polkadot-ci
       options: --user root
     steps:
       - uses: actions/setup-node@v1
@@ -41,7 +41,7 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/727-ventures/typechain-polkadot-ci
+      image: ghcr.io/brushfam/typechain-polkadot-ci
       options: --user root
     steps:
       - uses: actions/setup-node@v1
@@ -62,7 +62,7 @@ jobs:
       cancel-in-progress: true
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/727-ventures/typechain-polkadot-ci
+      image: ghcr.io/brushfam/typechain-polkadot-ci
       options: --user root
     steps:
       - uses: actions/setup-node@v1
