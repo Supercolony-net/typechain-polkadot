@@ -13,7 +13,7 @@ function Typechain(
 	input: string,
 	output: string
 ) {
-	execSync(`npx typechain-polkadot --in ${input} --out ${output}`);
+	execSync(`npx @727-ventures/typechain-polkadot --in ${input} --out ${output}`);
 }
 
 function main() {

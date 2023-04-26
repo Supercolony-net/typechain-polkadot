@@ -44,7 +44,9 @@ function generate(abi: Abi, fileName: string, absPathToOutput: string) {
 	writeFileSync(
 		absPathToOutput,
 		`data/${fileName}.json`,
-		FILE(parser.tsTypes)
+		FILE(parser.tsTypes.filter((type) => {
+			return type.tsArgType.length;
+		}))
 	);
 }
 

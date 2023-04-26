@@ -1,6 +1,6 @@
 {
   "name": "@727-ventures/typechain-compiler",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.3",
   "description": "Util to test and compile your rust project",
   "bin": {
     "typechain-compiler": "bin/index.js"
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/727-ventures/typechain-polkadot#readme",
   "dependencies": {
-    "@727-ventures/typechain-polkadot": "1.0.0-beta.1",
+    "@727-ventures/typechain-polkadot": "1.0.0-beta.2",
     "@types/consola": "^2.2.5",
     "@types/yargs": "^17.0.10",
     "chalk": "^4.1.0",

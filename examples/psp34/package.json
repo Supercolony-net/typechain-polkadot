@@ -8,7 +8,8 @@
     "start": "ts-node index.ts"
   },
   "dependencies": {
-    "@727-ventures/typechain-polkadot": "1.0.0-beta.1",
+    "@727-ventures/typechain-polkadot": "1.0.0-beta.2",
+	"@727-ventures/typechain-types": "1.0.0-beta.1",
     "@types/node": "^18.8.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.9.5",
