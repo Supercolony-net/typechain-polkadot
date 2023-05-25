@@ -51,7 +51,7 @@ export default class TypechainPolkadot {
 		const fullFileNames = FsAPI.readdirSync(absPathToABIs);
 
 		for(const fullFileName of fullFileNames) {
-			if( !fullFileName.endsWith('.json') ) continue;
+			if( !fullFileName.endsWith('.json') || fullFileName.endsWith('.rustc_info.json') ) continue;
 
 			const fileName = fullFileName.slice(0, -5);
 			const _abiStr = FsAPI.readFileSync( PathAPI.resolve(absPathToABIs, fullFileName), 'utf8' );
