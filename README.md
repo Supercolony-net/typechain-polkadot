@@ -100,3 +100,4 @@ Typechain participates in the Web3 Grants, you can find the roadmap there:
 - [Grant I](https://github.com/w3f/Grants-Program/blob/master/applications/typechain-polkadot-follow-up.md)
 	- [Delivery milestone 1](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-milestone-1.md#milestone-delivery-mailbox)
 	- [Delivery milestone 2](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-milestone-2.md)
+	- [Delivery milestone 3](https://github.com/w3f/Grant-Milestone-Delivery/blob/master/deliveries/typechain-polkadot-follow-up-2.md)
