@@ -13,8 +13,8 @@ import { {{#each values}}{{{this}}}{{#unless @last}}, {{/unless}}{{/each}} } fro
 {{/each}}{{/if}}
 
 export default class Methods {
-	private __nativeContract : ContractPromise;
-	private __apiPromise: ApiPromise;
+	readonly __nativeContract : ContractPromise;
+	readonly __apiPromise: ApiPromise;
 
 	constructor(
 		nativeContract : ContractPromise,
